@@ -1,0 +1,21 @@
+Rule Name,Borrower Name,Borrowing Amount,Risk Rating,Status,Failure Reason,Selection Time (ms),Finalization Time (ms)
+Normal Lenders,Anand Prakash Singh,13500.0,N/A,FAILED,creditScore < 600 (510.0),1786249354321,N/A
+Normal Lenders,Manjunath R,29500.0,N/A,FAILED,loanAmount/income > 0.50,1786249355806,N/A
+Normal Lenders,Aravinda S G,92000.0,N/A,FAILED,loanAmount > 50000 (92000.0),1786249357616,N/A
+Normal Lenders,Sajidmahammad Fakirmahammad Vahora,97000.0,N/A,FAILED,loanAmount > 50000 (97000.0),1786249359060,N/A
+Normal Lenders,Ravikumar Madigeri,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786249360624,N/A
+Normal Lenders,S Sornakaleswaran,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786249362274,N/A
+Normal Lenders,D Manjunatha,67500.0,N/A,FAILED,loanAmount > 50000 (67500.0),1786249363975,N/A
+Normal Lenders,Seetanshu Misra,18000.0,N/A,FAILED,creditScore < 600 (478.0),1786249365423,N/A
+Normal Lenders,Shailesh Kumar,18500.0,N/A,FINALIZED,,1786249367339,1786249492376
+Normal Lenders,Chintachettu Shankar,26500.0,N/A,FAILED,loanAmount/income > 0.50,1786249411399,N/A
+Normal Lenders,Mr Mr Mandar Bane,28000.0,N/A,FINALIZED,,1786249412951,1786249492376
+Normal Lenders,Mr Arvind,55000.0,N/A,FAILED,loanAmount > 50000 (55000.0),1786249424468,N/A
+Normal Lenders,Seraj Khan,79000.0,N/A,FAILED,loanAmount > 50000 (79000.0),1786249425842,N/A
+Normal Lenders,Kaushik Baruah,94500.0,N/A,FAILED,loanAmount > 50000 (94500.0),1786249427164,N/A
+Normal Lenders,Aditya Garg,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786249428395,N/A
+Normal Lenders,Vikas Anand,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786249429730,N/A
+Normal Lenders,Karthik Gullapally,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786249431057,N/A
+Normal Lenders,Tapesh Kumar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786249432424,N/A
+Normal Lenders,Anil Kumar,12000.0,N/A,FAILED,creditScore < 600 (414.0),1786249433867,N/A
+Normal Lenders,Ms Chakkere Gopal Rajeshwari,17000.0,N/A,FINALIZED,,1786249466399,1786249492376

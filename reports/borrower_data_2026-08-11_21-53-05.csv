@@ -1,0 +1,661 @@
+Rule Name,Borrower Name,Borrowing Amount,Risk Rating,Status,Failure Reason,Selection Time (ms),Finalization Time (ms)
+Repeated Lenders - Medium Risk,Kaushik Bandyopadhyay,13500.0,N/A,FAILED,creditScore < 700,1786465507971,N/A
+Repeated Lenders - Medium Risk,Lakshmipriya Rajaselvam,13500.0,N/A,FAILED,creditScore < 700,1786465509569,N/A
+Repeated Lenders - Medium Risk,Mr Athi Krishnan,7500.0,N/A,FAILED,creditScore < 700,1786465511301,N/A
+Repeated Lenders - Medium Risk,Koteswararao Bandi,25500.0,N/A,FAILED,creditScore < 700,1786465512777,N/A
+Repeated Lenders - Medium Risk,Manjunatha E A,35500.0,N/A,FAILED,creditScore < 700,1786465514255,N/A
+Repeated Lenders - Medium Risk,Praveena A,39500.0,N/A,FAILED,creditScore < 700,1786465515648,N/A
+Repeated Lenders - Medium Risk,Mr Shalini,21000.0,N/A,FAILED,creditScore < 700,1786465517102,N/A
+Repeated Lenders - Medium Risk,Kammampati Saidulu,13000.0,N/A,FAILED,creditScore < 700,1786465518518,N/A
+Repeated Lenders - Medium Risk,Bapanapalli Srikanth,50000.0,N/A,FAILED,creditScore < 700,1786465520027,N/A
+Repeated Lenders - Medium Risk,Anil Kumar Yadav,10000.0,N/A,FAILED,creditScore < 700,1786465521586,N/A
+Repeated Lenders - High Risk,Kaushik Bandyopadhyay,13500.0,N/A,FINALIZED,,1786465621187,1786466178344
+Repeated Lenders - High Risk,Lakshmipriya Rajaselvam,13500.0,N/A,FINALIZED,,1786465633141,1786466178344
+Repeated Lenders - High Risk,Laxmikanta Das,20000.0,N/A,FINALIZED,,1786465644993,1786466178344
+Repeated Lenders - High Risk,Prasanta Kumar Das,22500.0,N/A,FAILED,loanAmount/income > 0.50,1786465656748,N/A
+Repeated Lenders - High Risk,Mr Tatarao Doolla,64500.0,N/A,FAILED,loanAmount/income > 0.50,1786465658232,N/A
+Repeated Lenders - High Risk,Ganesh Kumar Saow,100000.0,N/A,FAILED,creditScore < 600,1786465659557,N/A
+Repeated Lenders - High Risk,Mr Athi Krishnan,7500.0,N/A,FAILED,creditScore < 600,1786465661031,N/A
+Repeated Lenders - High Risk,Heramb Rajan Naik,20000.0,N/A,FAILED,loanAmount/income > 0.50,1786465662466,N/A
+Repeated Lenders - High Risk,Prakhar Yadav,49500.0,N/A,FAILED,creditScore < 600,1786465663969,N/A
+Repeated Lenders - High Risk,M Logesh,20000.0,N/A,FINALIZED,,1786465665574,1786466178344
+Repeated Lenders - High Risk,Mohan Krishna N,25000.0,N/A,FAILED,loanAmount/income > 0.50,1786465707717,N/A
+Repeated Lenders - High Risk,Mr Abhitabh Bachchan,19000.0,N/A,FINALIZED,,1786465709277,1786466178344
+Repeated Lenders - High Risk,Koteswararao Bandi,25500.0,N/A,FINALIZED,,1786465721202,1786466178344
+Repeated Lenders - High Risk,Manjunatha E A,35500.0,N/A,FAILED,loanAmount/income > 0.50,1786465732837,N/A
+Repeated Lenders - High Risk,Praveena A,39500.0,N/A,FAILED,loanAmount/income > 0.50,1786465734301,N/A
+Repeated Lenders - High Risk,Mr Sathisha N,66000.0,N/A,FAILED,loanAmount/income > 0.50,1786465735731,N/A
+Repeated Lenders - High Risk,Sachin Vishnu Sonwalkar,75000.0,N/A,FINALIZED,,1786465737360,1786466178344
+Repeated Lenders - High Risk,Sudalai Ramesh Mariappan,100000.0,N/A,FAILED,loanAmount/income > 0.50,1786465749183,N/A
+Repeated Lenders - High Risk,Rahul Sharma,100000.0,N/A,FAILED,loanAmount/income > 0.50,1786465750660,N/A
+Repeated Lenders - High Risk,Siddharth Saini,10000.0,N/A,FAILED,creditScore < 600,1786465752100,N/A
+Repeated Lenders - High Risk,Ruhee Fatima,21000.0,N/A,FAILED,creditScore < 600,1786465784769,N/A
+Repeated Lenders - High Risk,Mr Bibekananda Nanda,53000.0,N/A,FAILED,loanAmount/income > 0.50,1786465786158,N/A
+Repeated Lenders - High Risk,Amol Ashokrao Salve,58500.0,N/A,FAILED,loanAmount/income > 0.50,1786465787514,N/A
+Repeated Lenders - High Risk,Jeganathan Nathan,100000.0,N/A,FAILED,loanAmount/income > 0.50,1786465788915,N/A
+Repeated Lenders - High Risk,Mr Shiva Pakhare,5000.0,N/A,FAILED,creditScore < 600,1786465790331,N/A
+Repeated Lenders - High Risk,Srijana Gurung,10000.0,N/A,FINALIZED,,1786465791922,1786466178344
+Repeated Lenders - High Risk,Kammampati Saidulu,13000.0,N/A,FAILED,creditScore < 600,1786465803787,N/A
+Repeated Lenders - High Risk,Rampal,30000.0,N/A,FAILED,loanAmount/income > 0.50,1786465805329,N/A
+Repeated Lenders - High Risk,Biswajit Chowdhury,49000.0,N/A,FAILED,loanAmount/income > 0.50,1786465806715,N/A
+Repeated Lenders - High Risk,Bapanapalli Srikanth,50000.0,N/A,FAILED,creditScore < 600,1786465808319,N/A
+Repeated Lenders - High Risk,Siva Siva,15500.0,N/A,FAILED,loanAmount/income > 0.50,1786465842340,N/A
+Repeated Lenders - High Risk,Yamini,20000.0,N/A,FAILED,loanAmount/income > 0.50,1786465844117,N/A
+Repeated Lenders - High Risk,Sharmila Suresh Jadhav,26000.0,N/A,FAILED,loanAmount/income > 0.50,1786465846011,N/A
+Repeated Lenders - High Risk,Kinthali Aruna Kumar,50000.0,N/A,FAILED,loanAmount/income > 0.50,1786465847794,N/A
+Repeated Lenders - High Risk,Mohammad Mukarram Ansari,52000.0,N/A,FAILED,loanAmount/income > 0.50,1786465849585,N/A
+Repeated Lenders - High Risk,Apurba Bora,25000.0,N/A,FAILED,loanAmount/income > 0.50,1786465851526,N/A
+Repeated Lenders - High Risk,Chitrakant Sharma,11000.0,N/A,FINALIZED,,1786465853660,1786466178344
+Repeated Lenders - High Risk,Pange Hanumant Mahaling,53500.0,N/A,FAILED,loanAmount/income > 0.50,1786465866093,N/A
+Repeated Lenders - High Risk,Neethidevan Arivukkannu,60000.0,N/A,FAILED,loanAmount/income > 0.50,1786465868059,N/A
+Repeated Lenders - High Risk,Ajit Pandian,82500.0,N/A,FAILED,loanAmount/income > 0.50,1786465870847,N/A
+Repeated Lenders - High Risk,Rahul Pareek,11500.0,N/A,FINALIZED,,1786465905765,1786466178344
+Repeated Lenders - High Risk,Pochimcherla Vani Anusha,15000.0,N/A,FINALIZED,,1786465918694,1786466178344
+Repeated Lenders - High Risk,Mr Raj Stephen Jayapaul Libin,24500.0,N/A,FAILED,loanAmount/income > 0.50,1786465932778,N/A
+Repeated Lenders - High Risk,Sangeetha K,50500.0,N/A,FAILED,loanAmount/income > 0.50,1786465934751,N/A
+Repeated Lenders - High Risk,M Udhayaprakash,63000.0,N/A,FAILED,loanAmount/income > 0.50,1786465936867,N/A
+Repeated Lenders - High Risk,Mr Mr Pazhani,63500.0,N/A,FAILED,loanAmount/income > 0.50,1786465938832,N/A
+Repeated Lenders - High Risk,Mr Karan Kishore Chordiya,9500.0,N/A,FINALIZED,,1786465941305,1786466178344
+Repeated Lenders - High Risk,Mojjada Mohanarao,15000.0,N/A,FAILED,loanAmount/income > 0.50,1786465953645,N/A
+Repeated Lenders - High Risk,Chatan Mandal,19500.0,N/A,FINALIZED,,1786465957237,1786466178344
+Repeated Lenders - High Risk,Mr Ravi Kumar Gouru,20500.0,N/A,FINALIZED,,1786466003663,1786466178344
+Repeated Lenders - High Risk,Anuj Kris Wishard,22000.0,N/A,FINALIZED,,1786466016386,1786466178344
+Repeated Lenders - High Risk,Ambala Gopalakrishna,22000.0,N/A,FAILED,loanAmount/income > 0.50,1786466028438,N/A
+Repeated Lenders - High Risk,Prashant Andhare,24000.0,N/A,FAILED,loanAmount/income > 0.50,1786466030147,N/A
+Repeated Lenders - High Risk,Hitesh,24000.0,N/A,FAILED,loanAmount/income > 0.50,1786466031899,N/A
+Repeated Lenders - High Risk,Sangadi Sreenivasu,30000.0,N/A,FINALIZED,,1786466034004,1786466178344
+Repeated Lenders - High Risk,Mr Vijay Shankar Pandey,97000.0,N/A,FAILED,loanAmount/income > 0.50,1786466045943,N/A
+Repeated Lenders - High Risk,Mohd Saqib,15000.0,N/A,FINALIZED,,1786466048292,1786466178344
+Repeated Lenders - High Risk,Sohail Khan,21000.0,N/A,FAILED,loanAmount/income > 0.50,1786466060508,N/A
+Repeated Lenders - High Risk,Poulomi Chowdhury,21500.0,N/A,FINALIZED,,1786466063664,1786466178344
+Repeated Lenders - High Risk,Ganesh Chandra,25000.0,N/A,FAILED,loanAmount/income > 0.50,1786466109566,N/A
+Repeated Lenders - High Risk,Avinash Kumar,49500.0,N/A,FAILED,loanAmount/income > 0.50,1786466111612,N/A
+Repeated Lenders - High Risk,Sarita Yadav,34500.0,N/A,FAILED,creditScore < 600,1786466113758,N/A
+Repeated Lenders - High Risk,Prakash Singh,80000.0,N/A,FAILED,creditScore < 600,1786466115459,N/A
+Repeated Lenders - High Risk,Prabhukrupa Kalpataru Bal,15000.0,N/A,FAILED,loanAmount/income > 0.50,1786466117103,N/A
+Repeated Lenders - High Risk,Gaurav Gaurav,100000.0,N/A,FAILED,creditScore < 600,1786466118974,N/A
+Repeated Lenders - High Risk,Anish Agrawal,18000.0,N/A,FINALIZED,,1786466120611,1786466178344
+Repeated Business Lenders,Mr Madhusudan B Mantri,20500.0,N/A,FAILED,income < 50000 (49000.0),1786466244165,N/A
+Daily Repayment Lenders,Alam,35000.0,N/A,FAILED,creditScore < 730,1786466341405,N/A
+Daily Repayment Lenders,Seelam Manoj,39000.0,N/A,FAILED,creditScore < 730,1786466342737,N/A
+Daily Repayment Lenders,Sher Mau,39500.0,N/A,FAILED,creditScore < 730,1786466344057,N/A
+Daily Repayment Lenders,Saumyadipta Das,40000.0,N/A,FAILED,creditScore < 730,1786466345305,N/A
+Daily Repayment Lenders,Mr Manmeet Kumar,40500.0,N/A,FAILED,creditScore < 730,1786466346560,N/A
+Daily Repayment Lenders,Mr Palyakere Mahaboobsab Apsarulla,41500.0,N/A,FAILED,creditScore < 730,1786466347815,N/A
+Daily Repayment Lenders,Mr Irappa Hanamappa Madar,41500.0,N/A,SELECTED,,1786466349210,N/A
+Daily Repayment Lenders,Mr Ashok Kumar,42000.0,N/A,FAILED,creditScore < 730,1786466360787,N/A
+Daily Repayment Lenders,Mr Mangesh Rameshrao Burande,42500.0,N/A,FAILED,income < 50000,1786466362099,N/A
+Daily Repayment Lenders,Mr Sureshchandra Chandra Babru,43000.0,N/A,FAILED,income < 50000,1786466363468,N/A
+Daily Repayment Lenders,Mr Dheeraj Singh,43000.0,N/A,FAILED,creditScore < 730,1786466395453,N/A
+Daily Repayment Lenders,Mr Shahjan Ansari,43000.0,N/A,FAILED,creditScore < 730,1786466396809,N/A
+Daily Repayment Lenders,Chinchilam Lakshmipathi Patnayak,43500.0,N/A,FAILED,creditScore < 730,1786466398136,N/A
+Daily Repayment Lenders,Mohammad Sakir Mohammad Daudji,43500.0,N/A,FAILED,creditScore < 730,1786466399542,N/A
+Daily Repayment Lenders,Brajesh Rajak,43500.0,N/A,FAILED,creditScore < 730,1786466401103,N/A
+Daily Repayment Lenders,Mr Sumson Chintapalli,43500.0,N/A,FAILED,creditScore < 730,1786466402522,N/A
+Daily Repayment Lenders,Mr Furkan Ahmad Khan,44500.0,N/A,FAILED,creditScore < 730,1786466403913,N/A
+Daily Repayment Lenders,Mr Firoz Bashir Khan,44500.0,N/A,FAILED,income < 50000,1786466405294,N/A
+Daily Repayment Lenders,Mr Prashant Kumar,45000.0,N/A,FAILED,creditScore < 730,1786466406577,N/A
+Daily Repayment Lenders,Dileep Kumar Gonard,45000.0,N/A,FAILED,creditScore < 730,1786466408279,N/A
+Daily Repayment Lenders,Alisha Asif Atar,45000.0,N/A,FAILED,creditScore < 730,1786466440905,N/A
+Daily Repayment Lenders,Rahul,45500.0,N/A,FAILED,creditScore < 730,1786466442403,N/A
+Daily Repayment Lenders,Mr Ravi S,45500.0,N/A,FAILED,income < 50000,1786466443807,N/A
+Daily Repayment Lenders,Duken Eshi,45500.0,N/A,FAILED,income < 50000,1786466445132,N/A
+Daily Repayment Lenders,Babita Behera,45500.0,N/A,FAILED,creditScore < 730,1786466446637,N/A
+Daily Repayment Lenders,Ismyilsab Bagadageri,46000.0,N/A,FAILED,creditScore < 730,1786466448037,N/A
+Daily Repayment Lenders,Mr Balu P,46000.0,N/A,FAILED,creditScore < 730,1786466449384,N/A
+Daily Repayment Lenders,Mr Kuruva Swamilinga Kuruva Swamilinga,46000.0,N/A,FAILED,creditScore < 730,1786466450821,N/A
+Daily Repayment Lenders,L Balakrishna,46500.0,N/A,FAILED,creditScore < 730,1786466452405,N/A
+Daily Repayment Lenders,Repala Mamatha,46500.0,N/A,FAILED,creditScore < 730,1786466454339,N/A
+Daily Repayment Lenders,Mr Akhil Akhil,47000.0,N/A,SELECTED,,1786466488024,N/A
+Daily Repayment Lenders,Mr Hedar Ali,47000.0,N/A,SELECTED,,1786466500356,N/A
+Daily Repayment Lenders,Mr Abdul Sheikh,47000.0,N/A,FAILED,creditScore < 730,1786466512467,N/A
+Daily Repayment Lenders,Izhar Afroz,47000.0,N/A,FAILED,creditScore < 730,1786466514107,N/A
+Daily Repayment Lenders,Kasim,47000.0,N/A,FAILED,creditScore < 730,1786466515571,N/A
+Daily Repayment Lenders,Arjun Jat,47500.0,N/A,FAILED,creditScore < 730,1786466517046,N/A
+Daily Repayment Lenders,Mr Bhoopendra Kumar,47500.0,N/A,FAILED,creditScore < 730,1786466518599,N/A
+Daily Repayment Lenders,Mrs Sirisha Mulpuri,47500.0,N/A,FAILED,creditScore < 730,1786466520075,N/A
+Daily Repayment Lenders,Mr Mohammad Umar,47500.0,N/A,FAILED,creditScore < 730,1786466521782,N/A
+Daily Repayment Lenders,Mr Shrvan Kumar,47500.0,N/A,FAILED,income < 50000,1786466523972,N/A
+Daily Repayment Lenders,Mr Mohan Kumar H V,47500.0,N/A,FAILED,income < 50000,1786466557801,N/A
+Daily Repayment Lenders,Mr Ritesh Parmar,47500.0,N/A,FAILED,creditScore < 730,1786466559549,N/A
+Daily Repayment Lenders,Abhishek Jain,48000.0,N/A,FAILED,creditScore < 730,1786466561150,N/A
+Daily Repayment Lenders,Mr Yeshala Kiran Kumar,48000.0,N/A,FAILED,income < 50000,1786466562719,N/A
+Daily Repayment Lenders,Mrs Habeeba Shaik,48000.0,N/A,FAILED,creditScore < 730,1786466564326,N/A
+Daily Repayment Lenders,Gulam Malik Mohammad Kalim,48000.0,N/A,FAILED,income < 50000,1786466565992,N/A
+Daily Repayment Lenders,Mr Gaurav Kumar,48500.0,N/A,FAILED,income < 50000,1786466567683,N/A
+Daily Repayment Lenders,Mr Shanti Lal Prajapat,48500.0,N/A,FAILED,creditScore < 730,1786466569309,N/A
+Daily Repayment Lenders,Mr Mahesh Dattaram Shedage,49000.0,N/A,FAILED,income < 50000,1786466570940,N/A
+Daily Repayment Lenders,Mr Shivasailal Agalduty,50000.0,N/A,FAILED,creditScore < 730,1786466573505,N/A
+Daily Repayment Lenders,Mr Vijaykumar Rajendra Yadav,50000.0,N/A,FAILED,creditScore < 730,1786466607910,N/A
+Daily Repayment Lenders,Shounak Dasgupta,50000.0,N/A,FAILED,creditScore < 730,1786466609593,N/A
+Daily Repayment Lenders,Mr Syed Saleem Saleem,50000.0,N/A,FAILED,income < 50000,1786466611150,N/A
+Daily Repayment Lenders,Mer Devsibhai Bhojabhai,50000.0,N/A,FAILED,income < 50000,1786466613077,N/A
+Daily Repayment Lenders,Mr Arbaj Shah,50000.0,N/A,FAILED,creditScore < 730,1786466614665,N/A
+Daily Repayment Lenders,Mr Amit Yadav,50000.0,N/A,FAILED,creditScore < 730,1786466616344,N/A
+Daily Repayment Lenders,Mana Ram,50500.0,N/A,SELECTED,,1786466618394,N/A
+Daily Repayment Lenders,Mohd Rais,50500.0,N/A,FAILED,income < 50000,1786466630793,N/A
+Daily Repayment Lenders,Mr Abhinav Dubey,50500.0,N/A,FAILED,income < 50000,1786466632442,N/A
+Daily Repayment Lenders,Gelam Balakrishna,50500.0,N/A,FAILED,creditScore < 730,1786466635139,N/A
+Daily Repayment Lenders,Mr Maruti Gulab Mule,51000.0,N/A,FAILED,creditScore < 730,1786466670600,N/A
+Daily Repayment Lenders,Mr Awesikram Mohammad,51000.0,N/A,FAILED,income < 50000,1786466672700,N/A
+Daily Repayment Lenders,Ms Manisha Raghunath Salunkhe,51500.0,N/A,SELECTED,,1786466674809,N/A
+Daily Repayment Lenders,Wasim Akaram,51500.0,N/A,FAILED,creditScore < 730,1786466686916,N/A
+Daily Repayment Lenders,Mr Praveen Birla,52000.0,N/A,FAILED,creditScore < 730,1786466688582,N/A
+Daily Repayment Lenders,Mrs Kaja Mohammed Hajira Banu,52000.0,N/A,FAILED,income < 50000,1786466690501,N/A
+Daily Repayment Lenders,Mrs Pratibha Deepak Shakanthi,52500.0,N/A,SELECTED,,1786466692413,N/A
+Daily Repayment Lenders,Mr Jeetu Jha,52500.0,N/A,FAILED,income < 50000,1786466704520,N/A
+Daily Repayment Lenders,Harikrishnan S,52500.0,N/A,FAILED,income < 50000,1786466706198,N/A
+Daily Repayment Lenders,Mr Rameshwar Lal Gurjar,52500.0,N/A,FAILED,creditScore < 730,1786466709007,N/A
+Daily Repayment Lenders,Mr Dheeraj Rami,53500.0,N/A,FAILED,creditScore < 730,1786466745366,N/A
+Daily Repayment Lenders,Amir Sohel Shaikh,53500.0,N/A,FAILED,creditScore < 730,1786466747546,N/A
+Daily Repayment Lenders,Mohd Arman,53500.0,N/A,FAILED,creditScore < 730,1786466749424,N/A
+Daily Repayment Lenders,Mr Siddharth Kumar Singh,53500.0,N/A,FAILED,creditScore < 730,1786466751235,N/A
+Daily Repayment Lenders,Mr Mohan Lal Gupta,53500.0,N/A,FAILED,creditScore < 730,1786466753099,N/A
+Daily Repayment Lenders,Mr Kumar Shashi Bhushan,54000.0,N/A,FAILED,creditScore < 730,1786466755171,N/A
+Daily Repayment Lenders,Ms Sarita Sarita Kumari,54000.0,N/A,FAILED,creditScore < 730,1786466756884,N/A
+Daily Repayment Lenders,Mr Sunil,54000.0,N/A,FAILED,income < 50000,1786466758761,N/A
+Daily Repayment Lenders,Akhilesh N,54000.0,N/A,FAILED,income < 50000,1786466760527,N/A
+Daily Repayment Lenders,Farah Khan,54500.0,N/A,FAILED,creditScore < 730,1786466763125,N/A
+Daily Repayment Lenders,Rajeev Kumar,54500.0,N/A,FAILED,creditScore < 730,1786466800163,N/A
+Daily Repayment Lenders,Dinesh Singh,54500.0,N/A,FAILED,creditScore < 730,1786466802088,N/A
+Daily Repayment Lenders,Mr Deepak Kumar,54500.0,N/A,FAILED,creditScore < 730,1786466804329,N/A
+Daily Repayment Lenders,Mohit Nagar,55000.0,N/A,FAILED,creditScore < 730,1786466806292,N/A
+Daily Repayment Lenders,Santu Kumar Dhali,55000.0,N/A,FAILED,income < 50000,1786466808420,N/A
+Daily Repayment Lenders,Bheemuni Kondala Rao,55500.0,N/A,SELECTED,,1786466810852,N/A
+Daily Repayment Lenders,Mr Suneel Suneel Gupta,55500.0,N/A,FAILED,creditScore < 730,1786466823050,N/A
+Daily Repayment Lenders,Vijay Ravi,55500.0,N/A,FAILED,creditScore < 730,1786466825163,N/A
+Daily Repayment Lenders,Mr Subramaniyan Thirunavukkarasu,56000.0,N/A,FAILED,creditScore < 730,1786466827126,N/A
+Daily Repayment Lenders,Aman,56500.0,N/A,FAILED,creditScore < 730,1786466830161,N/A
+Daily Repayment Lenders,Mr Ranjeet Kumar Choudhary,56500.0,N/A,FAILED,creditScore < 730,1786466867775,N/A
+Daily Repayment Lenders,Tupakula Guru Jyothi,56500.0,N/A,FAILED,creditScore < 730,1786466869854,N/A
+Daily Repayment Lenders,Mr Sangi Sunny,56500.0,N/A,FAILED,creditScore < 730,1786466871824,N/A
+Daily Repayment Lenders,Najibudeen Shahul Hameed,56500.0,N/A,FAILED,creditScore < 730,1786466873719,N/A
+Daily Repayment Lenders,Baburam Umray,56500.0,N/A,FAILED,income < 50000,1786466875775,N/A
+Daily Repayment Lenders,Rahat Istifaz,56500.0,N/A,FAILED,creditScore < 730,1786466877566,N/A
+Daily Repayment Lenders,Mr Shambhu Kumar,57000.0,N/A,FAILED,creditScore < 730,1786466879778,N/A
+Daily Repayment Lenders,Mr Damodar Singh,57000.0,N/A,FAILED,creditScore < 730,1786466882058,N/A
+Daily Repayment Lenders,Ms Rita Mary J,57000.0,N/A,FAILED,creditScore < 730,1786466884025,N/A
+Daily Repayment Lenders,Shaikh Shabbir Shaikh Khadim,57000.0,N/A,FAILED,income < 50000,1786466886904,N/A
+Daily Repayment Lenders,Guddi Tiwari,57000.0,N/A,FAILED,income < 50000,1786466925474,N/A
+Daily Repayment Lenders,Naramdasu Ganesh,57500.0,N/A,FAILED,income < 50000,1786466927807,N/A
+Daily Repayment Lenders,Rajender Saini,57500.0,N/A,FAILED,creditScore < 730,1786466929777,N/A
+Daily Repayment Lenders,Mr Tinku Bhomik,57500.0,N/A,FAILED,income < 50000,1786466932081,N/A
+Daily Repayment Lenders,Md Sharif,58000.0,N/A,FAILED,"age not in [25,60]",1786466934379,N/A
+Daily Repayment Lenders,Mr Dipak Biswas,58000.0,N/A,FAILED,creditScore < 730,1786466936294,N/A
+Daily Repayment Lenders,Lucky Harwani,58000.0,N/A,SELECTED,,1786466939271,N/A
+Daily Repayment Lenders,Abhishek,58000.0,N/A,FAILED,creditScore < 730,1786466951783,N/A
+Daily Repayment Lenders,Mr Naveen Rajashekar,58000.0,N/A,FAILED,creditScore < 730,1786466954120,N/A
+Daily Repayment Lenders,Mr Sandeep,58500.0,N/A,SELECTED,,1786466957958,N/A
+Daily Repayment Lenders,Mr Shaik Shahed,58500.0,N/A,FAILED,creditScore < 730,1786467007982,N/A
+Daily Repayment Lenders,Yoshva S,58500.0,N/A,FAILED,creditScore < 730,1786467010363,N/A
+Daily Repayment Lenders,Mr Mohammed Feroz,59000.0,N/A,FAILED,creditScore < 730,1786467012463,N/A
+Daily Repayment Lenders,Mr Ganesh Chhaganlal Joshi,59000.0,N/A,FAILED,income < 50000,1786467014847,N/A
+Daily Repayment Lenders,Mr Saravjeet Singh,59000.0,N/A,FAILED,creditScore < 730,1786467017237,N/A
+Daily Repayment Lenders,Prathibha V,59000.0,N/A,FAILED,creditScore < 730,1786467019199,N/A
+Daily Repayment Lenders,Dipesh Arun Thakur,59500.0,N/A,FAILED,income < 50000,1786467021339,N/A
+Daily Repayment Lenders,Mr Thiravidamani Thiyagarajan,59500.0,N/A,FAILED,income < 50000,1786467023394,N/A
+Daily Repayment Lenders,Mr Raju Bhowmick,60000.0,N/A,FAILED,creditScore < 730,1786467025755,N/A
+Daily Repayment Lenders,Jangam Gurvaiah Swamy,60000.0,N/A,FAILED,creditScore < 730,1786467029286,N/A
+Normal Lenders,Yogita Sardar,52500.0,N/A,FAILED,loanAmount > 50000 (52500.0),1786467100349,N/A
+Normal Lenders,Maria Joseph B,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467101627,N/A
+Normal Lenders,Ganesh Kumar Saow,100000.0,N/A,FAILED,creditScore < 600 (570.0),1786467102936,N/A
+Normal Lenders,Pradeep Vilas Kamble,94500.0,N/A,FAILED,loanAmount > 50000 (94500.0),1786467104188,N/A
+Normal Lenders,Mukesh Kumar Mahich,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467105475,N/A
+Normal Lenders,Sapna Mahajan,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467106842,N/A
+Normal Lenders,Mr Athi Krishnan,7500.0,N/A,FINALIZED,,1786467108227,1786467713656
+Normal Lenders,Suresh Yadav,19500.0,N/A,FAILED,loanAmount/income > 0.50,1786467119660,N/A
+Normal Lenders,Mocherla Venkata Satya Naga Laxmi,21000.0,N/A,FINALIZED,,1786467121070,1786467713656
+Normal Lenders,Kasula Bava Pakurudheen,45000.0,N/A,FAILED,loanAmount/income > 0.50,1786467132635,N/A
+Normal Lenders,Mugesh Rajkumar,51000.0,N/A,FAILED,loanAmount > 50000 (51000.0),1786467164677,N/A
+Normal Lenders,Mr Azgar Ahmed,60000.0,N/A,FAILED,loanAmount > 50000 (60000.0),1786467165907,N/A
+Normal Lenders,Botcha Janardhanarao,62000.0,N/A,FAILED,loanAmount > 50000 (62000.0),1786467167194,N/A
+Normal Lenders,Mnaveen Kumar,65500.0,N/A,FAILED,loanAmount > 50000 (65500.0),1786467168443,N/A
+Normal Lenders,Sunita Kamlakasha Shetty,76500.0,N/A,FAILED,loanAmount > 50000 (76500.0),1786467169794,N/A
+Normal Lenders,Sanjukta Mukherjee,76500.0,N/A,FAILED,loanAmount > 50000 (76500.0),1786467171088,N/A
+Normal Lenders,Mr Shankar V N,78000.0,N/A,FAILED,loanAmount > 50000 (78000.0),1786467172389,N/A
+Normal Lenders,Kalidas G,78500.0,N/A,FAILED,loanAmount > 50000 (78500.0),1786467173560,N/A
+Normal Lenders,Satyendra Kumar Singh,79000.0,N/A,FAILED,loanAmount > 50000 (79000.0),1786467174766,N/A
+Normal Lenders,Ratheeshkumar Sreekumaran Pillai,93000.0,N/A,FAILED,creditScore < 600 (585.0),1786467176272,N/A
+Normal Lenders,Harwant,94500.0,N/A,FAILED,creditScore < 600 (585.0),1786467208592,N/A
+Normal Lenders,Saurav Chanda,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467209889,N/A
+Normal Lenders,Mr Anil Raysing Patil,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467211267,N/A
+Normal Lenders,M Girisha,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467212607,N/A
+Normal Lenders,Sivanesan P,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467213909,N/A
+Normal Lenders,Mr Durlov Kr Baro,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467215169,N/A
+Normal Lenders,Mr Kalipada Tudu,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467216536,N/A
+Normal Lenders,Vinod Ananda Pawar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467217927,N/A
+Normal Lenders,P Manohar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467219291,N/A
+Normal Lenders,Patel Mukeshkumar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467220751,N/A
+Normal Lenders,Mohan Krishna N,25000.0,N/A,FAILED,loanAmount/income > 0.50,1786467253571,N/A
+Normal Lenders,Nishish Srivastava,23500.0,N/A,FAILED,loanAmount/income > 0.50,1786467254884,N/A
+Normal Lenders,Basireddy Nagajyoshna,60000.0,N/A,FAILED,loanAmount > 50000 (60000.0),1786467257700,N/A
+Normal Lenders,Mrinal Garai,97000.0,N/A,FAILED,loanAmount > 50000 (97000.0),1786467258988,N/A
+Normal Lenders,Chandrala Mahesh,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467260300,N/A
+Normal Lenders,Manjunatha E A,35500.0,N/A,FAILED,loanAmount/income > 0.50,1786467261645,N/A
+Normal Lenders,Praveena A,39500.0,N/A,FAILED,loanAmount/income > 0.50,1786467262936,N/A
+Normal Lenders,Bablesh Kumar,50000.0,N/A,FAILED,loanAmount/income > 0.50,1786467264390,N/A
+Normal Lenders,Senghani Rajeshbhai Bhavanjibhai,52500.0,N/A,FAILED,loanAmount > 50000 (52500.0),1786467265908,N/A
+Normal Lenders,Kumar Brajesh Chandra,75500.0,N/A,FAILED,loanAmount > 50000 (75500.0),1786467299228,N/A
+Normal Lenders,Manish Kumar Balayi,79500.0,N/A,FAILED,loanAmount > 50000 (79500.0),1786467300583,N/A
+Normal Lenders,Mr Adarsh P Nair Nair,85000.0,N/A,FAILED,loanAmount > 50000 (85000.0),1786467301929,N/A
+Normal Lenders,Ghanshyam Kumar,91500.0,N/A,FAILED,creditScore < 600 (594.0),1786467303309,N/A
+Normal Lenders,Amit Appasab Tavanakke,95500.0,N/A,FAILED,creditScore < 600 (594.0),1786467305217,N/A
+Normal Lenders,Janak Jagdishchandra Panchal,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467307343,N/A
+Normal Lenders,Rupadhar Sabar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467309363,N/A
+Normal Lenders,Jolen Tiru,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467311217,N/A
+Normal Lenders,Sudalai Ramesh Mariappan,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467313179,N/A
+Normal Lenders,Shashikant Pandurang Jadhav,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467315933,N/A
+Normal Lenders,Mr Mohit Dhiman,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467350997,N/A
+Normal Lenders,Erramchetty Chaithanya,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467352730,N/A
+Normal Lenders,Rahul Sharma,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467355125,N/A
+Normal Lenders,Shiju Jacob George,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467356986,N/A
+Normal Lenders,Shyam Kamal Yadav,25000.0,N/A,FAILED,loanAmount/income > 0.50,1786467359054,N/A
+Normal Lenders,Mr Jayesh Purushottam Chindarkar,50000.0,N/A,FAILED,loanAmount/income > 0.50,1786467361108,N/A
+Normal Lenders,Mr Nukala Sivaprasad,51500.0,N/A,FAILED,loanAmount > 50000 (51500.0),1786467363056,N/A
+Normal Lenders,Mr Binod Kumar Rout,52000.0,N/A,FAILED,loanAmount > 50000 (52000.0),1786467364863,N/A
+Normal Lenders,Mr Sugam Jain,56500.0,N/A,FAILED,loanAmount > 50000 (56500.0),1786467366773,N/A
+Normal Lenders,Mohammad Abdul Raheem,58500.0,N/A,FAILED,loanAmount > 50000 (58500.0),1786467369800,N/A
+Normal Lenders,Selvaraj A,75000.0,N/A,FAILED,loanAmount > 50000 (75000.0),1786467404801,N/A
+Normal Lenders,Mr Yash Ahuja,77000.0,N/A,FAILED,loanAmount > 50000 (77000.0),1786467406698,N/A
+Normal Lenders,Shankaragouda Ghanur,78500.0,N/A,FAILED,loanAmount > 50000 (78500.0),1786467408425,N/A
+Normal Lenders,Mr Muthuswamy Sigamany,83000.0,N/A,FAILED,loanAmount > 50000 (83000.0),1786467410653,N/A
+Normal Lenders,Rajan Baburao Sasulkar,86000.0,N/A,FAILED,loanAmount > 50000 (86000.0),1786467412592,N/A
+Normal Lenders,Shailesh Yashwant Sutar,88500.0,N/A,FAILED,loanAmount > 50000 (88500.0),1786467414509,N/A
+Normal Lenders,Balbir Singh,92500.0,N/A,FAILED,loanAmount > 50000 (92500.0),1786467416162,N/A
+Normal Lenders,Mr Chitrasen Gouda,94000.0,N/A,FAILED,loanAmount > 50000 (94000.0),1786467418064,N/A
+Normal Lenders,Mary Magdeline,97500.0,N/A,FAILED,loanAmount > 50000 (97500.0),1786467419949,N/A
+Normal Lenders,Kondepati Venkata Subramanyeswara Rao,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467422908,N/A
+Normal Lenders,Panjam Siva Kumar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467458571,N/A
+Normal Lenders,Ms Rehana Begam,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467460407,N/A
+Normal Lenders,Malathy D,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467462328,N/A
+Normal Lenders,Vijayan Mohan,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467464724,N/A
+Normal Lenders,Mr Abhinav Neog,100000.0,N/A,FAILED,creditScore < 600 (594.0),1786467466890,N/A
+Normal Lenders,Dev Pratap,100000.0,N/A,FAILED,creditScore < 600 (594.0),1786467468836,N/A
+Normal Lenders,Deependra Srivastava,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467472782,N/A
+Normal Lenders,Brian Sircar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467474380,N/A
+Normal Lenders,Mr Dinesh Kumar Meena,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467476177,N/A
+Normal Lenders,Mr Shalini,21000.0,N/A,FINALIZED,,1786467512068,1786467713656
+Normal Lenders,Ruhee Fatima,21000.0,N/A,FINALIZED,,1786467524113,1786467713656
+Normal Lenders,Amol Ashokrao Salve,58500.0,N/A,FAILED,loanAmount > 50000 (58500.0),1786467536074,N/A
+Normal Lenders,Jeganathan Nathan,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467537436,N/A
+Normal Lenders,Mr Kapil Sharma,23500.0,N/A,FAILED,loanAmount/income > 0.50,1786467538961,N/A
+Normal Lenders,Smruti Ranjan Panda,41500.0,N/A,FAILED,loanAmount/income > 0.50,1786467540387,N/A
+Normal Lenders,Gajendra Singh,42000.0,N/A,FAILED,loanAmount/income > 0.50,1786467541814,N/A
+Normal Lenders,Trongdila K Sangtam,48500.0,N/A,FAILED,loanAmount/income > 0.50,1786467543352,N/A
+Normal Lenders,Sanjeev,56500.0,N/A,FAILED,loanAmount > 50000 (56500.0),1786467544776,N/A
+Normal Lenders,Jitendra Kumar,69000.0,N/A,FAILED,loanAmount > 50000 (69000.0),1786467546657,N/A
+Normal Lenders,Ashish Sharma,82000.0,N/A,FAILED,loanAmount > 50000 (82000.0),1786467583268,N/A
+Normal Lenders,Mr Mukesh Kumar Didwariya,85000.0,N/A,FAILED,loanAmount > 50000 (85000.0),1786467584821,N/A
+Normal Lenders,Karthik H J,89000.0,N/A,FAILED,loanAmount > 50000 (89000.0),1786467586358,N/A
+Normal Lenders,Ankush Ekanath Temgire,97000.0,N/A,FAILED,loanAmount > 50000 (97000.0),1786467587765,N/A
+Normal Lenders,Dibya Ranjan Jena,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467589142,N/A
+Normal Lenders,Jai Narayan Shishodia,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467590630,N/A
+Normal Lenders,Sachin Babu Lal Rangari,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467592262,N/A
+Normal Lenders,Rasakatla Nikhil,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467593849,N/A
+Normal Lenders,Pintu Kumar Yadav,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467595380,N/A
+Normal Lenders,Mr Amit Kumar Tiwari,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467597162,N/A
+Normal Lenders,Mahendra Gogoi,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467633786,N/A
+Normal Lenders,Kammampati Saidulu,13000.0,N/A,FAILED,creditScore < 600 (577.0),1786467635393,N/A
+Normal Lenders,Biswajit Chowdhury,49000.0,N/A,FAILED,loanAmount/income > 0.50,1786467637027,N/A
+Normal Lenders,Bapanapalli Srikanth,50000.0,N/A,FAILED,loanAmount/income > 0.50,1786467638445,N/A
+Normal Lenders,Arindam Mazumdar,56000.0,N/A,FAILED,creditScore < 600 (426.0),1786467639869,N/A
+Normal Lenders,Sudha S,20000.0,N/A,FAILED,loanAmount/income > 0.50,1786467641330,N/A
+Normal Lenders,R Vimalraj,20000.0,N/A,FAILED,loanAmount/income > 0.50,1786467642916,N/A
+Normal Lenders,Ms Nandini,48000.0,N/A,FAILED,loanAmount/income > 0.50,1786467644517,N/A
+Normal Lenders,Dhan Bahadur Magar,48000.0,N/A,FAILED,loanAmount/income > 0.50,1786467646054,N/A
+Normal Lenders,Mr Shashikumar Pv,50500.0,N/A,FAILED,loanAmount > 50000 (50500.0),1786467648429,N/A
+Normal Lenders,Udhayakumar Radhakrishnan,26000.0,N/A,FINALIZED,,1786467686874,1786467713656
+Filling Fast Lenders,Prem Kumar,2000.0,N/A,SELECTED,,1786467778931,N/A
+Filling Fast Lenders,Vinod Yadav,2000.0,N/A,SELECTED,,1786467790757,N/A
+Filling Fast Lenders,Bathina Dheeraj Kumar,1000.0,N/A,FAILED,creditScore < 600 (487.0),1786467804095,N/A
+Filling Fast Lenders,Bathina Dheeraj Kumar,1000.0,N/A,FAILED,creditScore < 600 (487.0),1786467805467,N/A
+Filling Fast Lenders,Ms Priya Sandhya S,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467806785,N/A
+Filling Fast Lenders,Chanda Pavan Kumar,2000.0,N/A,SELECTED,,1786467808339,N/A
+Filling Fast Lenders,Reshma Sanjay Patil,5000.0,N/A,SELECTED,,1786467820278,N/A
+Filling Fast Lenders,Apurba Bora,25000.0,N/A,FAILED,loanAmount/income > 0.40,1786467831962,N/A
+Filling Fast Lenders,Manjunatha E A,35500.0,N/A,FAILED,loanAmount/income > 0.40,1786467833290,N/A
+Filling Fast Lenders,Manjunatha E A,35500.0,N/A,FAILED,loanAmount/income > 0.40,1786467834818,N/A
+Filling Fast Lenders,Mr Shankar V N,78000.0,N/A,FAILED,loanAmount > 50000 (78000.0),1786467867023,N/A
+Filling Fast Lenders,Mr Suraj Kumar Saha,5000.0,N/A,SELECTED,,1786467868819,N/A
+Filling Fast Lenders,Dasarath Murmu,7000.0,N/A,SELECTED,,1786467880780,N/A
+Filling Fast Lenders,Mrs Rajathi,2500.0,N/A,SELECTED,,1786467892676,N/A
+Filling Fast Lenders,Kammampati Saidulu,13000.0,N/A,FAILED,creditScore < 600 (577.0),1786467904324,N/A
+Filling Fast Lenders,Ronita Ganguly,5000.0,N/A,FAILED,creditScore < 600 (577.0),1786467905910,N/A
+Filling Fast Lenders,Aniket Anant Kasekar,16500.0,N/A,FAILED,loanAmount/income > 0.40,1786467907255,N/A
+Filling Fast Lenders,Pulkit Jingar,3000.0,N/A,SELECTED,,1786467908808,N/A
+Filling Fast Lenders,Asmita Ghosh,3000.0,N/A,SELECTED,,1786467921144,N/A
+Filling Fast Lenders,Sudar M S,2500.0,N/A,SELECTED,,1786467964582,N/A
+Filling Fast Lenders,Mr Gnanavel Ganesan,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786467976273,N/A
+Filling Fast Lenders,Amal Suresh,91000.0,N/A,FAILED,loanAmount > 50000 (91000.0),1786467977814,N/A
+Filling Fast Lenders,Amal Suresh,4000.0,N/A,SELECTED,,1786467979408,N/A
+Filling Fast Lenders,Mr Manoj Kumar,4000.0,N/A,SELECTED,,1786467991737,N/A
+Filling Fast Lenders,Rahul Rajan Gadekar,3500.0,N/A,SELECTED,,1786468003775,N/A
+Filling Fast Lenders,Praveenkumar,22000.0,N/A,FAILED,loanAmount/income > 0.40,1786468015593,N/A
+Filling Fast Lenders,Manjunatha S,5000.0,N/A,SELECTED,,1786468017454,N/A
+Filling Fast Lenders,Rohina Priyadarshinee,44500.0,N/A,FAILED,loanAmount/income > 0.40,1786468029177,N/A
+Filling Fast Lenders,Trongdila K Sangtam,48500.0,N/A,FAILED,loanAmount/income > 0.40,1786468031344,N/A
+Filling Fast Lenders,Piyush Sharma,4000.0,N/A,SELECTED,,1786468064825,N/A
+Filling Fast Lenders,Sarita Yadav,34500.0,N/A,FAILED,creditScore < 600 (535.0),1786468076806,N/A
+Filling Fast Lenders,Panjam Siva Kumar,100000.0,N/A,FAILED,creditScore < 600 (535.0),1786468078395,N/A
+Filling Fast Lenders,Ganesh Kumar Saow,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468079988,N/A
+Filling Fast Lenders,Shankar Chandrakant Sawant,17000.0,N/A,FAILED,creditScore < 600 (0.0),1786468081596,N/A
+Filling Fast Lenders,Shrinatha V,77500.0,N/A,FAILED,creditScore < 600 (0.0),1786468083139,N/A
+Filling Fast Lenders,Sidheswar Dash,22000.0,N/A,FAILED,loanAmount/income > 0.40,1786468084737,N/A
+Filling Fast Lenders,Mr Mr Pranay Utpal,5000.0,N/A,SELECTED,,1786468086730,N/A
+Filling Fast Lenders,Amol Ashokrao Salve,58500.0,N/A,FAILED,loanAmount > 50000 (58500.0),1786468098660,N/A
+Filling Fast Lenders,Mr Shashikumar Pv,50500.0,N/A,FAILED,loanAmount > 50000 (50500.0),1786468100924,N/A
+Filling Fast Lenders,Mr Shashikumar Pv,50500.0,N/A,FAILED,loanAmount > 50000 (50500.0),1786468134476,N/A
+Filling Fast Lenders,Sumanta Dutta,51500.0,N/A,FAILED,loanAmount > 50000 (51500.0),1786468136079,N/A
+Filling Fast Lenders,Mr Chetan Jani,20000.0,N/A,SELECTED,,1786468138134,N/A
+Filling Fast Lenders,Siddhant Jena,6000.0,N/A,SELECTED,,1786468150319,N/A
+Filling Fast Lenders,Thirumoorthi Kaveri,6000.0,N/A,SELECTED,,1786468162422,N/A
+Filling Fast Lenders,Chetan Vikas Patil,32500.0,N/A,FAILED,loanAmount/income > 0.40,1786468174431,N/A
+Filling Fast Lenders,Mr Mr Kurukuntla Jayapaul,6000.0,N/A,SELECTED,,1786468178272,N/A
+Filling Fast Lenders,Pankaj Singh,6000.0,N/A,SELECTED,,1786468191058,N/A
+Filling Fast Lenders,Manpreet Singh,16000.0,N/A,FAILED,creditScore < 600 (0.0),1786468236109,N/A
+Filling Fast Lenders,Kamal Kishor,20000.0,N/A,SELECTED,,1786468238170,N/A
+Filling Fast Lenders,Mr Nagegowda Dl,98000.0,N/A,FAILED,loanAmount > 50000 (98000.0),1786468251715,N/A
+Filling Fast Lenders,Shaik Akram,33500.0,N/A,FAILED,loanAmount/income > 0.40,1786468253214,N/A
+Filling Fast Lenders,Shekhavat Dipendra Shaktisingh,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468255011,N/A
+Filling Fast Lenders,Gogulamanda Syam Kumar,6500.0,N/A,SELECTED,,1786468257171,N/A
+Filling Fast Lenders,Yamini,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468269170,N/A
+Filling Fast Lenders,Himanshu Mishra,34000.0,N/A,FAILED,loanAmount/income > 0.40,1786468270773,N/A
+Filling Fast Lenders,Kundan Kumar,20000.0,N/A,SELECTED,,1786468273712,N/A
+Filling Fast Lenders,Sourav Sharma,34500.0,N/A,FAILED,loanAmount/income > 0.40,1786468319080,N/A
+Filling Fast Lenders,Luhar Jagdishkumar Harjibhai,22000.0,N/A,FAILED,loanAmount/income > 0.40,1786468320971,N/A
+Filling Fast Lenders,Mr Raju B,8000.0,N/A,SELECTED,,1786468323514,N/A
+Filling Fast Lenders,Jesin James,9500.0,N/A,SELECTED,,1786468336007,N/A
+Filling Fast Lenders,Mr Mohit Dhiman,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468348111,N/A
+Filling Fast Lenders,Anita Kaushik,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468351955,N/A
+Filling Fast Lenders,Prashant Andhare,24000.0,N/A,FAILED,loanAmount/income > 0.40,1786468354102,N/A
+Filling Fast Lenders,Dheeraj Kumar,9000.0,N/A,SELECTED,,1786468356341,N/A
+Filling Fast Lenders,Kushal Bora,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468369549,N/A
+Filling Fast Lenders,Mohammad Mukarram Ansari,52000.0,N/A,FAILED,loanAmount > 50000 (52000.0),1786468405520,N/A
+Filling Fast Lenders,Mr Lavali Kumar Goswami,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468407451,N/A
+Filling Fast Lenders,Mohammad Abdul Raheem,58500.0,N/A,FAILED,loanAmount > 50000 (58500.0),1786468409181,N/A
+Filling Fast Lenders,Mr Nikhil Pratap Singh,58500.0,N/A,FAILED,loanAmount > 50000 (58500.0),1786468411156,N/A
+Filling Fast Lenders,Mukesh Kumar Sah,59500.0,N/A,FAILED,loanAmount > 50000 (59500.0),1786468412913,N/A
+Filling Fast Lenders,Mr Jayesh Purushottam Chindarkar,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786468415059,N/A
+Filling Fast Lenders,Balaji Vanaraj,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468416960,N/A
+Filling Fast Lenders,Karan Bhagat,11000.0,N/A,SELECTED,,1786468419498,N/A
+Filling Fast Lenders,Mr Ankur Ankur,21500.0,N/A,FAILED,loanAmount/income > 0.40,1786468431987,N/A
+Filling Fast Lenders,Chirag Kantibhai Patel,12000.0,N/A,FAILED,creditScore < 600 (433.0),1786468435068,N/A
+Filling Fast Lenders,Geeta Devi,20000.0,N/A,SELECTED,,1786468472819,N/A
+Filling Fast Lenders,Shiju Jacob George,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468485439,N/A
+Filling Fast Lenders,Sudha S,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468487210,N/A
+Filling Fast Lenders,Suraj Tyagi,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468489411,N/A
+Filling Fast Lenders,R Mohan,12500.0,N/A,SELECTED,,1786468491953,N/A
+Filling Fast Lenders,P Manohar,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468504733,N/A
+Filling Fast Lenders,Deepak Sharma,61000.0,N/A,FAILED,loanAmount > 50000 (61000.0),1786468507236,N/A
+Filling Fast Lenders,Kondepati Venkata Subramanyeswara Rao,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468509234,N/A
+Filling Fast Lenders,Senghani Rajeshbhai Bhavanjibhai,52500.0,N/A,FAILED,loanAmount > 50000 (52500.0),1786468512657,N/A
+Filling Fast Lenders,Dhan Bahadur Magar,48000.0,N/A,FAILED,loanAmount/income > 0.40,1786468550611,N/A
+Filling Fast Lenders,Patel Akashkumar Kantibhai,39000.0,N/A,FAILED,loanAmount/income > 0.40,1786468552939,N/A
+Filling Fast Lenders,Mohammed Rizwan,13500.0,N/A,SELECTED,,1786468555653,N/A
+Filling Fast Lenders,Satnam Singh,53000.0,N/A,FAILED,loanAmount > 50000 (53000.0),1786468568573,N/A
+Filling Fast Lenders,Vinothkumar Subramani,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468570647,N/A
+Filling Fast Lenders,Vignesh A,40000.0,N/A,FAILED,loanAmount/income > 0.40,1786468572861,N/A
+Filling Fast Lenders,Mahendra Panwar,39000.0,N/A,FAILED,loanAmount/income > 0.40,1786468574930,N/A
+Filling Fast Lenders,Mnaveen Kumar,65500.0,N/A,FAILED,loanAmount > 50000 (65500.0),1786468577410,N/A
+Filling Fast Lenders,Bibin Chacko,91500.0,N/A,FAILED,loanAmount > 50000 (91500.0),1786468579729,N/A
+Filling Fast Lenders,Mr Mohd Junaid,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468583467,N/A
+Filling Fast Lenders,Danial Rai,20000.0,N/A,FAILED,loanAmount/income > 0.40,1786468622551,N/A
+Filling Fast Lenders,Bablesh Kumar,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786468625067,N/A
+Filling Fast Lenders,Ramya Menon,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468627509,N/A
+Filling Fast Lenders,Shri Ram,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786468629862,N/A
+Filling Fast Lenders,Rachit Kohli,49000.0,N/A,FAILED,loanAmount/income > 0.40,1786468632097,N/A
+Filling Fast Lenders,Ankitha M Bangera,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786468634329,N/A
+Filling Fast Lenders,Ms Laiba Waheed Siddiqui,16000.0,N/A,FAILED,loanAmount/income > 0.40,1786468636685,N/A
+Filling Fast Lenders,A Lavanya Dhathri,19000.0,N/A,SELECTED,,1786468639691,N/A
+Filling Fast Lenders,Mr Azgar Ahmed,60000.0,N/A,FAILED,loanAmount > 50000 (60000.0),1786468651865,N/A
+Filling Fast Lenders,Ghanshyam Kumar,91500.0,N/A,FAILED,creditScore < 600 (594.0),1786468655298,N/A
+Filling Fast Lenders,Akib Alam,100000.0,N/A,FAILED,loanAmount > 50000 (100000.0),1786468695182,N/A
+Filling Fast Lenders,Ayush Panwar,59000.0,N/A,FAILED,loanAmount > 50000 (59000.0),1786468697547,N/A
+Filling Fast Lenders,T Kishore,20000.0,N/A,FAILED,creditScore < 600 (331.0),1786468699680,N/A
+Filling Fast Lenders,Ms Ms Sarika Mehta,18500.0,N/A,FAILED,creditScore < 600 (424.0),1786468702033,N/A
+Filling Fast Lenders,Nishish Srivastava,23500.0,N/A,FAILED,loanAmount/income > 0.40,1786468704389,N/A
+Filling Fast Lenders,Virendra Kumar Ramji Singh,18500.0,N/A,FAILED,loanAmount/income > 0.40,1786468706629,N/A
+Filling Fast Lenders,Venkataravana M C,18500.0,N/A,FAILED,loanAmount/income > 0.40,1786468709029,N/A
+Filling Fast Lenders,Arindam Chakrabarti,28000.0,N/A,FAILED,creditScore < 600 (300.0),1786468711221,N/A
+Filling Fast Lenders,Ms Poonam Kumari,20500.0,N/A,FAILED,loanAmount/income > 0.40,1786468713518,N/A
+Filling Fast Lenders,Pradeep Vilas Kamble,94500.0,N/A,FAILED,loanAmount > 50000 (94500.0),1786468716922,N/A
+Bulk Business Lenders,Alam,35000.0,N/A,FAILED,creditScore < 680 (679.0),1786468786459,N/A
+Bulk Business Lenders,Seelam Manoj,39000.0,N/A,FAILED,creditScore < 680 (679.0),1786468787913,N/A
+Bulk Business Lenders,Sher Mau,39500.0,N/A,FAILED,loanAmount/income > 0.40,1786468789367,N/A
+Bulk Business Lenders,Saumyadipta Das,40000.0,N/A,FAILED,loanAmount/income > 0.40,1786468790745,N/A
+Bulk Business Lenders,Mr Manmeet Kumar,40500.0,N/A,FAILED,loanAmount/income > 0.40,1786468792082,N/A
+Bulk Business Lenders,Mr Palyakere Mahaboobsab Apsarulla,41500.0,N/A,FAILED,loanAmount/income > 0.40,1786468793351,N/A
+Bulk Business Lenders,Mr Irappa Hanamappa Madar,41500.0,N/A,FAILED,loanAmount/income > 0.40,1786468794698,N/A
+Bulk Business Lenders,Mr Ashok Kumar,42000.0,N/A,FAILED,loanAmount/income > 0.40,1786468795977,N/A
+Bulk Business Lenders,Mr Mangesh Rameshrao Burande,42500.0,N/A,FAILED,loanAmount/income > 0.40,1786468797358,N/A
+Bulk Business Lenders,Mr Sureshchandra Chandra Babru,43000.0,N/A,FAILED,loanAmount/income > 0.40,1786468798712,N/A
+Bulk Business Lenders,Mr Dheeraj Singh,43000.0,N/A,FAILED,income < 30000 (26159.81),1786468830609,N/A
+Bulk Business Lenders,Mr Shahjan Ansari,43000.0,N/A,FAILED,income < 30000 (26100.67),1786468831981,N/A
+Bulk Business Lenders,Chinchilam Lakshmipathi Patnayak,43500.0,N/A,FAILED,loanAmount/income > 0.40,1786468833308,N/A
+Bulk Business Lenders,Mohammad Sakir Mohammad Daudji,43500.0,N/A,FAILED,income < 30000 (26418.39),1786468834716,N/A
+Bulk Business Lenders,Brajesh Rajak,43500.0,N/A,FAILED,income < 30000 (26405.01),1786468836042,N/A
+Bulk Business Lenders,Mr Sumson Chintapalli,43500.0,N/A,FAILED,income < 30000 (26388.43),1786468837367,N/A
+Bulk Business Lenders,Mr Furkan Ahmad Khan,44500.0,N/A,FAILED,income < 30000 (27079.74),1786468838773,N/A
+Bulk Business Lenders,Mr Firoz Bashir Khan,44500.0,N/A,FAILED,creditScore < 680 (672.0),1786468840200,N/A
+Bulk Business Lenders,Mr Prashant Kumar,45000.0,N/A,FAILED,creditScore < 680 (672.0),1786468841534,N/A
+Bulk Business Lenders,Dileep Kumar Gonard,45000.0,N/A,FAILED,income < 30000 (27506.06),1786468843178,N/A
+Bulk Business Lenders,Alisha Asif Atar,45000.0,N/A,FAILED,income < 30000 (27331.6),1786468875790,N/A
+Bulk Business Lenders,Rahul,45500.0,N/A,FAILED,loanAmount/income > 0.40,1786468877282,N/A
+Bulk Business Lenders,Mr Ravi S,45500.0,N/A,FAILED,income < 30000 (27768.95),1786468878640,N/A
+Bulk Business Lenders,Duken Eshi,45500.0,N/A,FAILED,income < 30000 (27753.71),1786468880049,N/A
+Bulk Business Lenders,Babita Behera,45500.0,N/A,FAILED,creditScore < 680 (672.0),1786468881410,N/A
+Bulk Business Lenders,Ismyilsab Bagadageri,46000.0,N/A,FAILED,loanAmount/income > 0.40,1786468882940,N/A
+Bulk Business Lenders,Mr Balu P,46000.0,N/A,FAILED,loanAmount/income > 0.40,1786468884327,N/A
+Bulk Business Lenders,Mr Kuruva Swamilinga Kuruva Swamilinga,46000.0,N/A,FAILED,income < 30000 (28110.46),1786468885708,N/A
+Bulk Business Lenders,L Balakrishna,46500.0,N/A,FAILED,loanAmount/income > 0.40,1786468887174,N/A
+Bulk Business Lenders,Repala Mamatha,46500.0,N/A,FAILED,loanAmount/income > 0.40,1786468889012,N/A
+Bulk Business Lenders,Mr Akhil Akhil,47000.0,N/A,FAILED,loanAmount/income > 0.40,1786468922478,N/A
+Bulk Business Lenders,Mr Hedar Ali,47000.0,N/A,FAILED,loanAmount/income > 0.40,1786468924145,N/A
+Bulk Business Lenders,Mr Abdul Sheikh,47000.0,N/A,FAILED,income < 30000 (28646.46),1786468925667,N/A
+Bulk Business Lenders,Izhar Afroz,47000.0,N/A,FAILED,income < 30000 (28560.78),1786468927110,N/A
+Bulk Business Lenders,Kasim,47000.0,N/A,FAILED,creditScore < 680 (673.0),1786468928677,N/A
+Bulk Business Lenders,Arjun Jat,47500.0,N/A,FAILED,loanAmount/income > 0.40,1786468930146,N/A
+Bulk Business Lenders,Mr Bhoopendra Kumar,47500.0,N/A,FAILED,loanAmount/income > 0.40,1786468931610,N/A
+Bulk Business Lenders,Mrs Sirisha Mulpuri,47500.0,N/A,FAILED,income < 30000 (29048.38),1786468933173,N/A
+Bulk Business Lenders,Mr Mohammad Umar,47500.0,N/A,FAILED,creditScore < 680 (670.0),1786468934649,N/A
+Bulk Business Lenders,Mr Shrvan Kumar,47500.0,N/A,FAILED,income < 30000 (28897.58),1786468936669,N/A
+Bulk Business Lenders,Mr Mohan Kumar H V,47500.0,N/A,FAILED,income < 30000 (28897.58),1786468970347,N/A
+Bulk Business Lenders,Mr Ritesh Parmar,47500.0,N/A,FAILED,income < 30000 (25390.68),1786468971921,N/A
+Bulk Business Lenders,Abhishek Jain,48000.0,N/A,FAILED,loanAmount/income > 0.40,1786468973546,N/A
+Bulk Business Lenders,Mr Yeshala Kiran Kumar,48000.0,N/A,FAILED,loanAmount/income > 0.40,1786468975010,N/A
+Bulk Business Lenders,Mrs Habeeba Shaik,48000.0,N/A,FAILED,loanAmount/income > 0.40,1786468976662,N/A
+Bulk Business Lenders,Gulam Malik Mohammad Kalim,48000.0,N/A,FAILED,loanAmount/income > 0.40,1786468978364,N/A
+Bulk Business Lenders,Mr Gaurav Kumar,48500.0,N/A,FAILED,"age not in [23,60] (21)",1786468980041,N/A
+Bulk Business Lenders,Mr Shanti Lal Prajapat,48500.0,N/A,FAILED,income < 30000 (29621.55),1786468981702,N/A
+Bulk Business Lenders,Mr Mahesh Dattaram Shedage,49000.0,N/A,FAILED,loanAmount/income > 0.40,1786468983362,N/A
+Bulk Business Lenders,Mr Shivasailal Agalduty,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786468985627,N/A
+Bulk Business Lenders,Mr Vijaykumar Rajendra Yadav,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786469020113,N/A
+Bulk Business Lenders,Shounak Dasgupta,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786469021714,N/A
+Bulk Business Lenders,Mr Syed Saleem Saleem,50000.0,N/A,FAILED,loanAmount/income > 0.40,1786469023386,N/A
+Bulk Business Lenders,Mer Devsibhai Bhojabhai,50000.0,N/A,FAILED,income < 30000 (26908.26),1786469025080,N/A
+Bulk Business Lenders,Mr Arbaj Shah,50000.0,N/A,FAILED,creditScore < 680 (664.0),1786469026803,N/A
+Bulk Business Lenders,Mr Amit Yadav,50000.0,N/A,FAILED,creditScore < 680 (664.0),1786469028446,N/A
+Bulk Business Lenders,Mana Ram,50500.0,N/A,FAILED,loanAmount/income > 0.40,1786469030385,N/A
+Bulk Business Lenders,Mohd Rais,50500.0,N/A,FAILED,loanAmount/income > 0.40,1786469032036,N/A
+Bulk Business Lenders,Mr Abhinav Dubey,50500.0,N/A,FAILED,loanAmount/income > 0.40,1786469033655,N/A
+Bulk Business Lenders,Gelam Balakrishna,50500.0,N/A,FAILED,income < 30000 (27060.74),1786469035876,N/A
+Bulk Business Lenders,Mr Maruti Gulab Mule,51000.0,N/A,FAILED,loanAmount/income > 0.40,1786469070886,N/A
+Bulk Business Lenders,Mr Awesikram Mohammad,51000.0,N/A,FAILED,loanAmount/income > 0.40,1786469072784,N/A
+Bulk Business Lenders,Ms Manisha Raghunath Salunkhe,51500.0,N/A,FAILED,creditScore < 680 (664.0),1786469074414,N/A
+Bulk Business Lenders,Wasim Akaram,51500.0,N/A,FAILED,creditScore < 680 (664.0),1786469076317,N/A
+Bulk Business Lenders,Mr Praveen Birla,52000.0,N/A,FAILED,loanAmount/income > 0.40,1786469078216,N/A
+Bulk Business Lenders,Mrs Kaja Mohammed Hajira Banu,52000.0,N/A,FAILED,loanAmount/income > 0.40,1786469079896,N/A
+Bulk Business Lenders,Mrs Pratibha Deepak Shakanthi,52500.0,N/A,FAILED,loanAmount/income > 0.40,1786469081530,N/A
+Bulk Business Lenders,Mr Jeetu Jha,52500.0,N/A,FAILED,loanAmount/income > 0.40,1786469083418,N/A
+Bulk Business Lenders,Harikrishnan S,52500.0,N/A,FAILED,loanAmount/income > 0.40,1786469085087,N/A
+Bulk Business Lenders,Mr Rameshwar Lal Gurjar,52500.0,N/A,FAILED,loanAmount/income > 0.40,1786469087696,N/A
+Bulk Business Lenders,Mr Dheeraj Rami,53500.0,N/A,FAILED,loanAmount/income > 0.40,1786469123585,N/A
+Bulk Business Lenders,Amir Sohel Shaikh,53500.0,N/A,FAILED,loanAmount/income > 0.40,1786469125529,N/A
+Bulk Business Lenders,Mr Siddharth Kumar Singh,53500.0,N/A,FAILED,loanAmount/income > 0.40,1786469127270,N/A
+Bulk Business Lenders,Mr Mohan Lal Gupta,53500.0,N/A,FAILED,income < 30000 (28760.54),1786469129198,N/A
+Bulk Business Lenders,Mr Kumar Shashi Bhushan,54000.0,N/A,FAILED,loanAmount/income > 0.40,1786469130889,N/A
+Bulk Business Lenders,Ms Sarita Sarita Kumari,54000.0,N/A,FAILED,loanAmount/income > 0.40,1786469133034,N/A
+Bulk Business Lenders,Mr Sunil,54000.0,N/A,FAILED,income < 30000 (29055.48),1786469134915,N/A
+Bulk Business Lenders,Akhilesh N,54000.0,N/A,FAILED,income < 30000 (28823.42),1786469137050,N/A
+Bulk Business Lenders,Farah Khan,54500.0,N/A,FAILED,loanAmount/income > 0.40,1786469138970,N/A
+Bulk Business Lenders,Rajeev Kumar,54500.0,N/A,FAILED,loanAmount/income > 0.40,1786469141276,N/A
+Bulk Business Lenders,Dinesh Singh,54500.0,N/A,FAILED,loanAmount/income > 0.40,1786469178158,N/A
+Bulk Business Lenders,Mr Deepak Kumar,54500.0,N/A,FAILED,income < 30000 (29261.62),1786469180021,N/A
+Bulk Business Lenders,Mohit Nagar,55000.0,N/A,FAILED,loanAmount/income > 0.40,1786469181932,N/A
+Bulk Business Lenders,Santu Kumar Dhali,55000.0,N/A,FAILED,loanAmount/income > 0.40,1786469183889,N/A
+Bulk Business Lenders,Bheemuni Kondala Rao,55500.0,N/A,FAILED,loanAmount/income > 0.40,1786469185773,N/A
+Bulk Business Lenders,Mr Suneel Suneel Gupta,55500.0,N/A,FAILED,loanAmount/income > 0.40,1786469187548,N/A
+Bulk Business Lenders,Vijay Ravi,55500.0,N/A,FAILED,income < 30000 (29783.3),1786469189486,N/A
+Bulk Business Lenders,Mr Subramaniyan Thirunavukkarasu,56000.0,N/A,FAILED,loanAmount/income > 0.40,1786469191319,N/A
+Bulk Business Lenders,Aman,56500.0,N/A,FAILED,loanAmount/income > 0.40,1786469193489,N/A
+Bulk Business Lenders,Mr Ranjeet Kumar Choudhary,56500.0,N/A,FAILED,creditScore < 680 (671.0),1786469196433,N/A
+Bulk Business Lenders,Tupakula Guru Jyothi,56500.0,N/A,FAILED,creditScore < 680 (671.0),1786469233873,N/A
+Bulk Business Lenders,Mr Sangi Sunny,56500.0,N/A,FAILED,loanAmount/income > 0.40,1786469235897,N/A
+Bulk Business Lenders,Najibudeen Shahul Hameed,56500.0,N/A,FAILED,loanAmount/income > 0.40,1786469237919,N/A
+Bulk Business Lenders,Baburam Umray,56500.0,N/A,FAILED,creditScore < 680 (672.0),1786469240198,N/A
+Bulk Business Lenders,Rahat Istifaz,56500.0,N/A,FAILED,creditScore < 680 (672.0),1786469242463,N/A
+Bulk Business Lenders,Mr Shambhu Kumar,57000.0,N/A,FAILED,loanAmount/income > 0.40,1786469244303,N/A
+Bulk Business Lenders,Mr Damodar Singh,57000.0,N/A,FAILED,creditScore < 680 (679.0),1786469246322,N/A
+Bulk Business Lenders,Ms Rita Mary J,57000.0,N/A,FAILED,creditScore < 680 (679.0),1786469248204,N/A
+Bulk Business Lenders,Shaikh Shabbir Shaikh Khadim,57000.0,N/A,FAILED,loanAmount/income > 0.40,1786469250480,N/A
+Bulk Business Lenders,Guddi Tiwari,57000.0,N/A,FAILED,loanAmount/income > 0.40,1786469253482,N/A
+Bulk Business Lenders,Naramdasu Ganesh,57500.0,N/A,FAILED,loanAmount/income > 0.40,1786469292771,N/A
+Bulk Business Lenders,Rajender Saini,57500.0,N/A,FAILED,creditScore < 680 (671.0),1786469295017,N/A
+Bulk Business Lenders,Mr Tinku Bhomik,57500.0,N/A,FAILED,creditScore < 680 (671.0),1786469296966,N/A
+Bulk Business Lenders,Md Sharif,58000.0,N/A,FAILED,loanAmount/income > 0.40,1786469299355,N/A
+Bulk Business Lenders,Mr Dipak Biswas,58000.0,N/A,FAILED,loanAmount/income > 0.40,1786469301687,N/A
+Bulk Business Lenders,Lucky Harwani,58000.0,N/A,FAILED,loanAmount/income > 0.40,1786469303597,N/A
+Bulk Business Lenders,Abhishek,58000.0,N/A,FAILED,creditScore < 680 (664.0),1786469305877,N/A
+Bulk Business Lenders,Mr Naveen Rajashekar,58000.0,N/A,FAILED,creditScore < 680 (635.0),1786469308201,N/A
+Bulk Business Lenders,Mr Sandeep,58500.0,N/A,FAILED,creditScore < 680 (635.0),1786469310306,N/A
+Bulk Business Lenders,Mr Shaik Shahed,58500.0,N/A,FAILED,loanAmount/income > 0.40,1786469313746,N/A
+Bulk Business Lenders,Yoshva S,58500.0,N/A,FAILED,loanAmount/income > 0.40,1786469353300,N/A
+Bulk Business Lenders,Mr Mohammed Feroz,59000.0,N/A,FAILED,loanAmount/income > 0.40,1786469355681,N/A
+Bulk Business Lenders,Mr Ganesh Chhaganlal Joshi,59000.0,N/A,FAILED,loanAmount/income > 0.40,1786469357834,N/A
+Bulk Business Lenders,Mr Saravjeet Singh,59000.0,N/A,FAILED,creditScore < 680 (678.0),1786469360440,N/A
+Bulk Business Lenders,Prathibha V,59000.0,N/A,FAILED,loanAmount/income > 0.40,1786469362856,N/A
+Bulk Business Lenders,Dipesh Arun Thakur,59500.0,N/A,FAILED,loanAmount/income > 0.40,1786469365197,N/A
+Bulk Business Lenders,Mr Thiravidamani Thiyagarajan,59500.0,N/A,FAILED,loanAmount/income > 0.40,1786469367347,N/A
+Bulk Business Lenders,Mr Raju Bhowmick,60000.0,N/A,FAILED,loanAmount/income > 0.40,1786469370299,N/A
+Bulk Business Lenders,Jangam Gurvaiah Swamy,60000.0,N/A,FAILED,loanAmount/income > 0.40,1786469372742,N/A
+Bulk Business Lenders,Mrs Komal,60500.0,N/A,FAILED,loanAmount/income > 0.40,1786469375972,N/A
+Bulk Lenders,Arindam Chakrabarti,28000.0,N/A,FAILED,creditScore < 550,1786469441605,N/A
+Bulk Lenders,Yogita Sardar,52500.0,N/A,FAILED,loanAmount/income > 0.90,1786469442922,N/A
+Bulk Lenders,Nirnay Kailash Fulzele,64500.0,N/A,SELECTED,,1786469444597,N/A
+Bulk Lenders,Maria Joseph B,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469456146,N/A
+Bulk Lenders,Supurna Mahato Ghosh,34000.0,N/A,FAILED,loanAmount/income > 0.90,1786469457536,N/A
+Bulk Lenders,Pradeep Vilas Kamble,94500.0,N/A,FAILED,loanAmount/income > 0.90,1786469458849,N/A
+Bulk Lenders,Sapna Mahajan,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469460167,N/A
+Bulk Lenders,Chirag Kantibhai Patel,12000.0,N/A,FAILED,creditScore < 550,1786469461457,N/A
+Bulk Lenders,R Mohan,12500.0,N/A,SELECTED,,1786469463004,N/A
+Bulk Lenders,Vikas Yadav,25000.0,N/A,SELECTED,,1786469474955,N/A
+Bulk Lenders,Suparna Mukherjee,30000.0,N/A,SELECTED,,1786469517686,N/A
+Bulk Lenders,Dhanalakshmi H K,25500.0,N/A,SELECTED,,1786469529463,N/A
+Bulk Lenders,Lakshmi E,45500.0,N/A,FAILED,loanAmount/income > 0.90,1786469541125,N/A
+Bulk Lenders,Mugesh Rajkumar,51000.0,N/A,FAILED,loanAmount/income > 0.90,1786469542531,N/A
+Bulk Lenders,Hariom,57000.0,N/A,FAILED,loanAmount/income > 0.90,1786469543979,N/A
+Bulk Lenders,Mr Azgar Ahmed,60000.0,N/A,FAILED,loanAmount/income > 0.90,1786469545315,N/A
+Bulk Lenders,Botcha Janardhanarao,62000.0,N/A,SELECTED,,1786469546799,N/A
+Bulk Lenders,Mnaveen Kumar,65500.0,N/A,FAILED,loanAmount/income > 0.90,1786469558466,N/A
+Bulk Lenders,Sunita Kamlakasha Shetty,76500.0,N/A,FAILED,loanAmount/income > 0.90,1786469560078,N/A
+Bulk Lenders,Kalidas G,78500.0,N/A,FAILED,loanAmount/income > 0.90,1786469561920,N/A
+Bulk Lenders,Satyendra Kumar Singh,79000.0,N/A,FAILED,loanAmount/income > 0.90,1786469594663,N/A
+Bulk Lenders,Harwant,94500.0,N/A,FAILED,loanAmount/income > 0.90,1786469596073,N/A
+Bulk Lenders,Saurav Chanda,100000.0,N/A,SELECTED,,1786469597915,N/A
+Bulk Lenders,Mr Anil Raysing Patil,100000.0,N/A,SELECTED,,1786469609899,N/A
+Bulk Lenders,M Girisha,100000.0,N/A,SELECTED,,1786469621930,N/A
+Bulk Lenders,Sivanesan P,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469633843,N/A
+Bulk Lenders,Mr Durlov Kr Baro,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469635346,N/A
+Bulk Lenders,Mr Kalipada Tudu,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469636684,N/A
+Bulk Lenders,Vinod Ananda Pawar,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469638137,N/A
+Bulk Lenders,Harjeet Singh,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469640181,N/A
+Bulk Lenders,P Manohar,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469672976,N/A
+Bulk Lenders,Patel Mukeshkumar,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469674293,N/A
+Bulk Lenders,Mohd Ashif Iqbal,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469675600,N/A
+Bulk Lenders,Md Anarul Sk,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469676949,N/A
+Bulk Lenders,Mr Rupeshbhai Mangalbhai Gayakwad,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469678401,N/A
+Bulk Lenders,Mr Raju B,8000.0,N/A,SELECTED,,1786469679947,N/A
+Bulk Lenders,Mr Rahul Lochav,10000.0,N/A,SELECTED,,1786469691720,N/A
+Bulk Lenders,Mr Aayush Ashok Khare Ashok Kumar Khare,13000.0,N/A,SELECTED,,1786469703493,N/A
+Bulk Lenders,V K Rajaji Chinnu,47500.0,N/A,SELECTED,,1786469715679,N/A
+Bulk Lenders,Nishish Srivastava,23500.0,N/A,SELECTED,,1786469728015,N/A
+Bulk Lenders,Vignesh D,35000.0,N/A,FAILED,loanAmount/income > 0.90,1786469771990,N/A
+Bulk Lenders,Sham Sunder,50500.0,N/A,FAILED,loanAmount/income > 0.90,1786469773506,N/A
+Bulk Lenders,Basireddy Nagajyoshna,60000.0,N/A,SELECTED,,1786469775292,N/A
+Bulk Lenders,Mrinal Garai,97000.0,N/A,FAILED,loanAmount/income > 0.90,1786469787454,N/A
+Bulk Lenders,Chandrala Mahesh,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469789551,N/A
+Bulk Lenders,Mr Manoj Kumar,4000.0,N/A,SELECTED,,1786469792106,N/A
+Bulk Lenders,Irshad Kittabulla Ansari,10000.0,N/A,SELECTED,,1786469804682,N/A
+Bulk Lenders,Ms Laiba Waheed Siddiqui,16000.0,N/A,SELECTED,,1786469816612,N/A
+Bulk Lenders,Ms Ms Sarika Mehta,18500.0,N/A,FAILED,creditScore < 550,1786469828245,N/A
+Bulk Lenders,Danial Rai,20000.0,N/A,FAILED,creditScore < 550,1786469829572,N/A
+Bulk Lenders,Praveena A,39500.0,N/A,SELECTED,,1786469863739,N/A
+Bulk Lenders,Mrs Rita Barwa,50000.0,N/A,FAILED,loanAmount/income > 0.90,1786469875510,N/A
+Bulk Lenders,Bablesh Kumar,50000.0,N/A,FAILED,loanAmount/income > 0.90,1786469876919,N/A
+Bulk Lenders,Senghani Rajeshbhai Bhavanjibhai,52500.0,N/A,FAILED,loanAmount/income > 0.90,1786469878327,N/A
+Bulk Lenders,Harun Usman Shaikh,74500.0,N/A,FAILED,loanAmount/income > 0.90,1786469879855,N/A
+Bulk Lenders,Kumar Brajesh Chandra,75500.0,N/A,FAILED,loanAmount/income > 0.90,1786469881473,N/A
+Bulk Lenders,Manish Kumar Balayi,79500.0,N/A,SELECTED,,1786469883137,N/A
+Bulk Lenders,Mr Adarsh P Nair Nair,85000.0,N/A,FAILED,loanAmount/income > 0.90,1786469894942,N/A
+Bulk Lenders,Ghanshyam Kumar,91500.0,N/A,FAILED,loanAmount/income > 0.90,1786469896425,N/A
+Bulk Lenders,Amit Appasab Tavanakke,95500.0,N/A,FAILED,loanAmount/income > 0.90,1786469898156,N/A
+Bulk Lenders,Janak Jagdishchandra Panchal,100000.0,N/A,SELECTED,,1786469933143,N/A
+Bulk Lenders,Rupadhar Sabar,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469944932,N/A
+Bulk Lenders,Jolen Tiru,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469946819,N/A
+Bulk Lenders,Sudalai Ramesh Mariappan,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469948284,N/A
+Bulk Lenders,Shashikant Pandurang Jadhav,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469949956,N/A
+Bulk Lenders,Mr Mohit Dhiman,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469951565,N/A
+Bulk Lenders,Erramchetty Chaithanya,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469953072,N/A
+Bulk Lenders,Shiju Jacob George,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786469954635,N/A
+Bulk Lenders,Shyam Kamal Yadav,25000.0,N/A,FAILED,loanAmount/income > 0.90,1786469956111,N/A
+Bulk Lenders,Mr Jayesh Purushottam Chindarkar,50000.0,N/A,FAILED,loanAmount/income > 0.90,1786469957862,N/A
+Bulk Lenders,Mr Nukala Sivaprasad,51500.0,N/A,FAILED,loanAmount/income > 0.90,1786469993535,N/A
+Bulk Lenders,Mr Binod Kumar Rout,52000.0,N/A,FAILED,loanAmount/income > 0.90,1786469995103,N/A
+Bulk Lenders,Mr Sugam Jain,56500.0,N/A,FAILED,loanAmount/income > 0.90,1786469996653,N/A
+Bulk Lenders,Mohammad Abdul Raheem,58500.0,N/A,FAILED,loanAmount/income > 0.90,1786469998191,N/A
+Bulk Lenders,Selvaraj A,75000.0,N/A,FAILED,loanAmount/income > 0.90,1786469999689,N/A
+Bulk Lenders,Mr Yash Ahuja,77000.0,N/A,FAILED,loanAmount/income > 0.90,1786470001429,N/A
+Bulk Lenders,Shankaragouda Ghanur,78500.0,N/A,FAILED,loanAmount/income > 0.90,1786470002821,N/A
+Bulk Lenders,Mr Muthuswamy Sigamany,83000.0,N/A,FAILED,loanAmount/income > 0.90,1786470004592,N/A
+Bulk Lenders,Rajan Baburao Sasulkar,86000.0,N/A,FAILED,loanAmount/income > 0.90,1786470006204,N/A
+Bulk Lenders,Shailesh Yashwant Sutar,88500.0,N/A,FAILED,loanAmount/income > 0.90,1786470008329,N/A
+Bulk Lenders,Balbir Singh,92500.0,N/A,FAILED,loanAmount/income > 0.90,1786470046216,N/A
+Bulk Lenders,Mr Chitrasen Gouda,94000.0,N/A,FAILED,loanAmount/income > 0.90,1786470048869,N/A
+Bulk Lenders,Mary Magdeline,97500.0,N/A,FAILED,loanAmount/income > 0.90,1786470051290,N/A
+Bulk Lenders,Kondepati Venkata Subramanyeswara Rao,100000.0,N/A,SELECTED,,1786470054612,N/A
+Bulk Lenders,Ravi Prakash Bajpai,100000.0,N/A,SELECTED,,1786470068920,N/A
+Bulk Lenders,Ms Rehana Begam,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470082177,N/A
+Bulk Lenders,Malathy D,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470084431,N/A
+Bulk Lenders,Vijayan Mohan,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470086689,N/A
+Bulk Lenders,Mr Abhinav Neog,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470089285,N/A
+Bulk Lenders,Dev Pratap,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470092776,N/A
+Bulk Lenders,Deependra Srivastava,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470132602,N/A
+Bulk Lenders,Brian Sircar,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470135134,N/A
+Bulk Lenders,Mr Dinesh Kumar Meena,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470137749,N/A
+Bulk Lenders,Thirumoorthi Kaveri,6000.0,N/A,SELECTED,,1786470141211,N/A
+Bulk Lenders,Jeganathan Nathan,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470154689,N/A
+Bulk Lenders,Mr Kapil Sharma,23500.0,N/A,SELECTED,,1786470157644,N/A
+Bulk Lenders,Smruti Ranjan Panda,41500.0,N/A,FAILED,loanAmount/income > 0.90,1786470170895,N/A
+Bulk Lenders,Gajendra Singh,42000.0,N/A,FAILED,loanAmount/income > 0.90,1786470173867,N/A
+Bulk Lenders,Sanjeev,56500.0,N/A,FAILED,loanAmount/income > 0.90,1786470177683,N/A
+Bulk Lenders,Jitendra Kumar,69000.0,N/A,FAILED,loanAmount/income > 0.90,1786470180903,N/A
+Bulk Lenders,Ashish Sharma,82000.0,N/A,FAILED,loanAmount/income > 0.90,1786470219605,N/A
+Bulk Lenders,Mr Mukesh Kumar Didwariya,85000.0,N/A,FAILED,loanAmount/income > 0.90,1786470221952,N/A
+Bulk Lenders,Karthik H J,89000.0,N/A,SELECTED,,1786470225081,N/A
+Bulk Lenders,Ankush Ekanath Temgire,97000.0,N/A,FAILED,loanAmount/income > 0.90,1786470237320,N/A
+Bulk Lenders,Jai Narayan Shishodia,100000.0,N/A,SELECTED,,1786470240302,N/A
+Bulk Lenders,Sachin Babu Lal Rangari,100000.0,N/A,SELECTED,,1786470253188,N/A
+Bulk Lenders,Rasakatla Nikhil,100000.0,N/A,SELECTED,,1786470266300,N/A
+Bulk Lenders,Pintu Kumar Yadav,100000.0,N/A,SELECTED,,1786470280108,N/A
+Bulk Lenders,Mr Amit Kumar Tiwari,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470292573,N/A
+Bulk Lenders,Mahendra Gogoi,100000.0,N/A,FAILED,loanAmount/income > 0.90,1786470295871,N/A
+Bulk Lenders,Mr Harsh Raj,28000.0,N/A,FAILED,loanAmount/income > 0.90,1786470335527,N/A
+Bulk Lenders,Bapanapalli Srikanth,50000.0,N/A,FAILED,creditScore < 550,1786470338021,N/A
+Bulk Lenders,Dheeraj Kumar,9000.0,N/A,SELECTED,,1786470340759,N/A
+Bulk Lenders,Sudha S,20000.0,N/A,SELECTED,,1786470354234,N/A
+Bulk Lenders,R Vimalraj,20000.0,N/A,SELECTED,,1786470367854,N/A
+Bulk Lenders,Mr Nallathambi Aravindhan,44500.0,N/A,FAILED,loanAmount/income > 0.90,1786470380652,N/A
+Bulk Lenders,Ms Nandini,48000.0,N/A,FAILED,loanAmount/income > 0.90,1786470383142,N/A
+Bulk Lenders,Dhan Bahadur Magar,48000.0,N/A,FAILED,loanAmount/income > 0.90,1786470385432,N/A
+Bulk Lenders,Santosh Dhurve,60500.0,N/A,FAILED,loanAmount/income > 0.90,1786470387657,N/A
+Bulk Lenders,Adil Pasha,64000.0,N/A,FAILED,loanAmount/income > 0.90,1786470391691,N/A

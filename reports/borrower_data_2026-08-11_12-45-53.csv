@@ -1,0 +1,199 @@
+Rule Name,Borrower Name,Borrowing Amount,Risk Rating,Status,Failure Reason,Selection Time (ms),Finalization Time (ms)
+Repeated Lenders - Low Risk,Nagaraj Raj,15000.0,N/A,FAILED,creditScore < 730,1786432677861,N/A
+Repeated Lenders - Low Risk,Akshay Sunil Kothale,11000.0,N/A,FAILED,creditScore < 730,1786432679162,N/A
+Repeated Lenders - Low Risk,Vikas Narayan Raul,16500.0,N/A,FAILED,creditScore < 730,1786432680762,N/A
+Repeated Lenders - Low Risk,Rajesh Dilip Borse,31500.0,N/A,FAILED,creditScore < 730,1786432682062,N/A
+Repeated Lenders - Low Risk,Sumon Dutta,44500.0,N/A,FAILED,creditScore < 730,1786432683362,N/A
+Repeated Lenders - Low Risk,Chiranjib Ganguly,23000.0,N/A,FAILED,creditScore < 730,1786432684772,N/A
+Repeated Lenders - Low Risk,Himalaya Saikia,22000.0,N/A,FAILED,creditScore < 730,1786432687309,N/A
+Repeated Lenders - Low Risk,Ram Kumar Kumawat,16500.0,N/A,FAILED,creditScore < 730,1786432688585,N/A
+Repeated Lenders - Low Risk,Ms Karishma Verma,10000.0,N/A,FAILED,creditScore < 730,1786432689958,N/A
+Repeated Lenders - Low Risk,Raja Ram Ananth,17000.0,N/A,FAILED,creditScore < 730,1786432721866,N/A
+Repeated Lenders - Low Risk,Amandeep Singh,20000.0,N/A,FAILED,creditScore < 730,1786432723133,N/A
+Repeated Lenders - Low Risk,Raja Sekhar Ichapuram,25000.0,N/A,FAILED,creditScore < 730,1786432724363,N/A
+Repeated Lenders - Low Risk,Mrs Renugadevi D,22000.0,N/A,FAILED,creditScore < 730,1786432725724,N/A
+Repeated Lenders - Low Risk,Mrs Renugadevi D,24500.0,N/A,FAILED,creditScore < 730,1786432726975,N/A
+Repeated Lenders - Low Risk,Mr Avishekh Sutradhar,5500.0,N/A,FAILED,creditScore < 730,1786432728158,N/A
+Repeated Lenders - Low Risk,Mr Genaram Choudhary,15500.0,N/A,FAILED,creditScore < 730,1786432729438,N/A
+Repeated Lenders - Low Risk,H Elumalai,17500.0,N/A,FAILED,creditScore < 730,1786432730762,N/A
+Repeated Lenders - Low Risk,Ravichandran K,18500.0,N/A,FAILED,creditScore < 730,1786432732080,N/A
+Repeated Lenders - Low Risk,Mr Salammagari Parameswara Rao,25000.0,N/A,FAILED,creditScore < 730,1786432733582,N/A
+Repeated Lenders - Low Risk,Mr Vinod Kumar,34000.0,N/A,FAILED,creditScore < 730,1786432766047,N/A
+Repeated Lenders - Low Risk,Santosh Kumar,47000.0,N/A,FAILED,lendenScore < 770,1786432767510,N/A
+Repeated Lenders - Low Risk,Mr Rajamanikkam Thirupathi,13000.0,N/A,FAILED,creditScore < 730,1786432768984,N/A
+Repeated Lenders - Low Risk,Surajit Ghosh,15000.0,N/A,FAILED,creditScore < 730,1786432770521,N/A
+Repeated Lenders - Low Risk,Ms Turaka Sowjanya,19500.0,N/A,FAILED,creditScore < 730,1786432771817,N/A
+Repeated Lenders - Low Risk,Kishor G,19500.0,N/A,FAILED,creditScore < 730,1786432773187,N/A
+Repeated Lenders - Low Risk,Teppala Kiran Kumar,24000.0,N/A,FAILED,creditScore < 730,1786432774613,N/A
+Repeated Lenders - Low Risk,Mr Sunny Raj Kaushik,7500.0,N/A,FAILED,creditScore < 730,1786432775927,N/A
+Repeated Lenders - Low Risk,Karthick S,10000.0,N/A,FAILED,creditScore < 730,1786432777298,N/A
+Repeated Lenders - Low Risk,Vasava Divyeshkumar Sureshbhai,10500.0,N/A,FAILED,creditScore < 730,1786432778906,N/A
+Repeated Lenders - Low Risk,Pravin Dinkar Rupwate,19000.0,N/A,FAILED,creditScore < 730,1786432812039,N/A
+Repeated Lenders - Low Risk,Mr Parmar Ramabhai Anilkumar,22000.0,N/A,FAILED,creditScore < 730,1786432813620,N/A
+Repeated Lenders - Low Risk,Avik Paul,23500.0,N/A,FAILED,creditScore < 730,1786432815142,N/A
+Repeated Lenders - Low Risk,Ms Shalini E,26000.0,N/A,FAILED,creditScore < 730,1786432816705,N/A
+Repeated Lenders - Medium Risk,Nagaraj Raj,15000.0,N/A,FAILED,creditScore < 700,1786432917588,N/A
+Repeated Lenders - Medium Risk,Akshay Sunil Kothale,11000.0,N/A,FAILED,creditScore < 700,1786432918896,N/A
+Repeated Lenders - Medium Risk,Vikas Narayan Raul,16500.0,N/A,FAILED,creditScore < 700,1786432920428,N/A
+Repeated Lenders - Medium Risk,Rajesh Dilip Borse,31500.0,N/A,FAILED,creditScore < 700,1786432921847,N/A
+Repeated Lenders - Medium Risk,Sumon Dutta,44500.0,N/A,FAILED,creditScore < 700,1786432923094,N/A
+Repeated Lenders - Medium Risk,Chiranjib Ganguly,23000.0,N/A,FAILED,creditScore < 700,1786432924472,N/A
+Repeated Lenders - Medium Risk,Himalaya Saikia,22000.0,N/A,FAILED,creditScore < 700,1786432927057,N/A
+Repeated Lenders - Medium Risk,Ram Kumar Kumawat,16500.0,N/A,FAILED,creditScore < 700,1786432928341,N/A
+Repeated Lenders - Medium Risk,Ms Karishma Verma,10000.0,N/A,FAILED,creditScore < 700,1786432929906,N/A
+Repeated Lenders - Medium Risk,Raja Ram Ananth,17000.0,N/A,FAILED,creditScore < 700,1786432962069,N/A
+Repeated Lenders - Medium Risk,Amandeep Singh,20000.0,N/A,FAILED,creditScore < 700,1786432963405,N/A
+Repeated Lenders - Medium Risk,Raja Sekhar Ichapuram,25000.0,N/A,FAILED,creditScore < 700,1786432964752,N/A
+Repeated Lenders - Medium Risk,Mrs Renugadevi D,22000.0,N/A,FAILED,creditScore < 700,1786432966107,N/A
+Repeated Lenders - Medium Risk,Mr Sachin Shashika,24500.0,N/A,FAILED,creditScore < 700,1786432967568,N/A
+Repeated Lenders - Medium Risk,Mr Avishekh Sutradhar,5500.0,N/A,FAILED,creditScore < 700,1786432968923,N/A
+Repeated Lenders - Medium Risk,Mr Genaram Choudhary,15500.0,N/A,FAILED,creditScore < 700,1786432970321,N/A
+Repeated Lenders - Medium Risk,H Elumalai,17500.0,N/A,FAILED,creditScore < 700,1786432971754,N/A
+Repeated Lenders - Medium Risk,Ravichandran K,18500.0,N/A,FAILED,creditScore < 700,1786432973074,N/A
+Repeated Lenders - Medium Risk,Mr Salammagari Parameswara Rao,25000.0,N/A,FAILED,creditScore < 700,1786432974790,N/A
+Repeated Lenders - Medium Risk,Mr Vinod Kumar,34000.0,N/A,FINALIZED,,1786433007921,1786433109942
+Repeated Lenders - Medium Risk,Santosh Kumar,47000.0,N/A,FAILED,creditScore < 700,1786433019571,N/A
+Repeated Lenders - Medium Risk,Mr Rajamanikkam Thirupathi,13000.0,N/A,FAILED,creditScore < 700,1786433021007,N/A
+Repeated Lenders - Medium Risk,Surajit Ghosh,15000.0,N/A,FAILED,creditScore < 700,1786433022471,N/A
+Repeated Lenders - Medium Risk,Ms Turaka Sowjanya,19500.0,N/A,FAILED,creditScore < 700,1786433024028,N/A
+Repeated Lenders - Medium Risk,Kishor G,19500.0,N/A,FAILED,creditScore < 700,1786433025402,N/A
+Repeated Lenders - Medium Risk,Teppala Kiran Kumar,24000.0,N/A,FAILED,creditScore < 700,1786433026868,N/A
+Repeated Lenders - Medium Risk,Mr Sunny Raj Kaushik,7500.0,N/A,FAILED,creditScore < 700,1786433028391,N/A
+Repeated Lenders - Medium Risk,Karthick S,10000.0,N/A,FAILED,creditScore < 700,1786433029742,N/A
+Repeated Lenders - Medium Risk,Vasava Divyeshkumar Sureshbhai,10500.0,N/A,FAILED,creditScore < 700,1786433031711,N/A
+Repeated Lenders - Medium Risk,Pravin Dinkar Rupwate,19000.0,N/A,FAILED,creditScore < 700,1786433064779,N/A
+Repeated Lenders - Medium Risk,Mr Parmar Ramabhai Anilkumar,22000.0,N/A,FAILED,creditScore < 700,1786433066243,N/A
+Repeated Lenders - Medium Risk,Avik Paul,23500.0,N/A,FAILED,creditScore < 700,1786433067763,N/A
+Repeated Lenders - Medium Risk,Ms Shalini E,26000.0,N/A,FAILED,creditScore < 700,1786433069166,N/A
+Repeated Lenders - High Risk,Nagaraj Raj,15000.0,N/A,FAILED,creditScore < 600,1786433175847,N/A
+Repeated Lenders - High Risk,Akshay Sunil Kothale,11000.0,N/A,FINALIZED,,1786433177396,1786434285333
+Repeated Lenders - High Risk,Bobbala Naga Subbareddy,14000.0,N/A,FAILED,loanAmount/income > 0.50,1786433189079,N/A
+Repeated Lenders - High Risk,Vikas Narayan Raul,16500.0,N/A,FINALIZED,,1786433190603,1786434285333
+Repeated Lenders - High Risk,Rajesh Dilip Borse,31500.0,N/A,FAILED,creditScore < 600,1786433202114,N/A
+Repeated Lenders - High Risk,Sumon Dutta,44500.0,N/A,FINALIZED,,1786433203584,1786434285333
+Repeated Lenders - High Risk,Mr Abhishek Singh Singh Hada,10000.0,N/A,FINALIZED,,1786433215272,1786434285333
+Repeated Lenders - High Risk,Mr Mahesh D Shiyal,10000.0,N/A,FINALIZED,,1786433227039,1786434285333
+Repeated Lenders - High Risk,Salim Brahmin,12000.0,N/A,FINALIZED,,1786433238928,1786434285333
+Repeated Lenders - High Risk,Abhishek K C,12500.0,N/A,FINALIZED,,1786433251747,1786434285333
+Repeated Lenders - High Risk,Mr Chinnappa Gurudeva,16500.0,N/A,FINALIZED,,1786433294244,1786434285333
+Repeated Lenders - High Risk,Chiranjib Ganguly,23000.0,N/A,FAILED,creditScore < 600,1786433305878,N/A
+Repeated Lenders - High Risk,Mahalinga Bhat T,98500.0,N/A,FAILED,creditScore < 600,1786433307247,N/A
+Repeated Lenders - High Risk,Kiran Gurung,7000.0,N/A,FAILED,creditScore < 600,1786433308584,N/A
+Repeated Lenders - High Risk,Dixit Gogoi,16000.0,N/A,FAILED,creditScore < 600,1786433311360,N/A
+Repeated Lenders - High Risk,Mr Shivashankar E,17500.0,N/A,FAILED,loanAmount/income > 0.50,1786433312690,N/A
+Repeated Lenders - High Risk,Viswa Bramhana Manoharachari,20000.0,N/A,FINALIZED,,1786433314295,1786434285333
+Repeated Lenders - High Risk,Himalaya Saikia,22000.0,N/A,FINALIZED,,1786433326305,1786434285333
+Repeated Lenders - High Risk,Prasad Madiga,29000.0,N/A,FAILED,loanAmount/income > 0.50,1786433338220,N/A
+Repeated Lenders - High Risk,Vijay Govindram Tiwari,30500.0,N/A,FAILED,creditScore < 600,1786433370814,N/A
+Repeated Lenders - High Risk,Yacoob Fashiriya,100000.0,N/A,FAILED,loanAmount/income > 0.50,1786433372344,N/A
+Repeated Lenders - High Risk,R Raja,7000.0,N/A,FINALIZED,,1786433374123,1786434285333
+Repeated Lenders - High Risk,Ravi Shankar Prasad,8500.0,N/A,FINALIZED,,1786433386286,1786434285333
+Repeated Lenders - High Risk,Niraj Kumar,10000.0,N/A,FINALIZED,,1786433398638,1786434285333
+Repeated Lenders - High Risk,Dontala Prasad,10000.0,N/A,FINALIZED,,1786433410762,1786434285333
+Repeated Lenders - High Risk,Naveen J,10000.0,N/A,FINALIZED,,1786433422973,1786434285333
+Repeated Lenders - High Risk,Lokesha K S,12000.0,N/A,FINALIZED,,1786433435353,1786434285333
+Repeated Lenders - High Risk,Ram Kumar Kumawat,16500.0,N/A,FINALIZED,,1786433447170,1786434285333
+Repeated Lenders - High Risk,Pradip Kumar Das,40000.0,N/A,FAILED,loanAmount/income > 0.50,1786433459163,N/A
+Repeated Lenders - High Risk,Mr Krishna,100000.0,N/A,FAILED,creditScore < 600,1786433492315,N/A
+Repeated Lenders - High Risk,Sathishkumar V,6000.0,N/A,FAILED,creditScore < 600,1786433494080,N/A
+Repeated Lenders - High Risk,Elizabath Benny,7000.0,N/A,FINALIZED,,1786433495967,1786434285333
+Repeated Lenders - High Risk,Mr Manish Khatnani,8000.0,N/A,FINALIZED,,1786433508320,1786434285333
+Repeated Lenders - High Risk,Ms Karishma Verma,10000.0,N/A,FINALIZED,,1786433520459,1786434285333
+Repeated Lenders - High Risk,Mr Kumar,10500.0,N/A,FINALIZED,,1786433533042,1786434285333
+Repeated Lenders - High Risk,Shaik Jainabi,12000.0,N/A,FAILED,creditScore < 600,1786433545477,N/A
+Repeated Lenders - High Risk,Raja Ram Ananth,17000.0,N/A,FAILED,creditScore < 600,1786433547016,N/A
+Repeated Lenders - High Risk,Mr Mohammadimran Faridahemed Sodagar,17000.0,N/A,FAILED,loanAmount/income > 0.50,1786433548964,N/A
+Repeated Lenders - High Risk,Mr Mohammadimran Faridahemed Sodagar,18000.0,N/A,FAILED,loanAmount/income > 0.50,1786433582849,N/A
+Repeated Lenders - High Risk,Amandeep Singh,20000.0,N/A,FAILED,creditScore < 600,1786433584436,N/A
+Repeated Lenders - High Risk,Davinder Pal Singh,20000.0,N/A,FAILED,creditScore < 600,1786433586083,N/A
+Repeated Lenders - High Risk,Ms Jagruti Pravin Shardul,20500.0,N/A,FAILED,creditScore < 600,1786433587716,N/A
+Repeated Lenders - High Risk,Mrs Kethohalli Rangaramaiah Rashmi,24000.0,N/A,FAILED,loanAmount/income > 0.50,1786433589145,N/A
+Repeated Lenders - High Risk,Raja Sekhar Ichapuram,25000.0,N/A,FINALIZED,,1786433590994,1786434285333
+Repeated Lenders - High Risk,Smruti Ranjan Bal,26000.0,N/A,FAILED,loanAmount/income > 0.50,1786433602824,N/A
+Repeated Lenders - High Risk,Mita Mukherjee Chakraborty,33500.0,N/A,FAILED,loanAmount/income > 0.50,1786433604366,N/A
+Repeated Lenders - High Risk,Miss Achal Balkishan Raut,39000.0,N/A,FAILED,loanAmount/income > 0.50,1786433606044,N/A
+Repeated Lenders - High Risk,M Raji,42000.0,N/A,FAILED,creditScore < 600,1786433608432,N/A
+Repeated Lenders - High Risk,Janakiraman,45000.0,N/A,FAILED,loanAmount/income > 0.50,1786433642950,N/A
+Repeated Lenders - High Risk,Aarav Singh,49500.0,N/A,FAILED,loanAmount/income > 0.50,1786433644633,N/A
+Repeated Lenders - High Risk,Mohammad Irfan,96500.0,N/A,FAILED,loanAmount/income > 0.50,1786433646346,N/A
+Repeated Lenders - High Risk,Mr Mr Avishek Dey,3500.0,N/A,FINALIZED,,1786433648501,1786434285333
+Repeated Lenders - High Risk,Anil,3500.0,N/A,FINALIZED,,1786433660952,1786434285333
+Repeated Lenders - High Risk,Kallul Gharphalia,4500.0,N/A,FINALIZED,,1786433673320,1786434285333
+Repeated Lenders - High Risk,Pooja Verma,5500.0,N/A,FAILED,creditScore < 600,1786433685347,N/A
+Repeated Lenders - High Risk,Karthik B,6500.0,N/A,FINALIZED,,1786433687459,1786434285333
+Repeated Lenders - High Risk,D Boopathyraj,14000.0,N/A,FAILED,creditScore < 600,1786433700797,N/A
+Repeated Lenders - High Risk,H Suresh,15500.0,N/A,FINALIZED,,1786433703811,1786434285333
+Repeated Lenders - High Risk,Mr Amar Chavan,16000.0,N/A,FINALIZED,,1786433750039,1786434285333
+Repeated Lenders - High Risk,Mrs Renugadevi D,22000.0,N/A,FAILED,creditScore < 600,1786433762236,N/A
+Repeated Lenders - High Risk,Mr Sachin Shashika,24500.0,N/A,FAILED,creditScore < 600,1786433764080,N/A
+Repeated Lenders - High Risk,Dasari Vinay Kumar,25000.0,N/A,FAILED,loanAmount/income > 0.50,1786433765933,N/A
+Repeated Lenders - High Risk,Balvinder Singh,36000.0,N/A,FAILED,creditScore < 600,1786433767618,N/A
+Repeated Lenders - High Risk,Mr Avishekh Sutradhar,5500.0,N/A,FINALIZED,,1786433771752,1786434285333
+Repeated Lenders - High Risk,Rajath,5500.0,N/A,FINALIZED,,1786433784195,1786434285333
+Repeated Lenders - High Risk,Arshid Ahmad Zargar,8000.0,N/A,FINALIZED,,1786433797099,1786434285333
+Repeated Lenders - High Risk,P Gajendran,10000.0,N/A,FINALIZED,,1786433810983,1786434285333
+Repeated Lenders - High Risk,Jitendra Yadav,10500.0,N/A,FAILED,creditScore < 600,1786433857597,N/A
+Repeated Lenders - High Risk,Abhinav Barick,10500.0,N/A,FINALIZED,,1786433860001,1786434285333
+Repeated Lenders - High Risk,Ravi Kiran Bhattacharya,13000.0,N/A,FINALIZED,,1786433872867,1786434285333
+Repeated Lenders - High Risk,Mr Genaram Choudhary,15500.0,N/A,FINALIZED,,1786433885743,1786434285333
+Repeated Lenders - High Risk,H Elumalai,17500.0,N/A,FINALIZED,,1786433899134,1786434285333
+Repeated Lenders - High Risk,Ravichandran K,18500.0,N/A,FINALIZED,,1786433912345,1786434285333
+Repeated Lenders - High Risk,Amit Anandrao Tidake,24500.0,N/A,FAILED,loanAmount/income > 0.50,1786433924816,N/A
+Repeated Lenders - High Risk,Mr Salammagari Parameswara Rao,25000.0,N/A,FINALIZED,,1786433927062,1786434285333
+Repeated Lenders - High Risk,Parmar Kalpesh K,41000.0,N/A,FAILED,creditScore < 600,1786433939281,N/A
+Repeated Lenders - High Risk,Santosh Kumar,47000.0,N/A,FAILED,creditScore < 600,1786433942288,N/A
+Repeated Lenders - High Risk,Gulappa Chinnappa,49000.0,N/A,FAILED,loanAmount/income > 0.50,1786433979036,N/A
+Repeated Lenders - High Risk,Arun Sasankan,59000.0,N/A,FAILED,creditScore < 600,1786433981082,N/A
+Repeated Lenders - High Risk,Doddipatla Kalyana Kishore,77500.0,N/A,FAILED,loanAmount/income > 0.50,1786433983113,N/A
+Repeated Lenders - High Risk,Sandeep Yadav,93000.0,N/A,FAILED,loanAmount/income > 0.50,1786433984840,N/A
+Repeated Lenders - High Risk,Ch Samuel Prakash,100000.0,N/A,FAILED,loanAmount/income > 0.50,1786433987006,N/A
+Repeated Lenders - High Risk,Santosh Das,5000.0,N/A,FAILED,creditScore < 600,1786433988955,N/A
+Repeated Lenders - High Risk,Deepak Kumar,10000.0,N/A,FINALIZED,,1786433991657,1786434285333
+Repeated Lenders - High Risk,Mr Rajamanikkam Thirupathi,13000.0,N/A,FINALIZED,,1786434004198,1786434285333
+Repeated Lenders - High Risk,Surajit Ghosh,15000.0,N/A,FINALIZED,,1786434017386,1786434285333
+Repeated Lenders - High Risk,Rajan Kumar Shukla,16000.0,N/A,FAILED,creditScore < 600,1786434030488,N/A
+Repeated Lenders - High Risk,Najrul Islam,16000.0,N/A,FINALIZED,,1786434068873,1786434285333
+Repeated Lenders - High Risk,Nallasivam,16000.0,N/A,FAILED,creditScore < 600,1786434081920,N/A
+Repeated Lenders - High Risk,Mr Dharmendra Kumar Yadav,17000.0,N/A,FAILED,loanAmount/income > 0.50,1786434083886,N/A
+Repeated Lenders - High Risk,Ms Turaka Sowjanya,19500.0,N/A,FINALIZED,,1786434086799,1786434285333
+Repeated Lenders - High Risk,Kishor G,19500.0,N/A,FAILED,creditScore < 600,1786434099148,N/A
+Repeated Lenders - High Risk,Teppala Kiran Kumar,24000.0,N/A,FAILED,creditScore < 600,1786434102019,N/A
+Repeated Lenders - High Risk,Danbira Harichandra Mohanty,31500.0,N/A,FAILED,creditScore < 600,1786434104239,N/A
+Repeated Lenders - High Risk,Ms Poonam Gangaram Karnik,45500.0,N/A,FAILED,creditScore < 600,1786434106300,N/A
+Repeated Lenders - High Risk,Somdutta Mukherjee,100000.0,N/A,FAILED,creditScore < 600,1786434108346,N/A
+Repeated Lenders - High Risk,Mr Sunny Raj Kaushik,7500.0,N/A,FAILED,creditScore < 600,1786434152119,N/A
+Repeated Lenders - High Risk,Karthick S,10000.0,N/A,FAILED,creditScore < 600,1786434154040,N/A
+Repeated Lenders - High Risk,Vasava Divyeshkumar Sureshbhai,10500.0,N/A,FAILED,creditScore < 600,1786434156488,N/A
+Repeated Lenders - High Risk,Mr Vikram Kajari,13500.0,N/A,FAILED,creditScore < 600,1786434158283,N/A
+Repeated Lenders - High Risk,Mr Tiakumzuk,15000.0,N/A,FINALIZED,,1786434160719,1786434285333
+Repeated Lenders - High Risk,Mr Harish Khirolkar,16500.0,N/A,FAILED,loanAmount/income > 0.50,1786434173108,N/A
+Repeated Lenders - High Risk,Mr Shambu Jayakumarannair,18500.0,N/A,FINALIZED,,1786434176122,1786434285333
+Repeated Lenders - High Risk,Pravin Dinkar Rupwate,19000.0,N/A,FINALIZED,,1786434189149,1786434285333
+Repeated Lenders - High Risk,Dhavanitha,20500.0,N/A,FAILED,creditScore < 600,1786434201589,N/A
+Repeated Lenders - High Risk,Mr Amol Rangrao Gaikwad,33500.0,N/A,FAILED,borrowerType != SALARIED,1786434204124,N/A
+Repeated Lenders - High Risk,Mr Mr Nasarudeen B,50000.0,N/A,FAILED,borrowerType != SALARIED,1786434206554,N/A
+Repeated Lenders - High Risk,Ankit Katarmal,33000.0,N/A,FAILED,borrowerType != SALARIED,1786434208902,N/A
+Repeated Lenders - High Risk,Soumitra Ojha,45500.0,N/A,FAILED,loanAmount/income > 0.50,1786434211265,N/A
+Repeated Lenders - High Risk,Ramadoss Venkateswaran,33500.0,N/A,FAILED,income < 25000,1786434213790,N/A
+Repeated Lenders - High Risk,Chanchal Bhakta,37000.0,N/A,FAILED,income < 25000,1786434216203,N/A
+Repeated Lenders - High Risk,Randheer Pratap Pandey,41000.0,N/A,FAILED,borrowerType != SALARIED,1786434218604,N/A
+Repeated Lenders - High Risk,Shiv Sundar Kar,25500.0,N/A,FAILED,creditScore < 600,1786434221819,N/A
+Repeated Lenders - High Risk,Umesh Gupta,35000.0,N/A,FAILED,creditScore < 600,1786434262257,N/A
+Repeated Lenders - High Risk,Thalari Surya Vamshi,26000.0,N/A,FAILED,income < 25000,1786434264652,N/A
+Repeated Lenders - High Risk,Raja M,40500.0,N/A,FAILED,income < 25000,1786434267043,N/A
+Repeated Lenders - High Risk,Raval Harsadbhai,37500.0,N/A,FAILED,income < 25000,1786434269189,N/A
+Repeated Lenders - High Risk,Sita Devi,38500.0,N/A,FAILED,borrowerType != SALARIED,1786434271452,N/A
+Repeated Lenders - High Risk,G Kamalakannan,29000.0,N/A,FAILED,borrowerType != SALARIED,1786434273872,N/A
+Repeated Lenders - High Risk,Gulam Yazdani,46000.0,N/A,FAILED,loanAmount/income > 0.50,1786434276534,N/A
+Repeated Lenders - High Risk,Abdul Noorjahan,23000.0,N/A,FAILED,borrowerType != SALARIED,1786434279857,N/A
+Repeated Business Lenders,Mr S P Ragupathy,6000.0,N/A,FINALIZED,,1786434351590,1786434403253
+Repeated Business Lenders,Poonam Vijay Rathod,8000.0,N/A,FAILED,income < 50000 (43407.0),1786434363090,N/A
+Repeated Business Lenders,Sadia Intizar,17000.0,N/A,FAILED,income < 50000 (43407.0),1786434364313,N/A
+Repeated Business Lenders,Sadia Intizar,6000.0,N/A,FAILED,creditScore < 700 (666.0),1786434365561,N/A
+Daily Repayment Lenders,Mr Baiju Kumar Sada,30500.0,N/A,FAILED,creditScore < 730,1786434468247,N/A
+Daily Repayment Lenders,Ajitesh Kumar,34000.0,N/A,FAILED,creditScore < 730,1786434469419,N/A
+Daily Repayment Lenders,Alam,35000.0,N/A,FAILED,creditScore < 730,1786434470761,N/A
+Daily Repayment Lenders,Ravi Trilock Gothwal,36000.0,N/A,FAILED,creditScore < 730,1786434472048,N/A
+Daily Repayment Lenders,Kolloju Sathya Narayana Chary,36000.0,N/A,FAILED,income < 50000,1786434473241,N/A
+Daily Repayment Lenders,Mr Subrata Ghosh,38000.0,N/A,FINALIZED,,1786434474598,1786434512452
+Daily Repayment Lenders,Mr Mohd Nasir Mansoori,38500.0,N/A,FINALIZED,,1786434486229,1786434512452

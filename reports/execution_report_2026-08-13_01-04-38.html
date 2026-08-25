@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Lending Automation - Execution Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; padding: 20px; }
+.container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); overflow: hidden; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 30px; text-align: center; }
+.header h1 { font-size: 2.5em; margin-bottom: 10px; }
+.header p { font-size: 1.1em; opacity: 0.9; }
+.timestamp { font-size: 0.9em; opacity: 0.8; margin-top: 10px; }
+.summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 30px; background: #f8f9fa; }
+.card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 5px solid #667eea; }
+.card.success { border-left-color: #28a745; }
+.card.warning { border-left-color: #ffc107; }
+.card.danger { border-left-color: #dc3545; }
+.card.info { border-left-color: #17a2b8; }
+.card-label { font-size: 0.9em; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.card-value { font-size: 2em; font-weight: bold; color: #333; }
+.card-subtext { font-size: 0.85em; color: #999; margin-top: 8px; }
+.section { padding: 30px; border-top: 1px solid #e9ecef; }
+.section-title { font-size: 1.8em; font-weight: 600; margin-bottom: 20px; color: #333; display: flex; align-items: center; }
+.section-title:before { content: ''; display: inline-block; width: 4px; height: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin-right: 15px; border-radius: 2px; }
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 20px; }
+.chart-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; }
+.table-responsive { overflow-x: auto; margin-top: 20px; }
+table { width: 100%; border-collapse: collapse; }
+th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; text-align: left; font-weight: 600; }
+td { padding: 12px; border-bottom: 1px solid #e9ecef; }
+tr:hover { background: #f8f9fa; }
+.status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+.status-success { background: #d4edda; color: #155724; }
+.status-pending { background: #fff3cd; color: #856404; }
+.status-failed { background: #f8d7da; color: #721c24; }
+.error-box { background: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 10px 0; border-radius: 4px; color: #721c24; }
+.csv-section { text-align: center; padding: 30px; background: #f0f7ff; border-radius: 8px; margin: 20px 0; }
+.csv-section h3 { color: #0056b3; margin-bottom: 15px; }
+.btn { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 25px; font-weight: 600; cursor: pointer; border: none; font-size: 1em; transition: transform 0.2s, box-shadow 0.2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+.footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 0.9em; border-top: 1px solid #e9ecef; }
+.wallet-flow { background: #e7f3ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+.flow-item { display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+.flow-box { background: white; padding: 15px 25px; border-radius: 8px; border: 2px solid #667eea; min-width: 150px; text-align: center; }
+.flow-box-label { font-size: 0.85em; color: #666; text-transform: uppercase; }
+.flow-box-value { font-size: 1.5em; font-weight: bold; color: #667eea; margin-top: 5px; }
+.arrow { color: #667eea; font-size: 1.5em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+<div class="header">
+    <h1>📊 P2P Lending Automation Report</h1>
+    <p>Execution Summary & Performance Metrics</p>
+    <div class="timestamp">Generated: 2026-08-13 01:04:47</div>
+</div>
+<div class="summary-cards">
+    <div class="card success">
+        <div class="card-label">✅ Rules Passed</div>
+        <div class="card-value">0/8</div>
+    </div>
+    <div class="card danger">
+        <div class="card-label">❌ Rules Failed</div>
+        <div class="card-value">8</div>
+    </div>
+    <div class="card info">
+        <div class="card-label">👥 Borrowers Finalized</div>
+        <div class="card-value">0</div>
+        <div class="card-subtext">Selected: 0</div>
+    </div>
+    <div class="card success">
+        <div class="card-label">💰 Total Lent</div>
+        <div class="card-value">₹0</div>
+    </div>
+    <div class="card warning">
+        <div class="card-label">⏱️ Execution Time</div>
+        <div class="card-value">00:00:08</div>
+    </div>
+    <div class="card info">
+        <div class="card-label">💳 Wallet Balance</div>
+        <div class="card-value">₹30000</div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">📈 Analytics & Charts</div>
+    <div class="charts-grid">
+        <div class="chart-container">
+            <canvas id="rulesChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="borrowersChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">💰 Wallet Flow</div>
+    <div class="wallet-flow">
+        <div class="flow-item">
+            <div class="flow-box">
+                <div class="flow-box-label">Starting Balance</div>
+                <div class="flow-box-value">₹30000</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="flow-box">
+                <div class="flow-box-label">Amount Lent</div>
+                <div class="flow-box-value">-₹0</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="flow-box">
+                <div class="flow-box-label">Final Balance</div>
+                <div class="flow-box-value">₹30000</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">📋 Per-Rule Details</div>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rule Name</th>
+                    <th>Status</th>
+                    <th>Borrowers Selected</th>
+                    <th>Borrowers Finalized</th>
+                    <th>Amount Lent</th>
+                    <th>Execution Time</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">⚠️ Errors Encountered</div>
+    <div class="error-box">Repeated Lenders - Medium Risk: Failed to initialize connection pool</div>
+    <div class="error-box">Repeated Lenders - High Risk: Failed to initialize connection pool</div>
+    <div class="error-box">Repeated Business Lenders: Failed to initialize connection pool</div>
+    <div class="error-box">Daily Repayment Lenders: Failed to initialize connection pool</div>
+    <div class="error-box">Normal Lenders: Failed to initialize connection pool</div>
+    <div class="error-box">Filling Fast Lenders: Failed to initialize connection pool</div>
+    <div class="error-box">Bulk Business Lenders: Failed to initialize connection pool</div>
+    <div class="error-box">Bulk Lenders: Failed to initialize connection pool</div>
+</div>
+<div class="section">
+    <div class="section-title">📥 Download Borrower Data</div>
+    <div class="csv-section">
+        <h3>📊 Borrower Data in CSV Format</h3>
+        <p>All borrower records with their status and transaction details</p>
+        <a href="data:text/csv;base64,UnVsZSBOYW1lLEJvcnJvd2VyIE5hbWUsQm9ycm93aW5nIEFtb3VudCxSaXNrIFJhdGluZyxTdGF0dXMsRmFpbHVyZSBSZWFzb24sU2VsZWN0aW9uIFRpbWUgKG1zKSxGaW5hbGl6YXRpb24gVGltZSAobXMpCg==" download="borrower_data_2026-08-13_01-04-38.csv" class="btn">⬇️ Download CSV</a>
+    </div>
+</div>
+<div class="footer">
+    <p>P2P Lending Automation System | Report Generated Automatically</p>
+    <p>© 2026 - All Rights Reserved</p>
+</div>
+    </div>
+    <script>
+const rulesCtx = document.getElementById('rulesChart').getContext('2d');
+new Chart(rulesCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['✅ Passed', '❌ Failed'],
+        datasets: [{
+            data: [0, 8],
+            backgroundColor: ['#28a745', '#dc3545'],
+            borderColor: ['#fff', '#fff'],
+            borderWidth: 2
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 12 } } }, title: { display: true, text: 'Rules Execution Status' } } }
+});
+
+const borrowersCtx = document.getElementById('borrowersChart').getContext('2d');
+new Chart(borrowersCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Selected', 'Finalized'],
+        datasets: [{
+            label: 'Borrowers',
+            data: [0, 0],
+            backgroundColor: ['#17a2b8', '#28a745'],
+            borderColor: ['#0c5460', '#155724'],
+            borderWidth: 1
+        }]
+    },
+    options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false }, title: { display: true, text: 'Borrower Processing' } } }
+});
+
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+        labels: ['✅ Finalized', '⏳ Selected', '❌ Failed'],
+        datasets: [{
+            data: [0, 0, 0],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
+            borderColor: ['#fff', '#fff', '#fff'],
+            borderWidth: 2
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 12 } } }, title: { display: true, text: 'Borrower Status Breakdown' } } }
+});
+    </script>
+</body>
+</html>

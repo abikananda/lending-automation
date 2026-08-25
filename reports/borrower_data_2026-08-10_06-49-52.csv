@@ -1,0 +1,10 @@
+Rule Name,Borrower Name,Borrowing Amount,Risk Rating,Status,Failure Reason,Selection Time (ms),Finalization Time (ms)
+Repeated Lenders - Medium Risk,Dipak Suresh Panchal,9500.0,N/A,FAILED,creditScore < 700,1786324914754,N/A
+Repeated Lenders - Medium Risk,Antony William Truman C,14500.0,N/A,FAILED,creditScore < 700,1786324916139,N/A
+Repeated Lenders - Medium Risk,Mrs Jyothi Mary Juliet,9000.0,N/A,FAILED,creditScore < 700,1786324917632,N/A
+Repeated Lenders - Medium Risk,Chandra Babu Sathishkumar,11500.0,N/A,FAILED,creditScore < 700,1786324918997,N/A
+Repeated Lenders - Medium Risk,Mr Jallella Yadagiri,14000.0,N/A,FAILED,creditScore < 700,1786324920350,N/A
+Repeated Lenders - Medium Risk,M V Ramana,6000.0,N/A,FAILED,creditScore < 700,1786324921732,N/A
+Repeated Lenders - Medium Risk,Mr Anand Kumar Jha,24000.0,N/A,FAILED,loanAmount/income > 0.40,1786324923100,N/A
+Repeated Lenders - Medium Risk,Miss Abisha I S,10000.0,N/A,FINALIZED,,1786324924603,1786324951071
+Normal Lenders,Rajendra Ram,3500.0,N/A,FINALIZED,,1786325017122,1786325043850

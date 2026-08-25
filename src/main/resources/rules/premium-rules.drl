@@ -1,0 +1,348 @@
+package rules
+
+import com.abika.model.Borrower;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Risk Optimization Strategy:
+ * - All rules validate tenure (min 1, max 12 months - platform maximum)
+ * - Debt-to-income ratios strictly enforce borrower safety
+ * - Age and credit score thresholds prioritize borrower maturity
+ * - Null/boundary checks prevent runtime errors
+ * - Logging via SLF4J for production compliance
+ */
+
+global Logger logger;
+
+/**********************************************************************
+ * Repeated Borrowers
+ **********************************************************************/
+
+rule "Repeated Lenders - Low Risk"
+when
+    $b : Borrower(
+        repeated,
+        borrowerType == "SALARIED",
+        creditScore >= 730,
+        lendenScore >= 770,
+        income >= 80000,
+        interestRate >= 18 && interestRate <= 48,
+        age >= 25 && age <= 55,
+        loanAmount <= 30000,
+        tenure >= 1 && tenure <= 4,
+        eval((loanAmount * 1.0 / income) <= 0.30),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.20)
+    )
+then
+    $b.setLendingAmount(4000);
+    logger.info("LENDING_DECISION: Repeated Lenders - Low Risk | amount=4000 | risk=LOW");
+end
+
+
+rule "Repeated Lenders - Medium Risk"
+when
+    $b : Borrower(
+        repeated,
+        borrowerType == "SALARIED",
+        creditScore >= 700,
+        lendenScore >= 750,
+        income >= 50000,
+        interestRate >= 18 && interestRate <= 48,
+        age >= 20 && age <= 55,
+        loanAmount <= 50000,
+        tenure >= 1 && tenure <= 6,
+        eval((loanAmount * 1.0 / income) <= 0.40),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.20)
+    )
+then
+    $b.setLendingAmount(2000);
+    logger.info("LENDING_DECISION: Repeated Lenders - Medium Risk | amount=2000 | risk=MEDIUM");
+end
+
+
+rule "Repeated Lenders - High Risk"
+when
+    $b : Borrower(
+        repeated,
+        borrowerType == "SALARIED",
+        creditScore >= 600,
+        lendenScore >= 700,
+        income >= 25000,
+        interestRate >= 18,
+        age >= 18 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.50),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.40)
+    )
+then
+    $b.setLendingAmount(1000);
+    logger.info("LENDING_DECISION: Repeated Lenders - High Risk | amount=1000 | risk=HIGH");
+end
+
+
+/**********************************************************************
+ * Trusted Borrowers
+ **********************************************************************/
+
+rule "Trusted Lenders - Low Risk"
+when
+    $b : Borrower(
+        trusted,
+        borrowerType == "SALARIED",
+        creditScore >= 730,
+        lendenScore >= 750,
+        income >= 80000,
+        interestRate >= 18 && interestRate <= 48,
+        age >= 25 && age <= 55,
+        loanAmount <= 30000,
+        tenure >= 1 && tenure <= 4,
+        eval((loanAmount * 1.0 / income) <= 0.30),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.20)
+    )
+then
+    $b.setLendingAmount(4000);
+    logger.info("LENDING_DECISION: Trusted Lenders - Low Risk | amount=4000 | risk=LOW");
+end
+
+
+rule "Trusted Lenders - Medium Risk"
+when
+    $b : Borrower(
+        trusted,
+        borrowerType == "SALARIED",
+        creditScore >= 650,
+        lendenScore >= 750,
+        income >= 50000,
+        interestRate >= 18 && interestRate <= 48,
+        age >= 23 && age <= 55,
+        loanAmount <= 50000,
+        tenure >= 1 && tenure <= 6,
+        eval((loanAmount * 1.0 / income) <= 0.40),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.30)
+    )
+then
+    $b.setLendingAmount(2000);
+    logger.info("LENDING_DECISION: Trusted Lenders - Medium Risk | amount=2000 | risk=MEDIUM");
+end
+
+
+rule "Trusted Lenders - High Risk"
+when
+    $b : Borrower(
+        trusted,
+        borrowerType == "SALARIED",
+        creditScore >= 600,
+        lendenScore >= 700,
+        income >= 25000,
+        interestRate >= 18,
+        age >= 20 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.50),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.50)
+    )
+then
+    $b.setLendingAmount(1000);
+    logger.info("LENDING_DECISION: Trusted Lenders - High Risk | amount=1000 | risk=HIGH");
+end
+
+
+/**********************************************************************
+ * General Salaried Borrowers
+ **********************************************************************/
+
+rule "Good Lenders"
+when
+    $b : Borrower(
+        borrowerType == "SALARIED",
+        creditScore >= 680,
+        lendenScore >= 750,
+        income >= 30000,
+        interestRate >= 18,
+        age >= 23 && age <= 55,
+        loanAmount <= 30000,
+        tenure >= 1 && tenure <= 6,
+        eval((loanAmount * 1.0 / income) <= 0.30),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.20)
+    )
+then
+    $b.setLendingAmount(1000);
+    logger.info("LENDING_DECISION: Good Lenders | amount=1000 | risk=LOW-MED");
+end
+
+
+rule "Normal Lenders"
+when
+    $b : Borrower(
+        borrowerType == "SALARIED",
+        creditScore >= 600,
+        lendenScore >= 720,
+        income >= 25000,
+        interestRate >= 18,
+        age >= 20 && age <= 60,
+        loanAmount <= 50000,
+        tenure >= 1 && tenure <= 6,
+        eval((loanAmount * 1.0 / income) <= 0.50),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.30)
+    )
+then
+    $b.setLendingAmount(500);
+    logger.info("LENDING_DECISION: Normal Lenders | amount=500 | risk=MEDIUM");
+end
+
+
+rule "Bulk Lenders"
+when
+    $b : Borrower(
+        borrowerType == "SALARIED",
+        creditScore >= 550,
+        lendenScore >= 700,
+        income >= 25000,
+        interestRate >= 18,
+        age >= 20 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.90),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.50)
+    )
+then
+    $b.setLendingAmount(250);
+    logger.info("LENDING_DECISION: Bulk Lenders | amount=250 | risk=HIGH");
+end
+
+
+/**********************************************************************
+ * Self Employed Borrowers
+ **********************************************************************/
+
+rule "Repeated Business Lenders"
+when
+    $b : Borrower(
+        repeated,
+        borrowerType == "SELF-EMPLOYED",
+        creditScore >= 700,
+        lendenScore >= 750,
+        income >= 50000,
+        interestRate >= 18,
+        age >= 23 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.40),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.30)
+    )
+then
+    $b.setLendingAmount(1000);
+    logger.info("LENDING_DECISION: Repeated Business Lenders | amount=1000 | risk=MEDIUM");
+end
+
+rule "Good Business Lenders"
+when
+    $b : Borrower(
+        borrowerType == "SELF-EMPLOYED",
+        creditScore >= 730,
+        lendenScore >= 770,
+        income >= 50000,
+        interestRate >= 18,
+        age >= 23 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.35),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.25)
+    )
+then
+    $b.setLendingAmount(500);
+    logger.info("LENDING_DECISION: Good Business Lenders | amount=500 | risk=LOW");
+end
+
+
+rule "Bulk Business Lenders"
+when
+    $b : Borrower(
+        borrowerType == "SELF-EMPLOYED",
+        creditScore >= 680,
+        lendenScore >= 720,
+        income >= 30000,
+        interestRate >= 18,
+        age >= 23 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.40),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.30)
+    )
+then
+    $b.setLendingAmount(250);
+    logger.info("LENDING_DECISION: Bulk Business Lenders | amount=250 | risk=MEDIUM");
+end
+
+
+/**********************************************************************
+ * Filling Fast Loans
+ **********************************************************************/
+
+rule "Filling Fast Lenders"
+when
+    $b : Borrower(
+        borrowerType == "SALARIED",
+        creditScore >= 600,
+        lendenScore >= 700,
+        income >= 25000,
+        interestRate >= 18,
+        age >= 18 && age <= 60,
+        loanAmount <= 50000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.40),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.30),
+        eval((income - (loanAmount * 1.0 / tenure)) >= 15000)
+    )
+then
+    $b.setLendingAmount(250);
+    logger.info("LENDING_DECISION: Filling Fast Lenders | amount=250 | risk=HIGH");
+end
+
+
+/**********************************************************************
+ * Daily Repayment Loans
+ **********************************************************************/
+
+rule "Daily Repayment Lenders"
+when
+    $b : Borrower(
+        creditScore >= 730,
+        lendenScore >= 770,
+        income >= 50000,
+        interestRate >= 15 && interestRate <= 40,
+        age >= 25 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 1.0),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.20)
+    )
+then
+    $b.setLendingAmount(2000);
+    logger.info("LENDING_DECISION: Daily Repayment Lenders | amount=2000 | risk=MEDIUM");
+end
+
+/**********************************************************************
+ * Monthly Repayment Loans
+ **********************************************************************/
+
+rule "Monthly Repayment - High Risk"
+when
+    $b : Borrower(
+        borrowerType == "SALARIED",
+        creditScore >= 600,
+        lendenScore >= 720,
+        income >= 30000,
+        interestRate >= 18,
+        age >= 20 && age <= 60,
+        loanAmount <= 100000,
+        tenure >= 1 && tenure <= 12,
+        eval((loanAmount * 1.0 / income) <= 0.60),
+        eval((loanAmount * 1.0 / tenure) <= income * 0.40)
+    )
+then
+    $b.setLendingAmount(1000);
+    logger.info("LENDING_DECISION: Monthly Repayment - High Risk | amount=1000 | risk=HIGH");
+end

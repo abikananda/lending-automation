@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Lending Automation - Execution Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; padding: 20px; }
+.container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); overflow: hidden; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 30px; text-align: center; }
+.header h1 { font-size: 2.5em; margin-bottom: 10px; }
+.header p { font-size: 1.1em; opacity: 0.9; }
+.timestamp { font-size: 0.9em; opacity: 0.8; margin-top: 10px; }
+.summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 30px; background: #f8f9fa; }
+.card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 5px solid #667eea; }
+.card.success { border-left-color: #28a745; }
+.card.warning { border-left-color: #ffc107; }
+.card.danger { border-left-color: #dc3545; }
+.card.info { border-left-color: #17a2b8; }
+.card-label { font-size: 0.9em; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.card-value { font-size: 2em; font-weight: bold; color: #333; }
+.card-subtext { font-size: 0.85em; color: #999; margin-top: 8px; }
+.section { padding: 30px; border-top: 1px solid #e9ecef; }
+.section-title { font-size: 1.8em; font-weight: 600; margin-bottom: 20px; color: #333; display: flex; align-items: center; }
+.section-title:before { content: ''; display: inline-block; width: 4px; height: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin-right: 15px; border-radius: 2px; }
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 20px; }
+.chart-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; }
+.table-responsive { overflow-x: auto; margin-top: 20px; }
+table { width: 100%; border-collapse: collapse; }
+th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; text-align: left; font-weight: 600; }
+td { padding: 12px; border-bottom: 1px solid #e9ecef; }
+tr:hover { background: #f8f9fa; }
+.status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+.status-success { background: #d4edda; color: #155724; }
+.status-pending { background: #fff3cd; color: #856404; }
+.status-failed { background: #f8d7da; color: #721c24; }
+.error-box { background: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 10px 0; border-radius: 4px; color: #721c24; }
+.csv-section { text-align: center; padding: 30px; background: #f0f7ff; border-radius: 8px; margin: 20px 0; }
+.csv-section h3 { color: #0056b3; margin-bottom: 15px; }
+.btn { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 25px; font-weight: 600; cursor: pointer; border: none; font-size: 1em; transition: transform 0.2s, box-shadow 0.2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+.footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 0.9em; border-top: 1px solid #e9ecef; }
+.wallet-flow { background: #e7f3ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+.flow-item { display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+.flow-box { background: white; padding: 15px 25px; border-radius: 8px; border: 2px solid #667eea; min-width: 150px; text-align: center; }
+.flow-box-label { font-size: 0.85em; color: #666; text-transform: uppercase; }
+.flow-box-value { font-size: 1.5em; font-weight: bold; color: #667eea; margin-top: 5px; }
+.arrow { color: #667eea; font-size: 1.5em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+<div class="header">
+    <h1>📊 P2P Lending Automation Report</h1>
+    <p>Execution Summary & Performance Metrics</p>
+    <div class="timestamp">Generated: 2026-08-11 23:56:41</div>
+</div>
+<div class="summary-cards">
+    <div class="card success">
+        <div class="card-label">✅ Rules Passed</div>
+        <div class="card-value">3/8</div>
+    </div>
+    <div class="card danger">
+        <div class="card-label">❌ Rules Failed</div>
+        <div class="card-value">2</div>
+    </div>
+    <div class="card info">
+        <div class="card-label">👥 Borrowers Finalized</div>
+        <div class="card-value">48</div>
+        <div class="card-subtext">Selected: 24</div>
+    </div>
+    <div class="card success">
+        <div class="card-label">💰 Total Lent</div>
+        <div class="card-value">₹25500</div>
+    </div>
+    <div class="card warning">
+        <div class="card-label">⏱️ Execution Time</div>
+        <div class="card-value">00:19:18</div>
+    </div>
+    <div class="card info">
+        <div class="card-label">💳 Wallet Balance</div>
+        <div class="card-value">₹-250</div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">📈 Analytics & Charts</div>
+    <div class="charts-grid">
+        <div class="chart-container">
+            <canvas id="rulesChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="borrowersChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">💰 Wallet Flow</div>
+    <div class="wallet-flow">
+        <div class="flow-item">
+            <div class="flow-box">
+                <div class="flow-box-label">Starting Balance</div>
+                <div class="flow-box-value">₹25250</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="flow-box">
+                <div class="flow-box-label">Amount Lent</div>
+                <div class="flow-box-value">-₹25500</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="flow-box">
+                <div class="flow-box-label">Final Balance</div>
+                <div class="flow-box-value">₹-250</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">📋 Per-Rule Details</div>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rule Name</th>
+                    <th>Status</th>
+                    <th>Borrowers Selected</th>
+                    <th>Borrowers Finalized</th>
+                    <th>Amount Lent</th>
+                    <th>Execution Time</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Repeated Lenders - Medium Risk</strong></td>
+                    <td>
+                        <span class="status-badge status-success">✅ PASSED</span>
+                    </td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>₹4000</td>
+                    <td>03:52</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td><strong>Repeated Lenders - High Risk</strong></td>
+                    <td>
+                        <span class="status-badge status-success">✅ PASSED</span>
+                    </td>
+                    <td>21</td>
+                    <td>21</td>
+                    <td>₹21000</td>
+                    <td>09:50</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td><strong>Repeated Business Lenders</strong></td>
+                    <td>
+                        <span class="status-badge status-failed">❌ FAILED</span>
+                    </td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>₹0</td>
+                    <td>01:33</td>
+                    <td>No loans to finalize</td>
+                </tr>
+                <tr>
+                    <td><strong>Daily Repayment Lenders</strong></td>
+                    <td>
+                        <span class="status-badge status-failed">❌ FAILED</span>
+                    </td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>₹0</td>
+                    <td>02:28</td>
+                    <td>Lending finalization failed: URL validation did not confirm success</td>
+                </tr>
+                <tr>
+                    <td><strong>Normal Lenders</strong></td>
+                    <td>
+                        <span class="status-badge status-success">✅ PASSED</span>
+                    </td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>₹500</td>
+                    <td>01:33</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="section">
+    <div class="section-title">⚠️ Errors Encountered</div>
+    <div class="error-box">Repeated Business Lenders: No loans to finalize</div>
+    <div class="error-box">Daily Repayment Lenders: Lending finalization failed: URL validation did not confirm success</div>
+</div>
+<div class="section">
+    <div class="section-title">📥 Download Borrower Data</div>
+    <div class="csv-section">
+        <h3>📊 Borrower Data in CSV Format</h3>
+        <p>All borrower records with their status and transaction details</p>
+        <a href="data:text/csv;base64,UnVsZSBOYW1lLEJvcnJvd2VyIE5hbWUsQm9ycm93aW5nIEFtb3VudCxSaXNrIFJhdGluZyxTdGF0dXMsRmFpbHVyZSBSZWFzb24sU2VsZWN0aW9uIFRpbWUgKG1zKSxGaW5hbGl6YXRpb24gVGltZSAobXMpClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxCYXNoZWVyIEFoYW1lZCwxMTUwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA3MDAsMTc4NjQ3MTc2MjgxMixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIE1lZGl1bSBSaXNrLFZpa2FzIFlhZGF2LDI1MDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDcwMCwxNzg2NDcxNzY0MTg4LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gTWVkaXVtIFJpc2ssU3VwYXJuYSBNdWtoZXJqZWUsMzAwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzAwLDE3ODY0NzE3NjU2NjYsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxLYWxwYW5hIE1hc2tlLDE0NTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MTc2NzM0MCwxNzg2NDcxODc1Mjg5ClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxWIEsgUmFqYWppIENoaW5udSw0NzUwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjQwLDE3ODY0NzE3NzkyODcsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxOaXJtYWwgUmFpLDkwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzAwLDE3ODY0NzE3ODA2OTUsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxQcmF2ZWVuYSBBLDM5NTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDcwMCwxNzg2NDcxNzgyMDA1LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gTWVkaXVtIFJpc2ssQXl1c2ggRGFuZHJpeWFsLDY1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzAwLDE3ODY0NzE3ODMzNTIsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxCYXBhbmFwYWxsaSBTcmlrYW50aCw1MDAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA3MDAsMTc4NjQ3MTc4NjAwOCxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIE1lZGl1bSBSaXNrLFNhdmluZGVyIFBhbCBTaW5naCw5MDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDcwMCwxNzg2NDcxODE3OTI0LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gTWVkaXVtIFJpc2ssTXJzIENoaWxsYSBTYWkgSnlvdGhpIENoYW5kaGFuYSwxNjUwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA3MDAsMTc4NjQ3MTgxOTI2NyxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIE1lZGl1bSBSaXNrLFNocmlrZXNoIFJhdmluZHJhIFJhdXQsNTAwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzAwLDE3ODY0NzE4MjE4MjAsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBNZWRpdW0gUmlzayxBIExhdmFueWEgRGhhdGhyaSwxOTAwMC4wLE4vQSxGSU5BTElaRUQsLDE3ODY0NzE4MjMzMzUsMTc4NjQ3MTg3NTI4OQpSZXBlYXRlZCBMZW5kZXJzIC0gTWVkaXVtIFJpc2ssTXIgU2Fuaml0IFNhaGEsMTA1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzAwLDE3ODY0NzE4MzQ4OTMsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssQmFzaGVlciBBaGFtZWQsMTE1MDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcxOTQwODQ2LDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxBcmluZGFtIENoYWtyYWJhcnRpLDI4MDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcxOTUzNDkzLE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFNha3RoaXZlbCBSYW1hc2FteSw3NTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MTk1NjIyNiwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssQ2hpcmFnIEthbnRpYmhhaSBQYXRlbCwxMjAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MTk2NzY0MCxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxSIE1vaGFuLDEyNTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcxOTY4OTcwLE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFZpa2FzIFlhZGF2LDI1MDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcxOTcwMjM3LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFN1cGFybmEgTXVraGVyamVlLDMwMDAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MTk3MTcwOCwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXIgUmFqdSBCLDgwMDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcxOTgzMzM5LDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxNciBSYWh1bCBMb2NoYXYsMTAwMDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcxOTk1MTgzLDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxNciBBYXl1c2ggQXNob2sgS2hhcmUgQXNob2sgS3VtYXIgS2hhcmUsMTMwMDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyMDM3NjI1LDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxHYWplbmRyYSBLIEMsMjYwMDAuMCxOL0EsRkFJTEVELGxvYW5BbW91bnQvaW5jb21lID4gMC41MCwxNzg2NDcyMDQ5NDQxLE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFYgSyBSYWphamkgQ2hpbm51LDQ3NTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjA1MDkwNSwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTmlybWFsIFJhaSw5MDAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjA2MjU3OSwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTWFuanVuYXRoYSBILDkwMDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyMDc0NDE0LDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxCaGF2aW5iaGFpIEluZHJhaml0IFBhdGVsLDE2NTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjA4NjMyNCwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXMgTXMgU2FyaWthIE1laHRhLDE4NTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcyMDk4MDE1LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLE1zIE1zIFNhcmlrYSBNZWh0YSwyMDAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjA5OTM3MixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxKbmFuYXJhbmphbiBQYW5kYSwzMTUwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIxMDA2NDcsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssUHJhdmVlbmEgQSwzOTUwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIxMDIxMDgsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssU3VkYWxhaSBSYW1lc2ggTWFyaWFwcGFuLDEwMDAwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIxMzQ1NjYsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssVGhpcnVtb29ydGhpIEthdmVyaSw2MDAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjEzNjEzNSwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssQXl1c2ggRGFuZHJpeWFsLDY1MDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyMTQ4MjExLDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxBbmRla2hhciBNYWhlc2h3YXJpLDI2NTAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjE1OTg1NSxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxKZWdhbmF0aGFuIE5hdGhhbiwxMDAwMDAuMCxOL0EsRkFJTEVELGxvYW5BbW91bnQvaW5jb21lID4gMC41MCwxNzg2NDcyMTYxMzA3LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFN1a3VtYXIgSmFuYSw1NTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjE2NDA1OCwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXIgQW1pdCBMb2toYW5kZSw2NTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjE3NTcyOSwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXIgSGFyc2ggUmFqLDI4MDAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjE4NzM1NyxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxCYXBhbmFwYWxsaSBTcmlrYW50aCw1MDAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjE4OTAxMCxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxHb2d1bGFtYW5kYSBTeWFtIEt1bWFyLDY1MDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyMjIyMzY2LDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxTYXZpbmRlciBQYWwgU2luZ2gsOTAwMC4wLE4vQSxGSU5BTElaRUQsLDE3ODY0NzIyMzQzNTYsMTc4NjQ3MjQ2NTE5NwpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLE1ycyBDaGlsbGEgU2FpIEp5b3RoaSBDaGFuZGhhbmEsMTY1MDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyMjQ2NDA4LDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxZYW1pbmksMjAwMDAuMCxOL0EsRkFJTEVELGxvYW5BbW91bnQvaW5jb21lID4gMC41MCwxNzg2NDcyMjU4MzE5LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFJhbmUgQWpheSwyMDAwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIyNTk2MjQsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssU2hyaWtlc2ggUmF2aW5kcmEgUmF1dCw1MDAwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIyNjIzMzUsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssS2FyYW4gQmhhZ2F0LDExMDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcyMjYzNzc0LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLE1yIFNhbmppdCBTYWhhLDEwNTAwLjAsTi9BLEZJTkFMSVpFRCwsMTc4NjQ3MjI2NTMwNSwxNzg2NDcyNDY1MTk3ClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssQWppdCBQYW5kaWFuLDgyNTAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjI3NzA3NixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxBc2hvayBNYWl0eSwyNTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcyMzEwMzgxLE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLE1yIEthdGhpcmF2YW4sMzAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjMxMTcwOSxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxWaXJlbmRyYSBLdW1hciBSYW1qaSBTaW5naCwxODUwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIzMTQ0MjcsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssR2F1cmF2IFNpbmdoLDIxNTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcyMzE1NzU1LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLEFyY2hpdCBBamF5IFphdmVyaSwyNTAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjMxNzE1MixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxZYXRoYW0gUmFqdSw0ODAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjMxODU0NixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxTYW5nZWV0aGEgSyw1MDUwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIzMTk5MDUsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXIgTXIgUGF6aGFuaSw2MzUwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjMyMTIwNCxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxSYWp1IFJhaHVsLDY0NTAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjMyMjc2MixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxNciBNciBFa2FncmEgUmF3YXQsNDAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjM1NzgwMCxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxNb2hhbW1lZCBSaXp3YW4sMTM1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNjAwLDE3ODY0NzIzNTk2MTYsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssVmVua2F0YXJhdmFuYSBNIEMsMTg1MDAuMCxOL0EsRkFJTEVELGxvYW5BbW91bnQvaW5jb21lID4gMC41MCwxNzg2NDcyMzYxMzM2LE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFQgS2lzaG9yZSwyMDAwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA2MDAsMTc4NjQ3MjM2Mjk5NyxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxBbWJhbGEgR29wYWxha3Jpc2huYSwyMjAwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIzNjQ4NTIsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssVW1lc2ggUmFtZXNoIFNoaXJ2YW5ka2FyLDIzNTAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjM2NjQ1NixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxQcmFzaGFudCBBbmRoYXJlLDI0MDAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjM2ODIwNyxOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxTYWJpdGEgQmFyaWhhLDMwMDAwLjAsTi9BLEZBSUxFRCxsb2FuQW1vdW50L2luY29tZSA+IDAuNTAsMTc4NjQ3MjM3MDAwMixOL0EKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxNciBTaGFyYXRoIEJhYnUgTmFnYXJhaiwzOTAwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzIzNzE4ODQsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssU2FydmVzaCBTYW5qYXkgTGFoYW5lLDMwMDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyMzc1MTYyLDE3ODY0NzI0NjUxOTcKUmVwZWF0ZWQgTGVuZGVycyAtIEhpZ2ggUmlzayxSYWtlc2ggS3VtYXIgQ2hhdXJhc2l5YSw0MDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDYwMCwxNzg2NDcyNDIxMTQyLE4vQQpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLFRpdGhpIERhcywxMTAwMC4wLE4vQSxGSU5BTElaRUQsLDE3ODY0NzI0MjM0MDksMTc4NjQ3MjQ2NTE5NwpSZXBlYXRlZCBMZW5kZXJzIC0gSGlnaCBSaXNrLE5laGEgQWh1amEsMTE1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNjAwLDE3ODY0NzI0MzU1NzEsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXIgU2FpcmFqIEdhamFuYW4gTWF5ZWthciw0ODAwMC4wLE4vQSxGQUlMRUQsbG9hbkFtb3VudC9pbmNvbWUgPiAwLjUwLDE3ODY0NzI0MzczODAsTi9BClJlcGVhdGVkIExlbmRlcnMgLSBIaWdoIFJpc2ssTXIgTW9oYW1tZWQgRGFkYWhheWF0aCBLYWxhbmRlciwyMTUwMC4wLE4vQSxGSU5BTElaRUQsLDE3ODY0NzI0Mzk1ODgsMTc4NjQ3MjQ2NTE5NwpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxBbGFtLDM1MDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDczMCwxNzg2NDcyNjI0MzgyLE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxTZWVsYW0gTWFub2osMzkwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2MjU3NzAsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLFNoZXIgTWF1LDM5NTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDczMCwxNzg2NDcyNjI3NDAwLE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxTYXVteWFkaXB0YSBEYXMsNDAwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2Mjg4NjMsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIE1hbm1lZXQgS3VtYXIsNDA1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2MzAzNzksTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIFBhbHlha2VyZSBNYWhhYm9vYnNhYiBBcHNhcnVsbGEsNDE1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2MzE3ODMsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIElyYXBwYSBIYW5hbWFwcGEgTWFkYXIsNDE1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2MzMyODIsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIEFzaG9rIEt1bWFyLDQyMDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDczMCwxNzg2NDcyNjM0NjYyLE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxNciBTdXJlc2hjaGFuZHJhIENoYW5kcmEgQmFicnUsNDMwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2MzYyNDcsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIERoZWVyYWogU2luZ2gsNDMwMDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2Mzc5ODIsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIFNoYWhqYW4gQW5zYXJpLDQzMDAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDczMCwxNzg2NDcyNjcwMzEyLE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxDaGluY2hpbGFtIExha3NobWlwYXRoaSBQYXRuYXlhayw0MzUwMC4wLE4vQSxGQUlMRUQsY3JlZGl0U2NvcmUgPCA3MzAsMTc4NjQ3MjY3MTc4MyxOL0EKRGFpbHkgUmVwYXltZW50IExlbmRlcnMsTW9oYW1tYWQgU2FraXIgTW9oYW1tYWQgRGF1ZGppLDQzNTAwLjAsTi9BLEZBSUxFRCxpbmNvbWUgPCA1MDAwMCwxNzg2NDcyNjczMzUxLE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxCcmFqZXNoIFJhamFrLDQzNTAwLjAsTi9BLEZBSUxFRCxpbmNvbWUgPCA1MDAwMCwxNzg2NDcyNjc0OTQ5LE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxNciBTdW1zb24gQ2hpbnRhcGFsbGksNDM1MDAuMCxOL0EsRkFJTEVELGNyZWRpdFNjb3JlIDwgNzMwLDE3ODY0NzI2NzY0NzQsTi9BCkRhaWx5IFJlcGF5bWVudCBMZW5kZXJzLE1yIEZ1cmthbiBBaG1hZCBLaGFuLDQ0NTAwLjAsTi9BLEZBSUxFRCxjcmVkaXRTY29yZSA8IDczMCwxNzg2NDcyNjc4MDcwLE4vQQpEYWlseSBSZXBheW1lbnQgTGVuZGVycyxNciBGaXJveiBCYXNoaXIgS2hhbiw0NDUwMC4wLE4vQSxGQUlMRUQsaW5jb21lIDwgNTAwMDAsMTc4NjQ3MjY3OTYyNyxOL0EKRGFpbHkgUmVwYXltZW50IExlbmRlcnMsTXIgUHJhc2hhbnQgS3VtYXIsNDUwMDAuMCxOL0EsU0VMRUNURUQsLDE3ODY0NzI2ODE0MDYsTi9BCk5vcm1hbCBMZW5kZXJzLFBhcmVla3NoaXQgUGF0ZWwsMjAwMDAuMCxOL0EsRklOQUxJWkVELCwxNzg2NDcyNzc0ODAxLDE3ODY0NzI4MDEyNDMK" download="borrower_data_2026-08-11_23-37-22.csv" class="btn">⬇️ Download CSV</a>
+    </div>
+</div>
+<div class="footer">
+    <p>P2P Lending Automation System | Report Generated Automatically</p>
+    <p>© 2026 - All Rights Reserved</p>
+</div>
+    </div>
+    <script>
+const rulesCtx = document.getElementById('rulesChart').getContext('2d');
+new Chart(rulesCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['✅ Passed', '❌ Failed'],
+        datasets: [{
+            data: [3, 2],
+            backgroundColor: ['#28a745', '#dc3545'],
+            borderColor: ['#fff', '#fff'],
+            borderWidth: 2
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 12 } } }, title: { display: true, text: 'Rules Execution Status' } } }
+});
+
+const borrowersCtx = document.getElementById('borrowersChart').getContext('2d');
+new Chart(borrowersCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Selected', 'Finalized'],
+        datasets: [{
+            label: 'Borrowers',
+            data: [24, 48],
+            backgroundColor: ['#17a2b8', '#28a745'],
+            borderColor: ['#0c5460', '#155724'],
+            borderWidth: 1
+        }]
+    },
+    options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false }, title: { display: true, text: 'Borrower Processing' } } }
+});
+
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+        labels: ['✅ Finalized', '⏳ Selected', '❌ Failed'],
+        datasets: [{
+            data: [24, 1, 69],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
+            borderColor: ['#fff', '#fff', '#fff'],
+            borderWidth: 2
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 12 } } }, title: { display: true, text: 'Borrower Status Breakdown' } } }
+});
+    </script>
+</body>
+</html>
