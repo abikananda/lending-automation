@@ -28,6 +28,7 @@ import org.openqa.selenium.TimeoutException;
  */
 public class BorrowerScraper {
     private static final Logger logger = LoggerFactory.getLogger(BorrowerScraper.class);
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
      * Scrape and process borrowers from the loan list
@@ -75,7 +76,8 @@ public class BorrowerScraper {
         Set<String> seenCards = new HashSet<>();
         By cardLocator = By.cssSelector("div.MuiBox-root.css-79elbk");
 
-        // Batch-fetch all cards once at start, then detect new ones as they load
+        // Fetch cards once per batch. Individual card elements are reused until Selenium
+        // reports that the virtualized list has made them stale; only then is the list refreshed.
         List<WebElement> allCards = new ArrayList<>();
         int previousCardCount = 0;
 
@@ -90,31 +92,25 @@ public class BorrowerScraper {
                 break;
             }
 
-            int initialSeen = seenCards.size();
-
-            // Auto-scroll to load more cards before processing
+            // Auto-scroll to load more cards before processing. The helper only performs
+            // the scroll; synchronization happens once below by waiting for card-count growth.
             MethodTimer scrollTimer = new MethodTimer("scrollToLoadMoreCards (Retry " + (retry + 1) + ")");
             UIElementHandler.scrollToLoadMoreCards(driver);
             scrollTimer.end();
 
-            // Wait for new cards to appear after scroll (explicit wait instead of sleep)
-            // This is more reliable than fixed delays
+            // Wait for new cards to appear after scroll.
             MethodTimer cardWaitTimer = new MethodTimer("Waiting for cards to load");
             try {
-                final int prevCardCount = previousCardCount;  // Make final for lambda
-                
+                final int prevCardCount = previousCardCount;
                 WebDriverWaitManager.getShortWait().until(
-                    driver1 -> {
-                        List<WebElement> currentCards = driver1.findElements(cardLocator);
-                        return currentCards.size() > prevCardCount;
-                    }
+                    driver1 -> driver1.findElements(cardLocator).size() > prevCardCount
                 );
             } catch (TimeoutException e) {
                 logger.info("No new cards appeared after scroll (reached end of list)");
             }
             cardWaitTimer.end();
 
-            // Batch-fetch cards ONCE per retry (not repeatedly)
+            // Batch-fetch cards once per retry.
             allCards = driver.findElements(cardLocator);
             logger.info("Found {} total cards after scroll (retry {})", allCards.size(), retry + 1);
 
@@ -125,9 +121,8 @@ public class BorrowerScraper {
 
             previousCardCount = allCards.size();
 
-            // Process cards - use IndexedList to avoid stale element issues
             MethodTimer processCardsTimer = new MethodTimer("Processing cards batch (Retry " + (retry + 1) + ")");
-            
+
             for (int i = 0; i < allCards.size(); i++) {
 
                 // Check available balance excluding reserved amount
@@ -135,35 +130,25 @@ public class BorrowerScraper {
                 if (availableInner < investment.getLendAmtPerLoan())
                     break;
 
-                // Re-fetch card by index to avoid stale elements
+                WebElement card;
+                String borrowerName;
+
                 try {
-                    allCards = driver.findElements(cardLocator);  // Refresh list
-                    if (i >= allCards.size()) break;  // Safety check
-                } catch (StaleElementReferenceException e) {
-                    logger.debug("Card list became stale, refetching");
+                    if (i >= allCards.size()) break;
+                    card = allCards.get(i);
+                    borrowerName = extractBorrowerName(card);
+                } catch (StaleElementReferenceException stale) {
+                    // LenDenClub virtualizes/rerenders the list after popup interaction.
+                    // Refresh only when staleness is real instead of doing a full DOM query
+                    // before every borrower.
+                    logger.debug("Borrower card {} became stale; refreshing rendered card list", i);
                     allCards = driver.findElements(cardLocator);
                     if (i >= allCards.size()) break;
+                    card = allCards.get(i);
+                    borrowerName = extractBorrowerName(card);
                 }
 
-                WebElement card = allCards.get(i);
-
-                // Extract borrower name from the card
-                String borrowerName;
-                try {
-                    borrowerName = card.findElement(
-                        By.cssSelector("div.css-69i1ev p.MuiTypography-root")
-                    ).getText().trim();
-                } catch (Exception e) {
-                    try {
-                        borrowerName = card.findElement(
-                            By.xpath(".//div[contains(@class,'css-69i1ev')]//p[1]")
-                        ).getText().trim();
-                    } catch (Exception e2) {
-                        borrowerName = null;
-                    }
-                }
-
-                // Use borrower name as unique identifier
+                // Keep the existing borrower-name identity logic unchanged.
                 if (borrowerName == null || borrowerName.isEmpty() || seenCards.contains(borrowerName)) {
                     continue;
                 }
@@ -246,15 +231,15 @@ public class BorrowerScraper {
 
                     logger.info("Number of Loans Selected: {} of rule type: {}",
                             investment.getLoanCounts(), investment.getRuleName());
-                    
+
                     // Add borrower record as SELECTED for metrics
                     com.abika.reporting.ExecutionMetrics.BorrowerRecord rec = new com.abika.reporting.ExecutionMetrics.BorrowerRecord(
                             investment.getRuleName(), borrower.getName(), borrower.getLoanAmount());
                     rec.setStatus("SELECTED");
                     rec.setSelectionTimeMs(System.currentTimeMillis());
                     metrics.addBorrowerRecord(rec);
-                    
-                    // Close popup after adding loan (was missing - caused timing gap!)
+
+                    // Close popup after adding loan
                     MethodTimer closeTimer = new MethodTimer("closePopupFast - After Add Loan");
                     UIElementHandler.closePopupFast(driver);
                     closeTimer.end();
@@ -273,7 +258,7 @@ public class BorrowerScraper {
                     metrics.addBorrowerRecord(rec);
                 }
             }
-            
+
             processCardsTimer.end();
             logger.info("📊 Retry {} completed: processed {} total borrowers this batch",
                     retry + 1, seenCards.size());
@@ -286,17 +271,36 @@ public class BorrowerScraper {
                 String.format("%.2f", duration / (1000.0 * 60)));
     }
 
+    private static String extractBorrowerName(WebElement card) {
+        try {
+            return card.findElement(
+                By.cssSelector("div.css-69i1ev p.MuiTypography-root")
+            ).getText().trim();
+        } catch (StaleElementReferenceException stale) {
+            throw stale;
+        } catch (Exception e) {
+            try {
+                return card.findElement(
+                    By.xpath(".//div[contains(@class,'css-69i1ev')]//p[1]")
+                ).getText().trim();
+            } catch (StaleElementReferenceException stale) {
+                throw stale;
+            } catch (Exception e2) {
+                return null;
+            }
+        }
+    }
+
     /**
-     * Print borrower details in JSON format for logging
+     * Print borrower details in JSON format for logging.
+     * Reuse the ObjectMapper to avoid rebuilding serialization metadata for every borrower.
      */
     private static void printBorrower(Borrower borrower) {
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(borrower);
+            String json = OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(borrower);
             logger.info("Borrower: {}", json);
         } catch (Exception e) {
             logger.info("Error serializing borrower: {}", e.getMessage());
         }
     }
 }
-
