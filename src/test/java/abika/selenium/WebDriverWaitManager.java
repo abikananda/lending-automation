@@ -13,10 +13,13 @@ public class WebDriverWaitManager {
     public static final int SHORT_TIMEOUT = 2;
     public static final int ULTRA_SHORT_TIMEOUT = 1;
     public static final int MAX_RETRIES = 12;
+    public static final long FAST_TIMEOUT_MS = 500;
+    public static final long FAST_POLL_MS = 50;
 
     private static WebDriverWait standardWait;
     private static WebDriverWait shortWait;
     private static WebDriverWait ultraShortWait;
+    private static WebDriverWait fastWait;
 
     /**
      * Initialize wait instances - call once after WebDriver is created
@@ -25,6 +28,8 @@ public class WebDriverWaitManager {
         standardWait = new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT));
         shortWait = new WebDriverWait(driver, Duration.ofSeconds(SHORT_TIMEOUT));
         ultraShortWait = new WebDriverWait(driver, Duration.ofSeconds(ULTRA_SHORT_TIMEOUT));
+        fastWait = new WebDriverWait(driver, Duration.ofMillis(FAST_TIMEOUT_MS));
+        fastWait.pollingEvery(Duration.ofMillis(FAST_POLL_MS));
     }
 
     public static WebDriverWait getStandardWait() {
@@ -37,6 +42,10 @@ public class WebDriverWaitManager {
 
     public static WebDriverWait getUltraShortWait() {
         return ultraShortWait;
+    }
+
+    public static WebDriverWait getFastWait() {
+        return fastWait;
     }
 
     /**
@@ -68,4 +77,3 @@ public class WebDriverWaitManager {
         return 0.0;
     }
 }
-
