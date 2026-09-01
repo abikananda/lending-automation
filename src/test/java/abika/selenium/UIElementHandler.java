@@ -82,7 +82,7 @@ public class UIElementHandler {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", arrow);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrow);
             WebDriverWaitManager.getShortWait().until(
-                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.jipznm"))
+                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.hHvdph"))
             );
         } catch (Exception e) {
             logger.info("Card arrow click/wait failed: {}", e.getMessage());
@@ -96,9 +96,9 @@ public class UIElementHandler {
      * ultra-short wait before moving on.
      */
     public static void closePopupFast(WebDriver driver) {
-        By popupLocator = By.cssSelector("div.sc-dtBdUo.jipznm");
+        By popupLocator = By.cssSelector("div.sc-dtBdUo.hHvdph");
         try {
-            WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.jipznm svg"));
+            WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.hHvdph svg"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeBtn);
 
             try {
