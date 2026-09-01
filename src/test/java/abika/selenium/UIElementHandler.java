@@ -73,8 +73,10 @@ public class UIElementHandler {
     }
 
     /**
-     * Click a card arrow and wait for popup
-     * Optimized: Removed unnecessary sleep before click
+     * Click a borrower card arrow and require the borrower popup to become visible.
+     *
+     * This is fail-safe because continuing after a failed/open-timeout could make the parser
+     * read a stale popup from a previous borrower. No retry is performed here.
      */
     public static void clickCardArrowFast(WebDriver driver, WebElement card) {
         try {
@@ -85,7 +87,10 @@ public class UIElementHandler {
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.jipznm"))
             );
         } catch (Exception e) {
-            logger.info("Card arrow click/wait failed: {}", e.getMessage());
+            throw new IllegalStateException(
+                "Borrower popup could not be opened safely; aborting borrower processing to avoid parsing stale data",
+                e
+            );
         }
     }
 
@@ -122,7 +127,11 @@ public class UIElementHandler {
     }
 
     /**
-     * Click "Add Loan" button with minimal wait
+     * Click "Add Loan" exactly once and fail if Selenium cannot perform the click.
+     *
+     * Critical safety rule: callers reserve wallet and record a borrower as selected only
+     * after this method returns. Swallowing a click failure would therefore create a false
+     * local investment state. This method intentionally does not retry the financial action.
      */
     public static void clickAddLoanButton(WebDriver driver) {
         try {
@@ -133,7 +142,10 @@ public class UIElementHandler {
             );
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addLoanBtn);
         } catch (Exception e) {
-            logger.info("Failed to click Add Loan button: {}", e.getMessage());
+            throw new IllegalStateException(
+                "Add Loan could not be clicked safely; no wallet reservation or selection must be recorded",
+                e
+            );
         }
     }
 
