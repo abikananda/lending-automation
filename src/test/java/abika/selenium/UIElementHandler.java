@@ -16,8 +16,11 @@ public class UIElementHandler {
     private static final Logger logger = LoggerFactory.getLogger(UIElementHandler.class);
 
     /**
-     * Scroll to load more cards with explicit wait instead of hard-coded sleep
-     * Waits for new content to appear after scroll (more reliable than fixed delays)
+     * Scroll to load more cards.
+     *
+     * Important: this method only performs the scroll. BorrowerScraper already waits for
+     * the borrower card count to grow after calling this method, so waiting here as well
+     * duplicated the same synchronization and could add up to two seconds per retry.
      */
     public static void scrollToLoadMoreCards(WebDriver driver) {
         try {
@@ -32,72 +35,36 @@ public class UIElementHandler {
                     try {
                         scrollableContainer = driver.findElement(By.cssSelector("main, [role='main'], .MuiContainer-root"));
                     } catch (Exception e3) {
-                        // Last resort: scroll window with explicit wait for content
                         ((JavascriptExecutor) driver).executeScript(
                             "window.scrollBy(0, window.innerHeight * 0.8);"
                         );
-                        
-                        // Wait for new content to load (explicit wait instead of sleep)
-                        try {
-                            WebDriverWaitManager.getShortWait().until(
-                                d -> {
-                                    Long newHeight = (Long) ((JavascriptExecutor) d).executeScript("return document.body.scrollHeight;");
-                                    return newHeight != null && newHeight > 0;
-                                }
-                            );
-                        } catch (TimeoutException e) {
-                            logger.debug("Timeout waiting for content after scroll");
-                        }
                         return;
                     }
                 }
             }
 
             if (scrollableContainer != null) {
-                final WebElement container = scrollableContainer;  // Make final for lambda
-                
-                // Get current scroll position - safely handle Double/Long casting
                 Object scrollObj = ((JavascriptExecutor) driver).executeScript(
                     "return arguments[0].scrollTop;",
-                    container
+                    scrollableContainer
                 );
                 long currentScroll = WebDriverWaitManager.safeCastToLong(scrollObj);
 
-                // Scroll down
                 ((JavascriptExecutor) driver).executeScript(
                     "arguments[0].scrollTop += arguments[0].clientHeight * 0.8;",
-                    container
+                    scrollableContainer
                 );
 
-                // Wait for scroll animation to complete and new content to appear (explicit wait instead of sleep)
-                try {
-                    final long previousScroll = currentScroll;  // Make final for lambda
-                    
-                    WebDriverWaitManager.getShortWait().until(
-                        d -> {
-                            Object newScrollObj = ((JavascriptExecutor) d).executeScript(
-                                "return arguments[0].scrollTop;",
-                                container
-                            );
-                            long newScroll = WebDriverWaitManager.safeCastToLong(newScrollObj);
-                            return newScroll > previousScroll;  // Wait for scroll to actually move
-                        }
-                    );
-                } catch (TimeoutException e) {
-                    logger.debug("Timeout waiting for scroll to complete");
-                }
-
-                // Final verification
                 Object newScrollObj = ((JavascriptExecutor) driver).executeScript(
                     "return arguments[0].scrollTop;",
-                    container
+                    scrollableContainer
                 );
                 long newScroll = WebDriverWaitManager.safeCastToLong(newScrollObj);
 
                 if (newScroll > currentScroll) {
-                    logger.info("✅ Scrolled successfully. Previous position: {}, New position: {}", currentScroll, newScroll);
+                    logger.debug("Scrolled borrower container. Previous position: {}, New position: {}", currentScroll, newScroll);
                 } else {
-                    logger.info("⚠️ Scroll may not have worked. Position unchanged: {}", currentScroll);
+                    logger.debug("Scroll position unchanged immediately after scroll request: {}", currentScroll);
                 }
             }
         } catch (Exception e) {
@@ -113,7 +80,6 @@ public class UIElementHandler {
         try {
             WebElement arrow = card.findElement(By.cssSelector("div[aria-label='View borrower details']"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", arrow);
-            // Removed Thread.sleep(20) - JS click is instant, scroll animation handles timing
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrow);
             WebDriverWaitManager.getShortWait().until(
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.jipznm"))
@@ -124,24 +90,29 @@ public class UIElementHandler {
     }
 
     /**
-     * Close popup fast - optimized for speed
-     * Uses UltraShortWait and moves on quickly if timeout (popup likely already closing)
+     * Close popup fast while still preserving the existing fail-open behavior.
+     * A 50ms-polling wait detects normal transitions much sooner than Selenium's default
+     * polling interval. If the fast wait misses a slower animation, retain the previous
+     * ultra-short wait before moving on.
      */
     public static void closePopupFast(WebDriver driver) {
+        By popupLocator = By.cssSelector("div.sc-dtBdUo.jipznm");
         try {
             WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.jipznm svg"));
-            // Use JavaScript click for instant execution
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeBtn);
-            
-            // Use ultra-short wait with shorter timeout for faster throughput
-            // If popup doesn't close quickly, still proceed (it's closing in background)
+
             try {
-                WebDriverWaitManager.getUltraShortWait().until(
-                    ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.jipznm"))
+                WebDriverWaitManager.getFastWait().until(
+                    ExpectedConditions.invisibilityOfElementLocated(popupLocator)
                 );
-            } catch (TimeoutException e) {
-                // Popup is likely closing in background, don't wait for it
-                logger.debug("Popup close timeout - proceeding anyway (popup closing in background)");
+            } catch (TimeoutException fastTimeout) {
+                try {
+                    WebDriverWaitManager.getUltraShortWait().until(
+                        ExpectedConditions.invisibilityOfElementLocated(popupLocator)
+                    );
+                } catch (TimeoutException e) {
+                    logger.debug("Popup close timeout - proceeding with existing behavior (popup may still be closing)");
+                }
             }
         } catch (NoSuchElementException e) {
             logger.debug("Close button not found - popup likely already closed");
@@ -167,7 +138,9 @@ public class UIElementHandler {
     }
 
     /**
-     * Expand a panel using fast JavaScript click
+     * Expand a panel using fast JavaScript click.
+     * Replaces the fixed 150ms sleep with condition-based waiting. On an unusually slow
+     * transition, the previous 150ms fallback is retained so reliability is not reduced.
      */
     public static void expandPanelFast(WebDriver driver, String panelHeader) {
         try {
@@ -178,7 +151,14 @@ public class UIElementHandler {
 
             if ("false".equals(ariaExpanded)) {
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
-                Thread.sleep(150);
+                try {
+                    WebDriverWaitManager.getFastWait().until(
+                        ExpectedConditions.attributeToBe(buttonLocator, "aria-expanded", "true")
+                    );
+                } catch (TimeoutException e) {
+                    logger.debug("Panel {} did not report expanded within fast wait; applying compatibility delay", panelHeader);
+                    Thread.sleep(150);
+                }
             }
         } catch (Exception e) {
             logger.debug("Could not expand panel {}: {}", panelHeader, e.getMessage());
@@ -283,4 +263,3 @@ public class UIElementHandler {
         }
     }
 }
-
