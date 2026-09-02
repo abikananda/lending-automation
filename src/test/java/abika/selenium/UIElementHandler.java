@@ -117,7 +117,10 @@ public class UIElementHandler {
             }
 
             WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.hHvdph svg"));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeBtn);
+            ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window}));",
+                closeBtn
+            );
 
             try {
                 WebDriverWaitManager.getFastWait().until(
