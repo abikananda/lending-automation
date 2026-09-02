@@ -72,6 +72,15 @@ public class P2PAutomation {
                         logger.error("Rule '{}' failed: {}", rule, e.getMessage(), e);
                         metrics.setTotalRulesFailed(metrics.getTotalRulesFailed() + 1);
                         metrics.addError(rule + ": " + e.getMessage());
+
+                        // A failed rule can leave the browser in an uncertain lending state
+                        // (for example, one or more borrowers may already be selected but the
+                        // rule may not have reached finalization). Do not attempt later rules
+                        // in that same browser session.
+                        throw new IllegalStateException(
+                                "Aborting remaining rules after fatal failure in '" + rule + "' to avoid reusing uncertain browser state",
+                                e
+                        );
                     }
                 } else {
                     System.out.println("Wallet balance remaining is " + investment.getWalletAmount());
@@ -124,5 +133,3 @@ public class P2PAutomation {
         return investment;
     }
 }
-
-

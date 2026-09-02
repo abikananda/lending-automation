@@ -10,7 +10,7 @@ import java.time.Duration;
  */
 public class WebDriverWaitManager {
     public static final int LONG_TIMEOUT = 10;
-    public static final int SHORT_TIMEOUT = 2;
+    public static final int SHORT_TIMEOUT = 5;
     public static final int ULTRA_SHORT_TIMEOUT = 1;
     public static final int MAX_RETRIES = 12;
     public static final long FAST_TIMEOUT_MS = 500;
