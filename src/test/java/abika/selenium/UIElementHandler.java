@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class UIElementHandler {
     private static final Logger logger = LoggerFactory.getLogger(UIElementHandler.class);
+    private static final By BORROWER_POPUP = By.cssSelector("div.sc-dtBdUo.hHvdph");
 
     /**
      * Scroll to load more cards.
@@ -73,18 +74,25 @@ public class UIElementHandler {
     }
 
     /**
-     * Click a borrower card arrow and require the borrower popup to become visible.
+     * Click a borrower card arrow only when no previous borrower popup remains visible,
+     * then require the new borrower popup to become visible.
      *
-     * This is fail-safe because continuing after a failed/open-timeout could make the parser
-     * read a stale popup from a previous borrower. No retry is performed here.
+     * No retry is performed. If a previous popup is still present, processing aborts
+     * before another borrower can be opened or parsed.
      */
     public static void clickCardArrowFast(WebDriver driver, WebElement card) {
         try {
+            if (!driver.findElements(BORROWER_POPUP).isEmpty()) {
+                throw new IllegalStateException(
+                    "Previous borrower popup is still present; refusing to open the next borrower"
+                );
+            }
+
             WebElement arrow = card.findElement(By.cssSelector("div[aria-label='View borrower details']"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", arrow);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrow);
             WebDriverWaitManager.getShortWait().until(
-                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.hHvdph"))
+                ExpectedConditions.visibilityOfElementLocated(BORROWER_POPUP)
             );
         } catch (Exception e) {
             throw new IllegalStateException(
@@ -95,34 +103,56 @@ public class UIElementHandler {
     }
 
     /**
-     * Close popup fast while still preserving the existing fail-open behavior.
-     * A 50ms-polling wait detects normal transitions much sooner than Selenium's default
-     * polling interval. If the fast wait misses a slower animation, retain the previous
-     * ultra-short wait before moving on.
+     * Close the borrower popup and require it to be fully gone before returning.
+     *
+     * Critical safety rule: the next borrower must never be processed while the previous
+     * popup is still present. If the popup does not disappear within the configured waits,
+     * fail closed and abort the workflow instead of proceeding with stale UI state.
      */
     public static void closePopupFast(WebDriver driver) {
-        By popupLocator = By.cssSelector("div.sc-dtBdUo.hHvdph");
         try {
+            List<WebElement> popups = driver.findElements(BORROWER_POPUP);
+            if (popups.isEmpty()) {
+                return;
+            }
+
             WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.hHvdph svg"));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeBtn);
 
             try {
                 WebDriverWaitManager.getFastWait().until(
-                    ExpectedConditions.invisibilityOfElementLocated(popupLocator)
+                    ExpectedConditions.invisibilityOfElementLocated(BORROWER_POPUP)
                 );
             } catch (TimeoutException fastTimeout) {
-                try {
-                    WebDriverWaitManager.getUltraShortWait().until(
-                        ExpectedConditions.invisibilityOfElementLocated(popupLocator)
-                    );
-                } catch (TimeoutException e) {
-                    logger.debug("Popup close timeout - proceeding with existing behavior (popup may still be closing)");
-                }
+                WebDriverWaitManager.getUltraShortWait().until(
+                    ExpectedConditions.invisibilityOfElementLocated(BORROWER_POPUP)
+                );
             }
+
+            if (!driver.findElements(BORROWER_POPUP).isEmpty()) {
+                throw new IllegalStateException(
+                    "Borrower popup is still present after close confirmation; aborting before next borrower"
+                );
+            }
+        } catch (TimeoutException e) {
+            throw new IllegalStateException(
+                "Borrower popup did not fully close; aborting before next borrower to prevent stale-popup reuse",
+                e
+            );
         } catch (NoSuchElementException e) {
-            logger.debug("Close button not found - popup likely already closed");
+            if (!driver.findElements(BORROWER_POPUP).isEmpty()) {
+                throw new IllegalStateException(
+                    "Borrower popup is visible but close control was not found; aborting before next borrower",
+                    e
+                );
+            }
+        } catch (IllegalStateException e) {
+            throw e;
         } catch (Exception e) {
-            logger.debug("Error closing popup: {}", e.getMessage());
+            throw new IllegalStateException(
+                "Borrower popup close failed; aborting before next borrower to prevent stale-popup reuse",
+                e
+            );
         }
     }
 
