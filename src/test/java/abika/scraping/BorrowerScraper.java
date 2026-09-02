@@ -77,10 +77,9 @@ public class BorrowerScraper {
         Set<String> seenLoanIds = new HashSet<>();
         By cardLocator = By.cssSelector("div.MuiBox-root.css-79elbk");
 
-        // Fetch cards once per batch. Individual card elements are reused until Selenium
-        // reports that the virtualized list has made them stale; only then is the list refreshed.
+        // LenDenClub virtualizes the borrower list, so the number of DOM cards is not
+        // monotonic and cannot be used to decide whether the end of the list was reached.
         List<WebElement> allCards = new ArrayList<>();
-        int previousCardCount = 0;
 
         for (int retry = 0; retry < WebDriverWaitManager.MAX_RETRIES; retry++) {
 
@@ -93,34 +92,31 @@ public class BorrowerScraper {
                 break;
             }
 
-            // Auto-scroll to load more cards before processing. The helper only performs
-            // the scroll; synchronization happens once below by waiting for card-count growth.
             MethodTimer scrollTimer = new MethodTimer("scrollToLoadMoreCards (Retry " + (retry + 1) + ")");
             UIElementHandler.scrollToLoadMoreCards(driver);
             scrollTimer.end();
 
-            // Wait for new cards to appear after scroll.
-            MethodTimer cardWaitTimer = new MethodTimer("Waiting for cards to load");
+            // Wait for at least one currently rendered borrower that has not already been
+            // processed. Card count cannot be used here because virtualized batches can keep
+            // the same size while their borrower identities change.
+            MethodTimer cardWaitTimer = new MethodTimer("Waiting for unseen borrower cards");
             try {
-                final int prevCardCount = previousCardCount;
-                WebDriverWaitManager.getShortWait().until(
-                    driver1 -> driver1.findElements(cardLocator).size() > prevCardCount
+                WebDriverWaitManager.getShortWait().until(driver1 ->
+                        hasUnseenOrUncertainBorrowerCard(driver1.findElements(cardLocator), seenCards)
                 );
             } catch (TimeoutException e) {
-                logger.info("No new cards appeared after scroll (reached end of list)");
+                logger.info("No unseen borrower cards appeared after scroll; checking rendered batch before ending retries");
             }
             cardWaitTimer.end();
 
             // Batch-fetch cards once per retry.
             allCards = driver.findElements(cardLocator);
-            logger.info("Found {} total cards after scroll (retry {})", allCards.size(), retry + 1);
+            logger.info("Found {} rendered cards after scroll (retry {})", allCards.size(), retry + 1);
 
-            if (allCards.size() == previousCardCount) {
-                logger.info("✅ No new cards loaded. Ending retries.");
+            if (!hasUnseenOrUncertainBorrowerCard(allCards, seenCards)) {
+                logger.info("✅ All currently rendered borrower cards were already processed. Ending retries.");
                 break;
             }
-
-            previousCardCount = allCards.size();
 
             MethodTimer processCardsTimer = new MethodTimer("Processing cards batch (Retry " + (retry + 1) + ")");
 
@@ -157,19 +153,14 @@ public class BorrowerScraper {
                 seenCards.add(borrowerName);
                 logger.info("{}-Opening borrower: {}", i + 1, borrowerName);
 
-                // Click card arrow and get popup reference
                 MethodTimer cardClickTimer = new MethodTimer("clickCardArrowFast - " + borrowerName);
                 UIElementHandler.clickCardArrowFast(driver, card);
                 cardClickTimer.end();
 
-                // Parse borrower details while popup is loading
                 MethodTimer parseTimer = new MethodTimer("parseBorrowerDetails - " + borrowerName);
                 Borrower borrower = BorrowerDetailParser.parseBorrowerDetails(driver);
                 parseTimer.end();
 
-                // Financial safety invariant: the popup must belong to the card that was opened.
-                // If LenDenClub/Selenium leaves stale popup content visible, do not evaluate rules
-                // or click Add Loan for the wrong borrower.
                 try {
                     validateBorrowerIdentity(borrowerName, borrower, seenLoanIds);
                 } catch (IllegalStateException identityError) {
@@ -203,10 +194,8 @@ public class BorrowerScraper {
 
                 printBorrower(borrower);
 
-                // Pre-evaluate rule conditions to capture failing condition reasons
                 String failReason = com.abika.utils.RuleConditionEvaluator.evaluate(borrower, investment.getRuleName());
                 if (failReason != null) {
-                    // Record failure reason in metrics
                     com.abika.reporting.ExecutionMetrics.BorrowerRecord rec = new com.abika.reporting.ExecutionMetrics.BorrowerRecord(
                             investment.getRuleName(), borrower.getName(), borrower.getLoanAmount());
                     rec.setStatus("FAILED");
@@ -229,14 +218,12 @@ public class BorrowerScraper {
                 if (fired) {
                     logger.info("✅ Rule fired for: {}. LendingAmount: {}", borrower.getName(), borrower.getLendingAmount());
 
-                    // Click "Add Loan" button with reduced wait
                     MethodTimer addLoanTimer = new MethodTimer("clickAddLoanButton - " + borrowerName);
                     UIElementHandler.clickAddLoanButton(driver);
                     addLoanTimer.end();
 
                     investment.setLendAmtPerLoan((int) borrower.getLendingAmount());
                     investment.setLoanCounts(investment.getLoanCounts() + 1);
-                    // Reserve amount instead of deducting immediately. Actual wallet deduction happens after successful lending.
                     investment.setReservedAmount(investment.getReservedAmount() + borrower.getLendingAmount());
 
                     borrowerList.add(borrower);
@@ -244,14 +231,12 @@ public class BorrowerScraper {
                     logger.info("Number of Loans Selected: {} of rule type: {}",
                             investment.getLoanCounts(), investment.getRuleName());
 
-                    // Add borrower record as SELECTED for metrics
                     com.abika.reporting.ExecutionMetrics.BorrowerRecord rec = new com.abika.reporting.ExecutionMetrics.BorrowerRecord(
                             investment.getRuleName(), borrower.getName(), borrower.getLoanAmount());
                     rec.setStatus("SELECTED");
                     rec.setSelectionTimeMs(System.currentTimeMillis());
                     metrics.addBorrowerRecord(rec);
 
-                    // Close popup after adding loan
                     MethodTimer closeTimer = new MethodTimer("closePopupFast - After Add Loan");
                     UIElementHandler.closePopupFast(driver);
                     closeTimer.end();
@@ -261,7 +246,6 @@ public class BorrowerScraper {
                     closeTimer.end();
                     logger.info("❌ Rule not fired for: {}. Popup closed.", borrower.getName());
 
-                    // Record as failed with generic reason
                     com.abika.reporting.ExecutionMetrics.BorrowerRecord rec = new com.abika.reporting.ExecutionMetrics.BorrowerRecord(
                             investment.getRuleName(), borrower.getName(), borrower.getLoanAmount());
                     rec.setStatus("FAILED");
@@ -272,7 +256,7 @@ public class BorrowerScraper {
             }
 
             processCardsTimer.end();
-            logger.info("📊 Retry {} completed: processed {} total borrowers this batch",
+            logger.info("📊 Retry {} completed: processed {} unique borrowers so far",
                     retry + 1, seenCards.size());
         }
 
@@ -281,6 +265,38 @@ public class BorrowerScraper {
         long duration = System.currentTimeMillis() - startTime;
         logger.info("Loan list popup open for: {} minutes",
                 String.format("%.2f", duration / (1000.0 * 60)));
+    }
+
+    /**
+     * Return true when the rendered batch contains an unseen borrower, or when the DOM is
+     * too unstable to safely conclude that the end of the list has been reached.
+     *
+     * Returning true on stale/unreadable batches is intentional: it may cost one extra retry,
+     * but it avoids prematurely stopping and missing borrowers in a virtualized list.
+     */
+    private static boolean hasUnseenOrUncertainBorrowerCard(List<WebElement> cards, Set<String> seenCards) {
+        if (cards == null || cards.isEmpty()) {
+            return false;
+        }
+
+        boolean readableCardFound = false;
+        for (WebElement card : cards) {
+            try {
+                String borrowerName = extractBorrowerName(card);
+                if (borrowerName == null || borrowerName.isEmpty()) {
+                    continue;
+                }
+
+                readableCardFound = true;
+                if (!seenCards.contains(borrowerName)) {
+                    return true;
+                }
+            } catch (StaleElementReferenceException stale) {
+                return true;
+            }
+        }
+
+        return !readableCardFound;
     }
 
     private static String extractBorrowerName(WebElement card) {
