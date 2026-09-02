@@ -74,6 +74,7 @@ public class BorrowerScraper {
         long startTime = System.currentTimeMillis();
 
         Set<String> seenCards = new HashSet<>();
+        Set<String> seenLoanIds = new HashSet<>();
         By cardLocator = By.cssSelector("div.MuiBox-root.css-79elbk");
 
         // Fetch cards once per batch. Individual card elements are reused until Selenium
@@ -165,6 +166,17 @@ public class BorrowerScraper {
                 MethodTimer parseTimer = new MethodTimer("parseBorrowerDetails - " + borrowerName);
                 Borrower borrower = BorrowerDetailParser.parseBorrowerDetails(driver);
                 parseTimer.end();
+
+                // Financial safety invariant: the popup must belong to the card that was opened.
+                // If LenDenClub/Selenium leaves stale popup content visible, do not evaluate rules
+                // or click Add Loan for the wrong borrower.
+                try {
+                    validateBorrowerIdentity(borrowerName, borrower, seenLoanIds);
+                } catch (IllegalStateException identityError) {
+                    logger.error("CRITICAL borrower identity mismatch; aborting scrape: {}", identityError.getMessage());
+                    UIElementHandler.closePopupFast(driver);
+                    throw identityError;
+                }
 
                 if (npaBorrowers.contains(borrower.getName())) {
                     npaBorrowersInCurrentRun.add(borrower.getName());
@@ -289,6 +301,37 @@ public class BorrowerScraper {
                 return null;
             }
         }
+    }
+
+    private static void validateBorrowerIdentity(String cardBorrowerName, Borrower borrower, Set<String> seenLoanIds) {
+        if (borrower == null) {
+            throw new IllegalStateException("Borrower parser returned null for card '" + cardBorrowerName + "'");
+        }
+
+        String popupBorrowerName = borrower.getName();
+        if (popupBorrowerName == null || popupBorrowerName.isBlank()) {
+            throw new IllegalStateException("Popup borrower name is missing for card '" + cardBorrowerName + "'");
+        }
+
+        if (!normalizeBorrowerName(cardBorrowerName).equalsIgnoreCase(normalizeBorrowerName(popupBorrowerName))) {
+            throw new IllegalStateException(
+                    "card borrower '" + cardBorrowerName + "' != popup borrower '" + popupBorrowerName
+                            + "' (loanId=" + borrower.getLoanId() + ")");
+        }
+
+        String loanId = borrower.getLoanId();
+        if (loanId == null || loanId.isBlank()) {
+            throw new IllegalStateException("Popup loanId is missing for borrower '" + popupBorrowerName + "'");
+        }
+
+        if (!seenLoanIds.add(loanId.trim())) {
+            throw new IllegalStateException(
+                    "duplicate loanId '" + loanId + "' encountered again for borrower '" + popupBorrowerName + "'");
+        }
+    }
+
+    private static String normalizeBorrowerName(String name) {
+        return name == null ? "" : name.trim().replaceAll("\\s+", " ");
     }
 
     /**
