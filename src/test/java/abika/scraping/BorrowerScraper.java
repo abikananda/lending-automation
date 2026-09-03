@@ -29,6 +29,7 @@ import org.openqa.selenium.TimeoutException;
 public class BorrowerScraper {
     private static final Logger logger = LoggerFactory.getLogger(BorrowerScraper.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final By BORROWER_POPUP = By.cssSelector("div.sc-dtBdUo.hHvdph");
 
     /**
      * Scrape and process borrowers from the loan list
@@ -151,12 +152,13 @@ public class BorrowerScraper {
 
                 logger.info("{}-Opening borrower: {}", i + 1, borrowerName);
 
-                // Card elements can become stale between reading the borrower name and finding
-                // the arrow because LenDenClub rerenders/virtualizes the list. That is a safe,
-                // non-financial failure to recover from: re-resolve the same borrower by name
-                // from the current DOM and retry opening the popup once. Add Loan is never retried.
+                // Recover only from clearly non-financial UI failures before a borrower popup
+                // has opened. A stale card is re-resolved by borrower name. A popup visibility
+                // timeout first gets a second observation window with NO click; only if no popup
+                // exists after that grace window is the same borrower card re-resolved and clicked
+                // once more. Add Loan and finalization actions are never retried here.
                 MethodTimer cardClickTimer = new MethodTimer("clickCardArrowFast - " + borrowerName);
-                boolean popupOpened = openBorrowerPopupWithStaleRecovery(driver, cardLocator, borrowerName, card);
+                boolean popupOpened = openBorrowerPopupWithSafeRecovery(driver, cardLocator, borrowerName, card);
                 cardClickTimer.end();
                 if (!popupOpened) {
                     logger.info("Borrower card rerendered out of the current batch before popup open; deferring borrower '{}' to a later retry", borrowerName);
@@ -278,40 +280,106 @@ public class BorrowerScraper {
     }
 
     /**
-     * Open the borrower popup, recovering once when the card reference became stale before
-     * the click. A stale card is caused by the virtualized list rerendering and is safe to
-     * retry because no borrower popup or financial action has occurred yet.
+     * Open a borrower popup with bounded recovery for two known virtualized-list UI races:
+     * stale card references and a popup that does not become visible within the initial wait.
      *
-     * @return true when the popup opened; false when the same borrower is no longer rendered
-     *         after a stale rerender and should be rediscovered in a later batch.
+     * A timeout is not immediately re-clicked. We first wait another short window without any
+     * interaction. If the popup appears late, processing continues with that popup. Only when no
+     * popup element exists after the grace window do we reacquire the same borrower and click once
+     * more. Any ambiguous popup state or second non-stale failure remains fatal.
+     *
+     * @return true when the popup opened; false when the same borrower is no longer rendered and
+     *         should be rediscovered in a later batch.
      */
-    private static boolean openBorrowerPopupWithStaleRecovery(
+    private static boolean openBorrowerPopupWithSafeRecovery(
             WebDriver driver, By cardLocator, String borrowerName, WebElement initialCard) {
         try {
             UIElementHandler.clickCardArrowFast(driver, initialCard);
             return true;
         } catch (IllegalStateException firstFailure) {
-            if (!hasCause(firstFailure, StaleElementReferenceException.class)) {
-                throw firstFailure;
-            }
-
-            logger.info("Borrower card became stale before popup open for '{}'; refreshing card and retrying non-financial open once", borrowerName);
-            WebElement refreshedCard = findRenderedCardByBorrowerName(driver.findElements(cardLocator), borrowerName);
-            if (refreshedCard == null) {
-                return false;
-            }
-
-            try {
-                UIElementHandler.clickCardArrowFast(driver, refreshedCard);
-                return true;
-            } catch (IllegalStateException secondFailure) {
-                if (hasCause(secondFailure, StaleElementReferenceException.class)) {
-                    logger.info("Borrower card became stale again before popup open for '{}'; deferring to a later retry", borrowerName);
+            if (hasCause(firstFailure, StaleElementReferenceException.class)) {
+                logger.info("Borrower card became stale before popup open for '{}'; refreshing card and retrying non-financial open once", borrowerName);
+                WebElement refreshedCard = findRenderedCardByBorrowerName(driver.findElements(cardLocator), borrowerName);
+                if (refreshedCard == null) {
                     return false;
                 }
-                throw secondFailure;
+                return openRefreshedCardWithTimeoutRecovery(driver, cardLocator, borrowerName, refreshedCard);
+            }
+
+            if (hasCause(firstFailure, TimeoutException.class)) {
+                return recoverFromPopupOpenTimeout(driver, cardLocator, borrowerName);
+            }
+
+            throw firstFailure;
+        }
+    }
+
+    private static boolean openRefreshedCardWithTimeoutRecovery(
+            WebDriver driver, By cardLocator, String borrowerName, WebElement refreshedCard) {
+        try {
+            UIElementHandler.clickCardArrowFast(driver, refreshedCard);
+            return true;
+        } catch (IllegalStateException secondFailure) {
+            if (hasCause(secondFailure, StaleElementReferenceException.class)) {
+                logger.info("Borrower card became stale again before popup open for '{}'; deferring to a later retry", borrowerName);
+                return false;
+            }
+            if (hasCause(secondFailure, TimeoutException.class)) {
+                return recoverFromPopupOpenTimeout(driver, cardLocator, borrowerName);
+            }
+            throw secondFailure;
+        }
+    }
+
+    private static boolean recoverFromPopupOpenTimeout(
+            WebDriver driver, By cardLocator, String borrowerName) {
+        logger.info("Borrower popup not visible within initial wait for '{}'; waiting once more without clicking", borrowerName);
+
+        try {
+            WebDriverWaitManager.getShortWait().until(BorrowerScraper::isBorrowerPopupVisible);
+            logger.info("Borrower popup for '{}' became visible during grace wait; continuing without retry click", borrowerName);
+            return true;
+        } catch (TimeoutException graceTimeout) {
+            // Continue only if the DOM is unambiguous: no borrower popup element at all.
+        }
+
+        List<WebElement> popupElements = driver.findElements(BORROWER_POPUP);
+        if (!popupElements.isEmpty()) {
+            throw new IllegalStateException(
+                    "Borrower popup element exists after open timeout but is not safely visible; aborting to avoid a delayed double-click"
+            );
+        }
+
+        WebElement refreshedCard = findRenderedCardByBorrowerName(driver.findElements(cardLocator), borrowerName);
+        if (refreshedCard == null) {
+            logger.info("Borrower '{}' is no longer rendered after popup timeout; deferring to a later retry", borrowerName);
+            return false;
+        }
+
+        logger.info("No borrower popup appeared for '{}' after grace wait; retrying the non-financial popup open once with a refreshed card", borrowerName);
+        try {
+            UIElementHandler.clickCardArrowFast(driver, refreshedCard);
+            return true;
+        } catch (IllegalStateException retryFailure) {
+            if (hasCause(retryFailure, StaleElementReferenceException.class)) {
+                logger.info("Borrower card became stale during timeout recovery for '{}'; deferring to a later retry", borrowerName);
+                return false;
+            }
+            throw retryFailure;
+        }
+    }
+
+    private static boolean isBorrowerPopupVisible(WebDriver driver) {
+        for (WebElement popup : driver.findElements(BORROWER_POPUP)) {
+            try {
+                if (popup.isDisplayed()) {
+                    return true;
+                }
+            } catch (StaleElementReferenceException ignored) {
+                // The popup DOM is transitioning; keep waiting for a stable visible popup.
             }
         }
+        return false;
     }
 
     private static WebElement findRenderedCardByBorrowerName(List<WebElement> cards, String borrowerName) {
