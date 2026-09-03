@@ -145,17 +145,27 @@ public class BorrowerScraper {
                     borrowerName = extractBorrowerName(card);
                 }
 
-                // Keep the existing borrower-name identity logic unchanged.
                 if (borrowerName == null || borrowerName.isEmpty() || seenCards.contains(borrowerName)) {
                     continue;
                 }
 
-                seenCards.add(borrowerName);
                 logger.info("{}-Opening borrower: {}", i + 1, borrowerName);
 
+                // Card elements can become stale between reading the borrower name and finding
+                // the arrow because LenDenClub rerenders/virtualizes the list. That is a safe,
+                // non-financial failure to recover from: re-resolve the same borrower by name
+                // from the current DOM and retry opening the popup once. Add Loan is never retried.
                 MethodTimer cardClickTimer = new MethodTimer("clickCardArrowFast - " + borrowerName);
-                UIElementHandler.clickCardArrowFast(driver, card);
+                boolean popupOpened = openBorrowerPopupWithStaleRecovery(driver, cardLocator, borrowerName, card);
                 cardClickTimer.end();
+                if (!popupOpened) {
+                    logger.info("Borrower card rerendered out of the current batch before popup open; deferring borrower '{}' to a later retry", borrowerName);
+                    continue;
+                }
+
+                // Mark the card seen only after the popup actually opens. If virtualization made
+                // the card stale before opening, it remains eligible to be rediscovered later.
+                seenCards.add(borrowerName);
 
                 MethodTimer parseTimer = new MethodTimer("parseBorrowerDetails - " + borrowerName);
                 Borrower borrower = BorrowerDetailParser.parseBorrowerDetails(driver);
@@ -265,6 +275,72 @@ public class BorrowerScraper {
         long duration = System.currentTimeMillis() - startTime;
         logger.info("Loan list popup open for: {} minutes",
                 String.format("%.2f", duration / (1000.0 * 60)));
+    }
+
+    /**
+     * Open the borrower popup, recovering once when the card reference became stale before
+     * the click. A stale card is caused by the virtualized list rerendering and is safe to
+     * retry because no borrower popup or financial action has occurred yet.
+     *
+     * @return true when the popup opened; false when the same borrower is no longer rendered
+     *         after a stale rerender and should be rediscovered in a later batch.
+     */
+    private static boolean openBorrowerPopupWithStaleRecovery(
+            WebDriver driver, By cardLocator, String borrowerName, WebElement initialCard) {
+        try {
+            UIElementHandler.clickCardArrowFast(driver, initialCard);
+            return true;
+        } catch (IllegalStateException firstFailure) {
+            if (!hasCause(firstFailure, StaleElementReferenceException.class)) {
+                throw firstFailure;
+            }
+
+            logger.info("Borrower card became stale before popup open for '{}'; refreshing card and retrying non-financial open once", borrowerName);
+            WebElement refreshedCard = findRenderedCardByBorrowerName(driver.findElements(cardLocator), borrowerName);
+            if (refreshedCard == null) {
+                return false;
+            }
+
+            try {
+                UIElementHandler.clickCardArrowFast(driver, refreshedCard);
+                return true;
+            } catch (IllegalStateException secondFailure) {
+                if (hasCause(secondFailure, StaleElementReferenceException.class)) {
+                    logger.info("Borrower card became stale again before popup open for '{}'; deferring to a later retry", borrowerName);
+                    return false;
+                }
+                throw secondFailure;
+            }
+        }
+    }
+
+    private static WebElement findRenderedCardByBorrowerName(List<WebElement> cards, String borrowerName) {
+        if (cards == null || borrowerName == null) {
+            return null;
+        }
+
+        for (WebElement candidate : cards) {
+            try {
+                String candidateName = extractBorrowerName(candidate);
+                if (normalizeBorrowerName(borrowerName).equalsIgnoreCase(normalizeBorrowerName(candidateName))) {
+                    return candidate;
+                }
+            } catch (StaleElementReferenceException ignored) {
+                // Keep looking through the fresh rendered batch.
+            }
+        }
+        return null;
+    }
+
+    private static boolean hasCause(Throwable error, Class<? extends Throwable> causeType) {
+        Throwable current = error;
+        while (current != null) {
+            if (causeType.isInstance(current)) {
+                return true;
+            }
+            current = current.getCause();
+        }
+        return false;
     }
 
     /**
