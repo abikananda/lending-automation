@@ -7,6 +7,7 @@ import com.abika.utils.ConfigReader;
 import com.abika.utils.DroolsEngine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -30,6 +31,8 @@ public class BorrowerScraper {
     private static final Logger logger = LoggerFactory.getLogger(BorrowerScraper.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final By BORROWER_POPUP = By.cssSelector("div.sc-dtBdUo.hHvdph");
+    private static final String PRIMARY_CARD_SELECTOR = "div.MuiBox-root.css-79elbk";
+    private static final String BORROWER_ARROW_SELECTOR = "div[aria-label='View borrower details']";
 
     /**
      * Scrape and process borrowers from the loan list
@@ -47,7 +50,6 @@ public class BorrowerScraper {
 
         MethodTimer overallTimer = new MethodTimer("scrapeAndProcessBorrowers");
 
-        // Load all NPA borrowers into HashSet for O(1) lookup (batch load instead of N+1 queries)
         MethodTimer npaBorrowersTimer = new MethodTimer("Loading NPA borrowers");
         Set<String> npaBorrowers = dbService.getNPABorrowersAsSet();
         npaBorrowersTimer.end();
@@ -56,37 +58,37 @@ public class BorrowerScraper {
             logger.warn("⚠️ WARNING: NPA Borrowers list is empty! No NPA borrowers to filter.");
         }
 
-        // Load all trusted borrowers into HashSet for O(1) lookup (batch load instead of N+1 queries)
         MethodTimer trustedBorrowersTimer = new MethodTimer("Loading trusted borrowers");
         Set<String> trustedBorrowers = dbService.getTrustedBorrowersAsSet();
         trustedBorrowersTimer.end();
         logger.info("📊 Total trusted borrowers loaded: {}", trustedBorrowers.size());
 
-        // Load currently lent borrowers
         MethodTimer currentlyLentTimer = new MethodTimer("Loading currently lent borrowers");
         Set<String> borrowersCurrentlyLent =
                 new HashSet<>(dbService.getCurrentlyLendedBorrowers(ConfigReader.get(activateUser + "user")));
         currentlyLentTimer.end();
         logger.info("📊 Currently lent borrowers: {}", borrowersCurrentlyLent.size());
 
-        // Cache the repeatedLoan config outside loop
         boolean repeatedLoanConfig = Boolean.parseBoolean(ConfigReader.get("repeatedLoan"));
-
         long startTime = System.currentTimeMillis();
 
         Set<String> seenCards = new HashSet<>();
         Set<String> seenLoanIds = new HashSet<>();
-        By cardLocator = By.cssSelector("div.MuiBox-root.css-79elbk");
-
-        // LenDenClub virtualizes the borrower list, so the number of DOM cards is not
-        // monotonic and cannot be used to decide whether the end of the list was reached.
+        By cardLocator = By.cssSelector(PRIMARY_CARD_SELECTOR);
         List<WebElement> allCards = new ArrayList<>();
+
+        // First batch is a page-readiness condition, not end-of-list detection. A transiently
+        // empty list or a generated MUI class change must never be interpreted as "all cards seen".
+        if (!waitForInitialBorrowerCards(driver)) {
+            throw new IllegalStateException(
+                    "Borrower list did not load: no borrower cards or 'View borrower details' controls became available"
+            );
+        }
 
         for (int retry = 0; retry < WebDriverWaitManager.MAX_RETRIES; retry++) {
 
             logger.info("retry: {}", retry + 1);
 
-            // Check available balance excluding reserved amount
             double available = investment.getWalletAmount() - (investment.getReservedAmount() == null ? 0.0 : investment.getReservedAmount());
             if (available < investment.getLendAmtPerLoan()) {
                 logger.info("Wallet balance insufficient (available: {}), stopping scrape.", available);
@@ -97,22 +99,28 @@ public class BorrowerScraper {
             UIElementHandler.scrollToLoadMoreCards(driver);
             scrollTimer.end();
 
-            // Wait for at least one currently rendered borrower that has not already been
-            // processed. Card count cannot be used here because virtualized batches can keep
-            // the same size while their borrower identities change.
             MethodTimer cardWaitTimer = new MethodTimer("Waiting for unseen borrower cards");
             try {
                 WebDriverWaitManager.getShortWait().until(driver1 ->
-                        hasUnseenOrUncertainBorrowerCard(driver1.findElements(cardLocator), seenCards)
+                        hasUnseenOrUncertainBorrowerCard(findBorrowerCards(driver1, cardLocator), seenCards)
                 );
             } catch (TimeoutException e) {
                 logger.info("No unseen borrower cards appeared after scroll; checking rendered batch before ending retries");
             }
             cardWaitTimer.end();
 
-            // Batch-fetch cards once per retry.
-            allCards = driver.findElements(cardLocator);
+            allCards = findBorrowerCards(driver, cardLocator);
             logger.info("Found {} rendered cards after scroll (retry {})", allCards.size(), retry + 1);
+
+            if (allCards.isEmpty()) {
+                if (seenCards.isEmpty()) {
+                    throw new IllegalStateException(
+                            "Borrower list became empty before any borrower was processed; refusing to treat this as end-of-list"
+                    );
+                }
+                logger.info("No borrower cards currently rendered after processing {} borrowers; ending retries", seenCards.size());
+                break;
+            }
 
             if (!hasUnseenOrUncertainBorrowerCard(allCards, seenCards)) {
                 logger.info("✅ All currently rendered borrower cards were already processed. Ending retries.");
@@ -123,7 +131,6 @@ public class BorrowerScraper {
 
             for (int i = 0; i < allCards.size(); i++) {
 
-                // Check available balance excluding reserved amount
                 double availableInner = investment.getWalletAmount() - (investment.getReservedAmount() == null ? 0.0 : investment.getReservedAmount());
                 if (availableInner < investment.getLendAmtPerLoan())
                     break;
@@ -136,11 +143,8 @@ public class BorrowerScraper {
                     card = allCards.get(i);
                     borrowerName = extractBorrowerName(card);
                 } catch (StaleElementReferenceException stale) {
-                    // LenDenClub virtualizes/rerenders the list after popup interaction.
-                    // Refresh only when staleness is real instead of doing a full DOM query
-                    // before every borrower.
                     logger.debug("Borrower card {} became stale; refreshing rendered card list", i);
-                    allCards = driver.findElements(cardLocator);
+                    allCards = findBorrowerCards(driver, cardLocator);
                     if (i >= allCards.size()) break;
                     card = allCards.get(i);
                     borrowerName = extractBorrowerName(card);
@@ -152,11 +156,6 @@ public class BorrowerScraper {
 
                 logger.info("{}-Opening borrower: {}", i + 1, borrowerName);
 
-                // Recover only from clearly non-financial UI failures before a borrower popup
-                // has opened. A stale card is re-resolved by borrower name. A popup visibility
-                // timeout first gets a second observation window with NO click; only if no popup
-                // exists after that grace window is the same borrower card re-resolved and clicked
-                // once more. Add Loan and finalization actions are never retried here.
                 MethodTimer cardClickTimer = new MethodTimer("clickCardArrowFast - " + borrowerName);
                 boolean popupOpened = openBorrowerPopupWithSafeRecovery(driver, cardLocator, borrowerName, card);
                 cardClickTimer.end();
@@ -165,8 +164,6 @@ public class BorrowerScraper {
                     continue;
                 }
 
-                // Mark the card seen only after the popup actually opens. If virtualization made
-                // the card stale before opening, it remains eligible to be rediscovered later.
                 seenCards.add(borrowerName);
 
                 MethodTimer parseTimer = new MethodTimer("parseBorrowerDetails - " + borrowerName);
@@ -279,18 +276,64 @@ public class BorrowerScraper {
                 String.format("%.2f", duration / (1000.0 * 60)));
     }
 
+    private static boolean waitForInitialBorrowerCards(WebDriver driver) {
+        try {
+            WebDriverWaitManager.getStandardWait().until(BorrowerScraper::hasBorrowerCardsInDom);
+            return true;
+        } catch (TimeoutException timeout) {
+            logger.error("Borrower list readiness timeout: no cards or borrower detail controls became available");
+            return false;
+        }
+    }
+
+    private static boolean hasBorrowerCardsInDom(WebDriver driver) {
+        Object count = ((JavascriptExecutor) driver).executeScript(
+                "return document.querySelectorAll(arguments[0]).length || document.querySelectorAll(arguments[1]).length;",
+                PRIMARY_CARD_SELECTOR,
+                BORROWER_ARROW_SELECTOR
+        );
+        return count instanceof Number && ((Number) count).intValue() > 0;
+    }
+
     /**
-     * Open a borrower popup with bounded recovery for two known virtualized-list UI races:
-     * stale card references and a popup that does not become visible within the initial wait.
-     *
-     * A timeout is not immediately re-clicked. We first wait another short window without any
-     * interaction. If the popup appears late, processing continues with that popup. Only when no
-     * popup element exists after the grace window do we reacquire the same borrower and click once
-     * more. Any ambiguous popup state or second non-stale failure remains fatal.
-     *
-     * @return true when the popup opened; false when the same borrower is no longer rendered and
-     *         should be rediscovered in a later batch.
+     * Prefer the fast historical card selector. If LenDenClub rotates its generated MUI class,
+     * recover cards from the stable borrower-details aria-label and walk up to the nearest
+     * MuiBox ancestor that also contains the borrower-name block.
      */
+    @SuppressWarnings("unchecked")
+    private static List<WebElement> findBorrowerCards(WebDriver driver, By primaryCardLocator) {
+        List<WebElement> primaryCards = driver.findElements(primaryCardLocator);
+        if (!primaryCards.isEmpty()) {
+            return primaryCards;
+        }
+
+        Object fallback = ((JavascriptExecutor) driver).executeScript(
+                "const arrows = Array.from(document.querySelectorAll(arguments[0]));" +
+                "const cards = []; const seen = new Set();" +
+                "for (const arrow of arrows) {" +
+                "  let node = arrow.parentElement;" +
+                "  while (node && node !== document.body) {" +
+                "    if (node.matches && node.matches('div.MuiBox-root') && node.querySelector('div.css-69i1ev p.MuiTypography-root')) {" +
+                "      if (!seen.has(node)) { seen.add(node); cards.push(node); }" +
+                "      break;" +
+                "    }" +
+                "    node = node.parentElement;" +
+                "  }" +
+                "}" +
+                "return cards;",
+                BORROWER_ARROW_SELECTOR
+        );
+
+        if (fallback instanceof List<?>) {
+            List<WebElement> fallbackCards = (List<WebElement>) fallback;
+            if (!fallbackCards.isEmpty()) {
+                logger.debug("Using stable aria-label fallback for {} borrower cards", fallbackCards.size());
+            }
+            return fallbackCards;
+        }
+        return new ArrayList<>();
+    }
+
     private static boolean openBorrowerPopupWithSafeRecovery(
             WebDriver driver, By cardLocator, String borrowerName, WebElement initialCard) {
         try {
@@ -299,7 +342,7 @@ public class BorrowerScraper {
         } catch (IllegalStateException firstFailure) {
             if (hasCause(firstFailure, StaleElementReferenceException.class)) {
                 logger.info("Borrower card became stale before popup open for '{}'; refreshing card and retrying non-financial open once", borrowerName);
-                WebElement refreshedCard = findRenderedCardByBorrowerName(driver.findElements(cardLocator), borrowerName);
+                WebElement refreshedCard = findRenderedCardByBorrowerName(findBorrowerCards(driver, cardLocator), borrowerName);
                 if (refreshedCard == null) {
                     return false;
                 }
@@ -350,7 +393,7 @@ public class BorrowerScraper {
             );
         }
 
-        WebElement refreshedCard = findRenderedCardByBorrowerName(driver.findElements(cardLocator), borrowerName);
+        WebElement refreshedCard = findRenderedCardByBorrowerName(findBorrowerCards(driver, cardLocator), borrowerName);
         if (refreshedCard == null) {
             logger.info("Borrower '{}' is no longer rendered after popup timeout; deferring to a later retry", borrowerName);
             return false;
@@ -411,13 +454,6 @@ public class BorrowerScraper {
         return false;
     }
 
-    /**
-     * Return true when the rendered batch contains an unseen borrower, or when the DOM is
-     * too unstable to safely conclude that the end of the list has been reached.
-     *
-     * Returning true on stale/unreadable batches is intentional: it may cost one extra retry,
-     * but it avoids prematurely stopping and missing borrowers in a virtualized list.
-     */
     private static boolean hasUnseenOrUncertainBorrowerCard(List<WebElement> cards, Set<String> seenCards) {
         if (cards == null || cards.isEmpty()) {
             return false;
@@ -494,10 +530,6 @@ public class BorrowerScraper {
         return name == null ? "" : name.trim().replaceAll("\\s+", " ");
     }
 
-    /**
-     * Print borrower details in JSON format for logging.
-     * Reuse the ObjectMapper to avoid rebuilding serialization metadata for every borrower.
-     */
     private static void printBorrower(Borrower borrower) {
         try {
             String json = OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(borrower);
