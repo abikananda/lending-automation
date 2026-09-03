@@ -14,7 +14,8 @@ import java.util.List;
  */
 public class UIElementHandler {
     private static final Logger logger = LoggerFactory.getLogger(UIElementHandler.class);
-    private static final By BORROWER_POPUP = By.cssSelector("div.sc-dtBdUo.hHvdph");
+    private static final String BORROWER_POPUP_SELECTOR = "div.sc-dtBdUo.hHvdph";
+    private static final By BORROWER_POPUP = By.cssSelector(BORROWER_POPUP_SELECTOR);
 
     /**
      * Scroll to load more cards.
@@ -74,26 +75,43 @@ public class UIElementHandler {
     }
 
     /**
-     * Click a borrower card arrow only when no previous borrower popup remains visible,
+     * Click a borrower card arrow only when no previous borrower popup remains present,
      * then require the new borrower popup to become visible.
      *
-     * No retry is performed. If a previous popup is still present, processing aborts
-     * before another borrower can be opened or parsed.
+     * The popup pre-check, arrow lookup, scroll and click are intentionally executed in one
+     * browser-side JavaScript call. This preserves the existing fail-closed behavior while
+     * avoiding several expensive WebDriver round trips for every borrower.
+     *
+     * No retry is performed here. BorrowerScraper owns the bounded non-financial recovery.
      */
     public static void clickCardArrowFast(WebDriver driver, WebElement card) {
         try {
-            if (!driver.findElements(BORROWER_POPUP).isEmpty()) {
+            Object result = ((JavascriptExecutor) driver).executeScript(
+                "const card = arguments[0];" +
+                "const popupSelector = arguments[1];" +
+                "if (document.querySelector(popupSelector)) return 'POPUP_PRESENT';" +
+                "const arrow = card.querySelector(\"div[aria-label='View borrower details']\");" +
+                "if (!arrow) return 'ARROW_MISSING';" +
+                "arrow.scrollIntoView({block: 'center'});" +
+                "arrow.click();" +
+                "return 'CLICKED';",
+                card,
+                BORROWER_POPUP_SELECTOR
+            );
+
+            String status = String.valueOf(result);
+            if ("POPUP_PRESENT".equals(status)) {
                 throw new IllegalStateException(
                     "Previous borrower popup is still present; refusing to open the next borrower"
                 );
             }
+            if (!"CLICKED".equals(status)) {
+                throw new NoSuchElementException("Borrower details arrow was not found in the current card");
+            }
 
-            WebElement arrow = card.findElement(By.cssSelector("div[aria-label='View borrower details']"));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", arrow);
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrow);
-            WebDriverWaitManager.getShortWait().until(
-                ExpectedConditions.visibilityOfElementLocated(BORROWER_POPUP)
-            );
+            WebDriverWaitManager.getShortWait().until(UIElementHandler::isBorrowerPopupVisibleFast);
+        } catch (IllegalStateException e) {
+            throw e;
         } catch (Exception e) {
             throw new IllegalStateException(
                 "Borrower popup could not be opened safely; aborting borrower processing to avoid parsing stale data",
@@ -103,36 +121,43 @@ public class UIElementHandler {
     }
 
     /**
-     * Close the borrower popup and require it to be fully gone before returning.
+     * Close the borrower popup and require it to be fully removed before returning.
      *
      * Critical safety rule: the next borrower must never be processed while the previous
-     * popup is still present. If the popup does not disappear within the configured waits,
-     * fail closed and abort the workflow instead of proceeding with stale UI state.
+     * popup is still present. Popup lookup, close-control lookup and click are done in one
+     * browser-side call to reduce WebDriver traffic, but the same fail-closed confirmation
+     * remains in place after the click.
      */
     public static void closePopupFast(WebDriver driver) {
         try {
-            List<WebElement> popups = driver.findElements(BORROWER_POPUP);
-            if (popups.isEmpty()) {
-                return;
-            }
-
-            WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.hHvdph svg"));
-            ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window}));",
-                closeBtn
+            Object result = ((JavascriptExecutor) driver).executeScript(
+                "const popup = document.querySelector(arguments[0]);" +
+                "if (!popup) return 'NO_POPUP';" +
+                "const closeBtn = popup.querySelector('svg');" +
+                "if (!closeBtn) return 'CLOSE_MISSING';" +
+                "closeBtn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window}));" +
+                "return 'CLICKED';",
+                BORROWER_POPUP_SELECTOR
             );
 
-            try {
-                WebDriverWaitManager.getFastWait().until(
-                    ExpectedConditions.invisibilityOfElementLocated(BORROWER_POPUP)
-                );
-            } catch (TimeoutException fastTimeout) {
-                WebDriverWaitManager.getUltraShortWait().until(
-                    ExpectedConditions.invisibilityOfElementLocated(BORROWER_POPUP)
-                );
+            String status = String.valueOf(result);
+            if ("NO_POPUP".equals(status)) {
+                return;
+            }
+            if ("CLOSE_MISSING".equals(status)) {
+                throw new NoSuchElementException("Borrower popup close control was not found");
+            }
+            if (!"CLICKED".equals(status)) {
+                throw new IllegalStateException("Unexpected borrower popup close state: " + status);
             }
 
-            if (!driver.findElements(BORROWER_POPUP).isEmpty()) {
+            try {
+                WebDriverWaitManager.getFastWait().until(driver1 -> !borrowerPopupExistsFast(driver1));
+            } catch (TimeoutException fastTimeout) {
+                WebDriverWaitManager.getUltraShortWait().until(driver1 -> !borrowerPopupExistsFast(driver1));
+            }
+
+            if (borrowerPopupExistsFast(driver)) {
                 throw new IllegalStateException(
                     "Borrower popup is still present after close confirmation; aborting before next borrower"
                 );
@@ -143,7 +168,7 @@ public class UIElementHandler {
                 e
             );
         } catch (NoSuchElementException e) {
-            if (!driver.findElements(BORROWER_POPUP).isEmpty()) {
+            if (borrowerPopupExistsFast(driver)) {
                 throw new IllegalStateException(
                     "Borrower popup is visible but close control was not found; aborting before next borrower",
                     e
@@ -157,6 +182,27 @@ public class UIElementHandler {
                 e
             );
         }
+    }
+
+    private static boolean borrowerPopupExistsFast(WebDriver driver) {
+        Object result = ((JavascriptExecutor) driver).executeScript(
+            "return document.querySelector(arguments[0]) !== null;",
+            BORROWER_POPUP_SELECTOR
+        );
+        return Boolean.TRUE.equals(result);
+    }
+
+    private static boolean isBorrowerPopupVisibleFast(WebDriver driver) {
+        Object result = ((JavascriptExecutor) driver).executeScript(
+            "const el = document.querySelector(arguments[0]);" +
+            "if (!el) return false;" +
+            "const style = window.getComputedStyle(el);" +
+            "if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return false;" +
+            "const rect = el.getBoundingClientRect();" +
+            "return rect.width > 0 && rect.height > 0;",
+            BORROWER_POPUP_SELECTOR
+        );
+        return Boolean.TRUE.equals(result);
     }
 
     /**
