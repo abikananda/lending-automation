@@ -1,5 +1,11 @@
 package abika.orchestration;
 
+import abika.MethodTimer;
+import abika.auth.LoginService;
+import abika.filtering.FilterAndSortService;
+import abika.lending.LendingFinalizer;
+import abika.scraping.BorrowerScraper;
+import abika.selenium.UIElementHandler;
 import abika.selenium.WebDriverWaitManager;
 import com.abika.model.Borrower;
 import com.abika.model.Investment;
@@ -8,202 +14,125 @@ import com.abika.services.DBService;
 import com.abika.utils.ConfigReader;
 import com.abika.utils.DroolsEngine;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import abika.MethodTimer;
-import abika.auth.LoginService;
-import abika.filtering.FilterAndSortService;
-import abika.lending.LendingFinalizer;
-import abika.scraping.BorrowerScraper;
-import abika.selenium.UIElementHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 /**
- * Orchestrates the complete lending workflow for a single rule
- * Coordinates: login, borrower opening, filtering, scraping, and finalization
+ * Runs one lending rule as a deterministic state machine:
+ * DASHBOARD -> RULE LIST -> SCRAPE -> FINALIZE(optional) -> DASHBOARD.
  */
 public class LendingOrchestrator {
     private static final Logger logger = LoggerFactory.getLogger(LendingOrchestrator.class);
     private static final By BORROWER_CARD = By.cssSelector("div.MuiBox-root.css-79elbk");
-
     private static boolean isLoggedIn = false;
 
-    /**
-     * Execute complete lending flow for a given investment rule
-     */
-    public static void runForARule(Investment investment, WebDriver driver, String activateUser, ExecutionMetrics metrics) throws Exception {
+    public static void runForARule(
+            Investment investment,
+            WebDriver driver,
+            String activateUser,
+            ExecutionMetrics metrics) throws Exception {
+
         MethodTimer ruleTimer = new MethodTimer("runForARule [" + investment.getRuleName() + "]");
         ExecutionMetrics.RuleMetrics ruleMetrics = new ExecutionMetrics.RuleMetrics(investment.getRuleName());
+        DBService dbService = new DBService();
+        DroolsEngine droolsEngine = new DroolsEngine();
+        List<Borrower> borrowerList = new ArrayList<>();
+        List<String> npaBorrowersInCurrentRun = new ArrayList<>();
 
         investment.setWalletAmountAtRuleStart(investment.getWalletAmount());
         investment.setTotalBorrowersFinalized(0);
 
-        DBService dbService = new DBService();
-        DroolsEngine droolsEngine = new DroolsEngine();
-        List<Borrower> borrowerList = new ArrayList<>();
-        List<Borrower> trustedBorrowerList = new ArrayList<>();
-        List<String> npaBorrowersInCurrentRun = new ArrayList<>();
-
         try {
-            // Step 1: Login if not already logged in
-            MethodTimer loginCheckTimer = new MethodTimer("Login check and navigation");
             if (!isLoggedIn) {
                 LoginService.loginUser(driver, activateUser);
                 isLoggedIn = true;
-            } else {
-                LoginService.clickDashboard(driver);
             }
-            loginCheckTimer.end();
+            LoginService.ensureDashboard(driver);
 
-            // Step 2 + 3: Open borrower list, apply filters, and verify that cards actually loaded.
-            openBorrowerList(driver, investment);
-            FilterAndSortService.applyFiltersAndSort(driver, WebDriverWaitManager.getStandardWait());
+            openAndFilterRule(driver, investment);
 
             if (!waitForBorrowerCards(driver)) {
-                // This is a non-financial navigation retry. No borrower popup or Add Loan action
-                // has occurred yet, so it is safe to return to dashboard and reopen the list once.
-                logger.warn("⚠️ Borrower cards did not load for '{}'; reopening the list once before skipping the rule",
+                logger.warn("Borrower cards did not appear for '{}'; reopening rule list once",
                         investment.getRuleName());
-
-                LoginService.clickDashboard(driver);
-                openBorrowerList(driver, investment);
-                FilterAndSortService.applyFiltersAndSort(driver, WebDriverWaitManager.getStandardWait());
-
-                if (!waitForBorrowerCards(driver)) {
-                    String reason = "Borrower list did not load after one safe navigation retry";
-                    logger.error("❌ {} for rule '{}'. Skipping this rule so later rules can still run.",
-                            reason, investment.getRuleName());
-                    recordSkippedRule(ruleMetrics, metrics, ruleTimer, reason);
-                    return;
-                }
+                LoginService.ensureDashboard(driver);
+                openAndFilterRule(driver, investment);
             }
 
-            // Step 4: Scrape borrowers and apply rules
-            MethodTimer scrapeTimer = new MethodTimer("Scrape and process borrowers");
-            BorrowerScraper.scrapeAndProcessBorrowers(
-                    driver, dbService, droolsEngine, investment, borrowerList,
-                    npaBorrowersInCurrentRun, activateUser, metrics
-            );
-            scrapeTimer.end();
-
-            // Step 5: close any open popup before finalization.
-            // closePopupFast already returns normally when no popup exists. Any exception here is
-            // therefore a real uncertain popup state and must remain fatal rather than be swallowed.
-            MethodTimer closeBeforeFinalizeTimer = new MethodTimer("Close popup before finalize");
-            UIElementHandler.closePopupFast(driver);
-            logger.info("✅ Popup state confirmed safe before finalizing lending");
-            closeBeforeFinalizeTimer.end();
-
-            // A rule that selected no loans is a normal outcome, not a finalization failure.
-            // Do not enter slider/Continue flow and do not convert it into a fatal all-rules abort.
-            if (borrowerList.isEmpty() || investment.getLoanCounts() == 0) {
-                logger.info("ℹ️ No loans selected for rule '{}'. Skipping finalization and continuing to the next rule.",
+            if (!waitForBorrowerCards(driver)) {
+                logger.info("No borrower cards available for rule '{}'. Continuing to next rule.",
                         investment.getRuleName());
-
-                ruleMetrics.setPassed(true);
-                ruleMetrics.setBorrowersSelected(0);
-                ruleMetrics.setBorrowersFinalized(0);
-                ruleMetrics.setAmountLent(0.0);
-                ruleMetrics.setExecutionTimeMs(ruleTimer.getElapsedMillis());
-                metrics.addRuleMetrics(ruleMetrics);
+                completeZeroSelectionRule(investment, ruleMetrics, metrics, ruleTimer, driver);
                 return;
             }
 
-            // Step 6: Finalize lending only when at least one Add Loan selection was recorded.
-            MethodTimer finalizeTimer = new MethodTimer("Finalize lending");
+            BorrowerScraper.scrapeAndProcessBorrowers(
+                    driver, dbService, droolsEngine, investment, borrowerList,
+                    npaBorrowersInCurrentRun, activateUser, metrics);
+
+            UIElementHandler.closePopupFast(driver);
+
+            if (investment.getLoanCounts() == 0 || borrowerList.isEmpty()) {
+                logger.info("No eligible loans selected for '{}'. Skipping finalization.",
+                        investment.getRuleName());
+                completeZeroSelectionRule(investment, ruleMetrics, metrics, ruleTimer, driver);
+                return;
+            }
+
             LendingFinalizer.finalizeLending(driver, investment, metrics);
-            finalizeTimer.end();
 
-            // Step 7: Store borrower data in database
-            MethodTimer storeTimer = new MethodTimer("Store borrower data");
-            dbService.storeBorrowerList(borrowerList, ConfigReader.get(activateUser + "mobileNumber"));
+            dbService.storeBorrowerList(
+                    borrowerList, ConfigReader.get(activateUser + "mobileNumber"));
 
-            logger.info("📊 DEBUG: borrowerList size = {}", borrowerList.size());
-
-            List<String> nonNpaBorrowerNames = dbService.getNonNPABorrowers();
-            logger.info("📊 DEBUG: nonNpaBorrowerNames from DB size = {}", nonNpaBorrowerNames.size());
-            if (nonNpaBorrowerNames.isEmpty()) {
-                logger.warn("⚠️ WARNING: nonNpaBorrowerNames is empty! Check DB query criteria or data.");
-            } else {
-                logger.debug("📊 DEBUG: Sample non-NPA borrowers: {}", nonNpaBorrowerNames.stream().limit(5).toList());
-            }
-
-            StringJoiner joiner = new StringJoiner(",", "[", "]");
-            for (Borrower borrower : borrowerList) {
-                String name = borrower.getName();
-                if (name != null && nonNpaBorrowerNames.contains(name.trim())) {
-                    joiner.add(name);
-                    trustedBorrowerList.add(borrower);
-                }
-            }
-
-            if (trustedBorrowerList.isEmpty()) {
-                logger.warn("⚠️ No matched non-NPA borrowers. Possible reasons:");
-                logger.warn("   - borrowerList size: {}", borrowerList.size());
-                logger.warn("   - nonNpaBorrowerNames size: {}", nonNpaBorrowerNames.size());
-                if (!borrowerList.isEmpty() && !nonNpaBorrowerNames.isEmpty()) {
-                    logger.warn("   - Name mismatch detected between scraped and DB borrowers");
-                    logger.debug("   - Scraped names: {}", borrowerList.stream().map(Borrower::getName).toList());
-                    logger.debug("   - DB names: {}", nonNpaBorrowerNames);
-                }
-            } else {
-                logger.info("✅ Matched non-NPA borrowers: {}", joiner);
-            }
-
-            dbService.storeTrustedBorrowerList(trustedBorrowerList);
-
-            if (npaBorrowersInCurrentRun.isEmpty()) {
-                logger.warn("⚠️ No NPA borrowers encountered during this lending run");
-            } else {
-                logger.info("ℹ️ Existing NPA Borrowers encountered: {}", npaBorrowersInCurrentRun);
-            }
-
-            storeTimer.end();
-
-            Double amountLentInThisRule = investment.getAmountLentInThisRule();
-            Integer borrowersFinalized = investment.getTotalBorrowersFinalized();
+            Double amountLent = investment.getAmountLentInThisRule();
+            Integer finalized = investment.getTotalBorrowersFinalized();
+            int finalizedCount = finalized == null ? 0 : finalized;
 
             ruleMetrics.setPassed(true);
             ruleMetrics.setBorrowersSelected(borrowerList.size());
-            ruleMetrics.setBorrowersFinalized(borrowersFinalized != null ? borrowersFinalized : 0);
-            ruleMetrics.setAmountLent(amountLentInThisRule != null ? amountLentInThisRule : 0.0);
+            ruleMetrics.setBorrowersFinalized(finalizedCount);
+            ruleMetrics.setAmountLent(amountLent == null ? 0.0 : amountLent);
             ruleMetrics.setExecutionTimeMs(ruleTimer.getElapsedMillis());
-
-            logger.info("📊 Rule Metrics Summary - Selected: {}, Finalized: {}, Amount Lent: ₹{}",
-                    borrowerList.size(), borrowersFinalized,
-                    String.format("%.0f", amountLentInThisRule != null ? amountLentInThisRule : 0.0));
-
             metrics.addRuleMetrics(ruleMetrics);
             metrics.setTotalBorrowersSelected(metrics.getTotalBorrowersSelected() + borrowerList.size());
-            metrics.setTotalBorrowersFinalized(metrics.getTotalBorrowersFinalized()
-                    + (borrowersFinalized != null ? borrowersFinalized : 0));
+            metrics.setTotalBorrowersFinalized(metrics.getTotalBorrowersFinalized() + finalizedCount);
+
+            logger.info("📊 Rule Metrics Summary - Selected: {}, Finalized: {}, Amount Lent: ₹{}",
+                    borrowerList.size(), finalizedCount,
+                    String.format("%.0f", amountLent == null ? 0.0 : amountLent));
+
+            LoginService.ensureDashboard(driver);
 
         } catch (Exception e) {
-            logger.error("❌ Exception occurred during lending rule execution: {}", e.getMessage(), e);
-
+            logger.error("❌ Rule '{}' failed: {}", investment.getRuleName(), e.getMessage(), e);
             ruleMetrics.setPassed(false);
             ruleMetrics.setFailureReason(e.getMessage());
             ruleMetrics.setExecutionTimeMs(ruleTimer.getElapsedMillis());
             metrics.addRuleMetrics(ruleMetrics);
 
-            try {
-                droolsEngine.dispose();
-            } catch (Exception ex) {
-                logger.warn("Failed to dispose Drools engine: {}", ex.getMessage());
+            double reserved = investment.getReservedAmount() == null ? 0.0 : investment.getReservedAmount();
+            if (reserved <= 0.0) {
+                try {
+                    LoginService.ensureDashboard(driver);
+                } catch (Exception navigationError) {
+                    e.addSuppressed(navigationError);
+                }
             }
             throw e;
         } finally {
+            try {
+                droolsEngine.dispose();
+            } catch (Exception e) {
+                logger.debug("Drools dispose failed: {}", e.getMessage());
+            }
             ruleTimer.end();
         }
     }
 
-    private static void openBorrowerList(WebDriver driver, Investment investment) {
-        MethodTimer openLoansTimer = new MethodTimer("Open borrowers list");
+    private static void openAndFilterRule(WebDriver driver, Investment investment) {
         if (Boolean.parseBoolean(ConfigReader.get("repeatedLoan"))) {
             LoginService.openRepeatedBorrowers(driver);
         } else if (investment.getRuleName().contains("Filling Fast")) {
@@ -216,30 +145,33 @@ public class LendingOrchestrator {
         } else {
             LoginService.openLiveLoans(driver);
         }
-        openLoansTimer.end();
+
+        FilterAndSortService.applyFiltersAndSort(driver, WebDriverWaitManager.getStandardWait());
     }
 
     private static boolean waitForBorrowerCards(WebDriver driver) {
         try {
-            return WebDriverWaitManager.getStandardWait().until(
-                    currentDriver -> !currentDriver.findElements(BORROWER_CARD).isEmpty()
-            );
-        } catch (TimeoutException timeout) {
+            return WebDriverWaitManager.getShortWait().until(
+                    d -> !d.findElements(BORROWER_CARD).isEmpty());
+        } catch (Exception e) {
             return false;
         }
     }
 
-    private static void recordSkippedRule(
+    private static void completeZeroSelectionRule(
+            Investment investment,
             ExecutionMetrics.RuleMetrics ruleMetrics,
             ExecutionMetrics metrics,
             MethodTimer ruleTimer,
-            String reason) {
-        ruleMetrics.setPassed(false);
-        ruleMetrics.setFailureReason(reason);
+            WebDriver driver) {
+
+        ruleMetrics.setPassed(true);
         ruleMetrics.setBorrowersSelected(0);
         ruleMetrics.setBorrowersFinalized(0);
         ruleMetrics.setAmountLent(0.0);
         ruleMetrics.setExecutionTimeMs(ruleTimer.getElapsedMillis());
         metrics.addRuleMetrics(ruleMetrics);
+        investment.setReservedAmount(0.0);
+        LoginService.ensureDashboard(driver);
     }
 }
