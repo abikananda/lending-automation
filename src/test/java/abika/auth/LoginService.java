@@ -42,14 +42,11 @@ public class LoginService {
 
     /**
      * Put the browser into a known dashboard state. This is a bounded, non-financial recovery:
-     * click Home when available; otherwise use the list/success-page back arrow; otherwise use
-     * one browser back navigation. The method never loops indefinitely and fails if Home still
-     * cannot be observed.
+     * if Home is already visible, the dashboard is ready; otherwise use the list/success-page
+     * back arrow; otherwise use one browser-back navigation. Fail if Home still cannot be observed.
      */
     public static void ensureDashboard(WebDriver driver) {
         if (isHomeAvailable(driver)) {
-            clickHomeIfNeeded(driver);
-            waitForHome(driver);
             return;
         }
 
@@ -110,20 +107,9 @@ public class LoginService {
         return false;
     }
 
-    private static void clickHomeIfNeeded(WebDriver driver) {
-        List<WebElement> homes = driver.findElements(HOME);
-        if (!homes.isEmpty() && homes.get(0).isDisplayed()) {
-            UIElementHandler.safeClick(driver, homes.get(0));
-        }
-    }
-
-    private static void waitForHome(WebDriver driver) {
-        WebDriverWaitManager.getStandardWait().until(d -> isHomeAvailable(d));
-    }
-
     private static boolean waitForHomeQuietly(WebDriver driver) {
         try {
-            WebDriverWaitManager.getStandardWait().until(d -> isHomeAvailable(d));
+            WebDriverWaitManager.getStandardWait().until(LoginService::isHomeAvailable);
             return true;
         } catch (Exception ignored) {
             return false;
