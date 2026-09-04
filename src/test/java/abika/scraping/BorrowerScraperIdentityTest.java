@@ -32,8 +32,9 @@ class BorrowerScraperIdentityTest {
                 IllegalStateException.class,
                 () -> validate("MR AMARANADH GUDALI", stalePopupBorrower, seenLoanIds));
 
-        assertTrue(error.getMessage().contains("card borrower 'MR AMARANADH GUDALI'"));
-        assertTrue(error.getMessage().contains("popup borrower 'Dinesh Meghnath Pedhvi'"));
+        assertTrue(error.getMessage().contains("Borrower identity mismatch"));
+        assertTrue(error.getMessage().contains("card='MR AMARANADH GUDALI'"));
+        assertTrue(error.getMessage().contains("popup='Dinesh Meghnath Pedhvi'"));
     }
 
     @Test
@@ -47,7 +48,7 @@ class BorrowerScraperIdentityTest {
                 IllegalStateException.class,
                 () -> validate("DINESH MEGHNATH PEDHVI", borrower, seenLoanIds));
 
-        assertTrue(error.getMessage().contains("duplicate loanId 'LOA-DUPLICATE'"));
+        assertTrue(error.getMessage().contains("Duplicate loanId 'LOA-DUPLICATE'"));
     }
 
     private static Borrower borrower(String loanId, String name) {
