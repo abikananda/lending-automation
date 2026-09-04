@@ -116,7 +116,7 @@ public class UIElementHandler {
             // Removed Thread.sleep(20) - JS click is instant, scroll animation handles timing
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrow);
             WebDriverWaitManager.getShortWait().until(
-                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.jipznm"))
+                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.hHvdph"))
             );
         } catch (Exception e) {
             logger.info("Card arrow click/wait failed: {}", e.getMessage());
@@ -129,7 +129,7 @@ public class UIElementHandler {
      */
     public static void closePopupFast(WebDriver driver) {
         try {
-            WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.jipznm svg"));
+            WebElement closeBtn = driver.findElement(By.cssSelector("div.sc-dtBdUo.hHvdph svg"));
             // Use JavaScript click for instant execution
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeBtn);
             
@@ -137,7 +137,7 @@ public class UIElementHandler {
             // If popup doesn't close quickly, still proceed (it's closing in background)
             try {
                 WebDriverWaitManager.getUltraShortWait().until(
-                    ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.jipznm"))
+                    ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.sc-dtBdUo.hHvdph"))
                 );
             } catch (TimeoutException e) {
                 // Popup is likely closing in background, don't wait for it
