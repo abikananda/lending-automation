@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 /**
- * Centralized management of WebDriverWait instances and timeout constants
+ * Centralized management of WebDriverWait instances and timeout constants.
  */
 public class WebDriverWaitManager {
     public static final int LONG_TIMEOUT = 10;
@@ -21,9 +21,6 @@ public class WebDriverWaitManager {
     private static WebDriverWait ultraShortWait;
     private static WebDriverWait fastWait;
 
-    /**
-     * Initialize wait instances - call once after WebDriver is created
-     */
     public static void initialize(WebDriver driver) {
         standardWait = new WebDriverWait(driver, Duration.ofSeconds(LONG_TIMEOUT));
         shortWait = new WebDriverWait(driver, Duration.ofSeconds(SHORT_TIMEOUT));
@@ -32,48 +29,18 @@ public class WebDriverWaitManager {
         fastWait.pollingEvery(Duration.ofMillis(FAST_POLL_MS));
     }
 
-    public static WebDriverWait getStandardWait() {
-        return standardWait;
-    }
+    public static WebDriverWait getStandardWait() { return standardWait; }
+    public static WebDriverWait getShortWait() { return shortWait; }
+    public static WebDriverWait getUltraShortWait() { return ultraShortWait; }
+    public static WebDriverWait getFastWait() { return fastWait; }
 
-    public static WebDriverWait getShortWait() {
-        return shortWait;
-    }
-
-    public static WebDriverWait getUltraShortWait() {
-        return ultraShortWait;
-    }
-
-    public static WebDriverWait getFastWait() {
-        return fastWait;
-    }
-
-    /**
-     * Safe casting utility for JavaScript returns that may be Double or Long
-     * Fixes the issue: "class java.lang.Double cannot be cast to class java.lang.Long"
-     */
     public static long safeCastToLong(Object value) {
-        if (value instanceof Double) {
-            return ((Double) value).longValue();
-        } else if (value instanceof Long) {
-            return (Long) value;
-        } else if (value instanceof Integer) {
-            return ((Integer) value).longValue();
-        }
+        if (value instanceof Number) return ((Number) value).longValue();
         return 0L;
     }
 
-    /**
-     * Safe casting utility for JavaScript returns to double
-     */
     public static double safeCastToDouble(Object value) {
-        if (value instanceof Double) {
-            return (Double) value;
-        } else if (value instanceof Long) {
-            return ((Long) value).doubleValue();
-        } else if (value instanceof Integer) {
-            return ((Integer) value).doubleValue();
-        }
+        if (value instanceof Number) return ((Number) value).doubleValue();
         return 0.0;
     }
 }
