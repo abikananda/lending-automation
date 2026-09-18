@@ -13,6 +13,7 @@ import abika.selenium.UIElementHandler;
 import abika.selenium.WebDriverWaitManager;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Handles authentication and navigation between lending rule screens.
@@ -29,9 +30,17 @@ public class LoginService {
         UIElementHandler.safeClick(driver, driver.findElement(By.xpath("//div[text()='Send OTP']")));
 
         logger.info("Enter the OTP: ");
-        String otp = LendenClubOtpReader.getOtpFromEmail(
-                ConfigReader.get(activateUser + "email.username"),
-                ConfigReader.get(activateUser + "email.password"));
+        String otp;
+        String readFromEmail = ConfigReader.get("readOtpFromEmail");
+        if ("true".equalsIgnoreCase(readFromEmail)) {
+            otp = LendenClubOtpReader.getOtpFromEmail(
+                    ConfigReader.get(activateUser + "email.username"),
+                    ConfigReader.get(activateUser + "email.password"));
+        } else {
+            System.out.print("Please enter OTP: ");
+            Scanner scanner = new Scanner(System.in);
+            otp = scanner.nextLine().trim();
+        }
         driver.findElement(By.id("otp")).sendKeys(otp);
         UIElementHandler.safeClick(driver,
                 driver.findElement(By.xpath("//button[@type='submit' and normalize-space()='Verify OTP']")));
